@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEET Biology Mock Test 01</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fff5f7;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --border: #fce4ec;
+    --border2: #f8bbd0;
+    --accent: #e91e8c;
+    --accent2: #f06292;
+    --accent3: #ec407a;
+    --gold: #ff7043;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --green-border: #a5d6a7;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --red-border: #ef9a9a;
+    --orange: #e65100;
+    --orange-bg: #fff3e0;
+    --orange-border: #ffcc80;
+    --text: #1a0a10;
+    --text2: #4a1028;
+    --muted: #ad6b82;
+    --dim: #d4a0b0;
+    --shadow: rgba(233,30,140,0.08);
+    --shadow2: rgba(233,30,140,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ─── INTRO SCREEN ─── */
+  #intro-screen {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    background: radial-gradient(ellipse at 60% 10%, #fce4ec 0%, #fff5f7 60%);
+  }
+  #intro-screen.active { display: flex; }
+
+  .intro-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), #f48fb1);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 16px var(--shadow2);
+  }
+
+  .intro-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #880e4f 30%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .intro-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 480px;
+    width: 100%;
+    margin-bottom: 36px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .info-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .info-val { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent); }
+
+  .chapter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 540px;
+    margin-bottom: 36px;
+  }
+  .chapter-tag {
+    background: #fce4ec;
+    border: 1px solid var(--border2);
+    color: var(--accent3);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .start-btn {
+    background: linear-gradient(135deg, var(--accent), #f48fb1);
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 6px 24px var(--shadow2);
+  }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px var(--shadow2); }
+
+  /* ─── TEST SCREEN ─── */
+  #test-screen { display: none; flex-direction: column; min-height: 100vh; }
+  #test-screen.active { display: flex; }
+
+  .test-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,245,247,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid var(--border2);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .subject-pill {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    border: 1.5px solid var(--border2);
+    color: var(--accent);
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  .q-counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .q-counter span { color: var(--text); font-weight: 700; }
+
+  .timer {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1565c0;
+    background: #e3f2fd;
+    border: 1.5px solid #90caf9;
+    padding: 6px 14px;
+    border-radius: 8px;
+    min-width: 80px;
+    text-align: center;
+  }
+  .timer.warning { color: var(--orange); background: var(--orange-bg); border-color: var(--orange-border); }
+  .timer.danger { color: var(--red); background: var(--red-bg); border-color: var(--red-border); animation: pulse 1s infinite; }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #f48fb1);
+    transition: width 0.3s;
+    z-index: 200;
+  }
+
+  .test-body {
+    flex: 1;
+    padding: 20px;
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ─── QUESTION CARD ─── */
+  .q-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    animation: fadeIn 0.25s ease;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .q-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    background: #fce4ec;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+
+  .diff-badge {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .diff-easy { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .diff-medium { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .diff-hard { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+  .pyq-badge {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #fff3e0;
+    color: #bf360c;
+    border: 1px solid #ffcc80;
+  }
+
+  .chapter-badge {
+    font-size: 10px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .q-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .q-text strong { color: var(--accent); }
+  .q-text em { color: var(--orange); font-style: italic; }
+
+  /* ─── OPTIONS ─── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fff9fb;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    width: 100%;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .option:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #fce4ec;
+  }
+  .option:disabled { cursor: default; }
+
+  .opt-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: #fce4ec;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .option.selected { border-color: var(--accent); background: #fce4ec; }
+  .option.correct { border-color: var(--green); background: var(--green-bg); }
+  .option.correct .opt-label { background: var(--green-bg); color: var(--green); }
+  .option.wrong { border-color: var(--red); background: var(--red-bg); }
+  .option.wrong .opt-label { background: var(--red-bg); color: var(--red); }
+
+  /* ─── EXPLANATION ─── */
+  .explanation {
+    display: none;
+    margin-top: 16px;
+    background: #f3e5f5;
+    border: 1px solid #ce93d8;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .explanation.visible { display: block; }
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6a1b9a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .tip-box {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #fff3e0;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    font-size: 12.5px;
+    color: #bf360c;
+  }
+  .tip-box b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+
+  /* ─── NAV ─── */
+  .q-nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border2);
+    background: white;
+    color: var(--text2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); background: #fce4ec; }
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--accent), #f48fb1);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 4px 14px var(--shadow2);
+  }
+  .nav-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--shadow2); }
+  .nav-btn.submit {
+    background: linear-gradient(135deg, #c62828, #e53935);
+    border-color: transparent;
+    color: white;
+    margin-left: auto;
+    box-shadow: 0 4px 14px rgba(198,40,40,0.25);
+  }
+
+  /* ─── PALETTE ─── */
+  .palette-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--accent), #f48fb1);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--shadow2);
+    z-index: 150;
+    display: none;
+  }
+  #test-screen.active .palette-toggle { display: flex; align-items: center; justify-content: center; }
+
+  .palette-panel {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: white;
+    border: 1.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 16px;
+    z-index: 140;
+    width: 280px;
+    box-shadow: 0 8px 40px var(--shadow2);
+  }
+  .palette-panel.open { display: block; }
+  .palette-title { font-size: 11px; font-family: 'Space Mono', monospace; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .palette-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; }
+  .palette-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fff9fb;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    transition: all 0.1s;
+  }
+  .palette-dot:hover { border-color: var(--accent); }
+  .palette-dot.answered { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+  .palette-dot.current { background: var(--accent); border-color: var(--accent); color: white; }
+  .palette-dot.skipped { background: var(--orange-bg); border-color: var(--orange-border); color: var(--orange); }
+  .palette-legend { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .pal-leg { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+  .pal-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* ─── RESULT SCREEN ─── */
+  #result-screen { display: none; min-height: 100vh; padding: 20px; background: var(--bg); }
+  #result-screen.active { display: block; }
+
+  .result-wrap { max-width: 800px; margin: 0 auto; }
+
+  .result-header {
+    text-align: center;
+    padding: 40px 20px 32px;
+    background: radial-gradient(ellipse at 50% 0%, #fce4ec 0%, transparent 70%);
+    border-bottom: 1.5px solid var(--border2);
+    margin-bottom: 28px;
+  }
+
+  .result-grade {
+    font-family: 'Space Mono', monospace;
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .result-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .result-sub { color: var(--muted); font-size: 14px; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: white;
+    border: 1.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .stat-lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid var(--border2);
+  }
+
+  /* Chapter breakdown */
+  .chapter-breakdown { margin-bottom: 28px; }
+  .chapter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .chapter-name { font-size: 13px; flex: 1; color: var(--text2); }
+  .chapter-bar-wrap { flex: 2; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .chapter-bar { height: 100%; border-radius: 3px; transition: width 1s ease; }
+  .chapter-score { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted); min-width: 48px; text-align: right; }
+
+  /* Mistake analysis */
+  .mistake-section { margin-bottom: 28px; }
+  .mistake-item {
+    background: white;
+    border: 1.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+  .mistake-q { font-size: 13.5px; margin-bottom: 10px; color: var(--text); font-weight: 500; }
+  .mistake-ans-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .your-ans { font-size: 12px; padding: 4px 10px; border-radius: 6px; background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+  .correct-ans { font-size: 12px; padding: 4px 10px; border-radius: 6px; background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+  .mistake-exp { font-size: 12.5px; color: #4a1028; line-height: 1.6; }
+
+  /* Tips */
+  .tips-section { margin-bottom: 28px; }
+  .tip-card {
+    background: white;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+    box-shadow: 0 2px 10px var(--shadow);
+  }
+  .tip-card.danger { border-color: var(--red); }
+  .tip-card.warn { border-color: var(--orange); }
+  .tip-card.good { border-color: var(--green); }
+  .tip-card b { display: block; font-family: 'Syne', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; color: var(--accent); }
+  .tip-card.danger b { color: var(--red); }
+  .tip-card.warn b { color: var(--orange); }
+  .tip-card.good b { color: var(--green); }
+
+  .retry-btn {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    margin: 32px auto 40px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent), #f48fb1);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 6px 24px var(--shadow2);
+  }
+
+  /* Marks bar */
+  .marks-visual {
+    display: flex;
+    gap: 4px;
+    margin: 20px 0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mv-correct { background: var(--green); }
+  .mv-wrong { background: var(--red); }
+  .mv-skip { background: var(--border2); }
+
+  .mistake-section-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 10px 0 4px;
+  }
+  .trick-box {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #fff8e1;
+    border-left: 3px solid #f57c00;
+    border-radius: 0 8px 8px 0;
+    font-size: 12.5px;
+    color: #bf360c;
+    line-height: 1.6;
+  }
+  .trick-box b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; color: #e65100; }
+
+  /* Motivation card */
+  .motivation-card {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    border: 1.5px solid #f48fb1;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(233,30,140,0.15);
+  }
+  .motivation-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .motivation-emoji { font-size: 36px; margin-bottom: 12px; display: block; }
+  .motivation-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.5;
+    color: #880e4f;
+    margin-bottom: 8px;
+  }
+  .motivation-sub {
+    font-size: 13px;
+    color: #ad1457;
+    font-style: italic;
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+  .motivation-sig {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .test-header { padding: 10px 14px; }
+    .test-body { padding: 14px; }
+    .q-card { padding: 18px 14px; }
+    .timer { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="intro-screen" class="screen active">
+  <div class="intro-badge">🧬 NEET 2026 · Mock Test Series</div>
+  <h1 class="intro-title">Biology<br>Full Mock · 01</h1>
+  <p class="intro-sub">NEET-pattern questions based on PYQ trend analysis (2015–2024). Every question mapped to actual exam frequency.</p>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-label">Questions</div>
+      <div class="info-val">90</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Total Marks</div>
+      <div class="info-val">360</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Duration</div>
+      <div class="info-val">60 min</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Marking</div>
+      <div class="info-val">+4 / -1</div>
+    </div>
+  </div>
+
+  <div class="chapter-tags">
+    <span class="chapter-tag">Cell Biology</span>
+    <span class="chapter-tag">Biomolecules</span>
+    <span class="chapter-tag">Cell Division</span>
+    <span class="chapter-tag">Photosynthesis</span>
+    <span class="chapter-tag">Respiration</span>
+    <span class="chapter-tag">Plant Growth</span>
+    <span class="chapter-tag">Genetics</span>
+    <span class="chapter-tag">Evolution</span>
+    <span class="chapter-tag">Human Physiology</span>
+    <span class="chapter-tag">Reproduction</span>
+    <span class="chapter-tag">Ecology</span>
+    <span class="chapter-tag">Biotechnology</span>
+  </div>
+
+  <button class="start-btn" onclick="startTest()">Start Test →</button>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen" class="screen">
+  <div class="progress-bar" id="progressBar"></div>
+
+  <div class="test-header">
+    <div class="header-left">
+      <span class="subject-pill">BIO</span>
+      <span class="q-counter">Q <span id="qNumDisplay">1</span> of 90</span>
+    </div>
+    <div class="timer" id="timerDisplay">60:00</div>
+  </div>
+
+  <div class="test-body" id="questionArea"></div>
+
+  <button class="palette-toggle" id="paletteToggle" onclick="togglePalette()">⊞</button>
+  <div class="palette-panel" id="palettePanel">
+    <div class="palette-title">Question Navigator</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+    <div class="palette-legend">
+      <div class="pal-leg"><div class="pal-dot" style="background:var(--green-bg);border:1px solid var(--green-border)"></div>Answered</div>
+      <div class="pal-leg"><div class="pal-dot" style="background:var(--accent)"></div>Current</div>
+      <div class="pal-leg"><div class="pal-dot" style="background:rgba(255,154,60,0.2);border:1px solid var(--orange)"></div>Skipped</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen" class="screen">
+  <div class="result-wrap" id="resultContent"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  QUESTION BANK — 90 NEET Biology Questions
+//  Format: { q, opts[4], ans(0-3), diff, chapter, pyq, exp, tip }
+// ═══════════════════════════════════════════════════════════
+
+const questions = [
+
+// ── CELL BIOLOGY & CELL ORGANELLES ──
+{q:"The unit membrane model of cell membrane was proposed by:", opts:["Singer and Nicolson","Danielli and Davson","Robertson","Gorter and Grendel"], ans:2, diff:"medium", chapter:"Cell: Unit of Life", pyq:"NEET 2016",
+exp:"J.D. Robertson (1959) proposed the Unit Membrane Model based on electron microscopy. Gorter & Grendel proposed lipid bilayer; Danielli & Davson proposed protein-lipid sandwich; Singer-Nicolson proposed Fluid Mosaic Model (1972).",
+tip:"Memory peg: Robertson = Rigidly One layer (Unit membrane). Singer-Nicolson = Fluid Mosaic.",
+trick:"Trick: Options include all 4 real scientists — each proposed a different model. The trap is confusing Robertson (unit membrane) with Singer-Nicolson (fluid mosaic). Always link the model name to its key feature."},
+
+{q:"Which of the following is NOT a feature of the Fluid Mosaic Model?", opts:["Phospholipid bilayer is fluid","Proteins are embedded in lipid bilayer","Membrane proteins are static and rigid","Carbohydrates are attached to outer surface"], ans:2, diff:"easy", chapter:"Cell: Unit of Life", pyq:null,
+exp:"In Fluid Mosaic Model (Singer & Nicolson, 1972), proteins float and move within the fluid phospholipid bilayer — they are NOT static. That was the old Davson-Danielli sandwich model.",
+tip:"Fluid = proteins move laterally. Mosaic = proteins patchy pattern.",
+trick:"Trick: Option D (carbohydrates on outer surface) is TRUE — it's a real feature of FMM. The NOT question traps students who spot a true statement and pick it. Always read \"NOT\" questions twice."},
+
+{q:"The 9+2 arrangement of microtubules is found in:", opts:["Centriole","Cilia","Mitotic spindle","Cytoskeleton"], ans:1, diff:"easy", chapter:"Cell: Unit of Life", pyq:"NEET 2017",
+exp:"Cilia and flagella have the 9+2 arrangement: 9 peripheral doublet microtubules + 2 central singlets. Centrioles have 9+0 (9 triplets, no central pair).",
+tip:"Cilia/flagella = 9+2 (move things). Centriole = 9+0 (anchor/organize).",
+trick:"Trick: Centriole sounds similar to cilia/flagella and both involve microtubules. Remember: 9+2 = movement (cilia/flagella). 9+0 = organizing (centriole/basal body)."},
+
+{q:"Which organelle is called the 'Suicidal Bag' of the cell?", opts:["Ribosome","Peroxisome","Lysosome","Vacuole"], ans:2, diff:"easy", chapter:"Cell: Unit of Life", pyq:"NEET 2013",
+exp:"Lysosomes contain hydrolytic enzymes (acid hydrolases). If ruptured, they digest cell's own components — hence 'suicidal bags'. Coined by Christian de Duve.",
+tip:"De Duve discovered both lysosomes and peroxisomes. Lysosome = lysis = destruction.",
+trick:"Trick: Peroxisome is a distractor — it also contains hydrolytic-like enzymes. But only lysosomes are called suicidal bags. Peroxisome = H₂O₂ metabolism."},
+
+{q:"Ribosomes of prokaryotes are:", opts:["80S (60S + 40S)","70S (50S + 30S)","70S (60S + 40S)","80S (50S + 30S)"], ans:1, diff:"easy", chapter:"Cell: Unit of Life", pyq:"NEET 2018",
+exp:"Prokaryotic ribosomes = 70S (50S large + 30S small subunit). Eukaryotic cytoplasmic ribosomes = 80S (60S + 40S). Mitochondrial and chloroplast ribosomes = 70S (prokaryote-like).",
+tip:"PRO = 70S. EUK = 80S. 'S' values don't add — they're sedimentation coefficients.",
+trick:"Trick: The S values seem to add up (50+30≠70) — this trips students. S = Svedberg unit (sedimentation rate), not additive. Memorize the combinations as fixed pairs."},
+
+{q:"Which of the following has the largest genome among the given organisms?", opts:["E. coli","Yeast","Drosophila","Humans"], ans:3, diff:"medium", chapter:"Cell: Unit of Life", pyq:null,
+exp:"Human genome ≈ 3.2 × 10⁹ bp. Drosophila ≈ 1.8 × 10⁸ bp. Yeast ≈ 1.2 × 10⁷ bp. E. coli ≈ 4.6 × 10⁶ bp. Genome size ≠ organism complexity (C-value paradox).",
+tip:"More complex ≠ bigger genome. Amoeba has larger genome than humans (C-value paradox).",
+trick:"Trick: Common assumption that \"more complex = bigger genome.\" Humans seem like the obvious answer and they ARE correct here, but the bigger trap in NEET is when they ask about onion or amoeba which have larger genomes than humans."},
+
+{q:"The middle lamella is composed mainly of:", opts:["Cellulose","Calcium pectate","Hemicellulose","Lignin"], ans:1, diff:"easy", chapter:"Cell: Unit of Life", pyq:"NEET 2014",
+exp:"Middle lamella = calcium pectate (pectin). It cements adjacent cells together. Primary cell wall = cellulose + hemicellulose + pectin. Secondary wall = cellulose + lignin.",
+tip:"Middle Lamella = MAgnets of Calcium (binds cells together like cement).",
+trick:"Trick: Cellulose is the most abundant component of plant cell wall so students pick it. Middle lamella ≠ cell wall. It's the layer BETWEEN cells. Calcium pectate = glue between cells."},
+
+{q:"Which of the following is a correct match?", opts:["Chloroplast — ATP synthesis only","Mitochondria — Kreb's cycle in matrix","ER — Ribosome-free in rough ER","Golgi — Protein degradation"], ans:1, diff:"medium", chapter:"Cell: Unit of Life", pyq:null,
+exp:"Krebs cycle occurs in the mitochondrial matrix. Rough ER has ribosomes on its surface. Golgi is for secretion/modification, not degradation (that's lysosomes). Chloroplast does both ATP synthesis and Calvin cycle.",
+tip:"Matrix = site of Krebs + fatty acid oxidation. Inner membrane = ETC + oxidative phosphorylation.",
+trick:"Trick: \"Chloroplast — ATP synthesis only\" sounds reasonable since it makes ATP in light reactions. The trap is \"only\" — Calvin cycle also happens there. Watch for absolute words like \"only.\""},
+
+// ── BIOMOLECULES ──
+{q:"Which bond links two amino acids in a protein?", opts:["Glycosidic bond","Ester bond","Peptide bond","Hydrogen bond"], ans:2, diff:"easy", chapter:"Biomolecules", pyq:"NEET 2015",
+exp:"Adjacent amino acids are linked by peptide bonds (–CO–NH–), formed between carboxyl group of one and amino group of the next with elimination of water (condensation).",
+tip:"Amino acids → Peptide bond. Monosaccharides → Glycosidic bond. Fatty acids + glycerol → Ester bond.",
+trick:"Trick: H-bonds are involved in protein structure so students pick them. But H-bonds stabilize secondary structure — the actual covalent link between amino acids is the peptide bond."},
+
+{q:"The enzyme that joins Okazaki fragments during DNA replication is:", opts:["DNA helicase","DNA ligase","DNA polymerase III","Primase"], ans:1, diff:"medium", chapter:"Biomolecules", pyq:"NEET 2016",
+exp:"DNA ligase seals nicks between Okazaki fragments on the lagging strand by forming phosphodiester bonds. DNA pol III synthesizes them. Primase makes RNA primers. Helicase unwinds DNA.",
+tip:"Ligase = glue. Think LIGAse = LIGA (joins). Okazaki fragments are on lagging strand.",
+trick:"Trick: Students confuse DNA Pol III (synthesizes Okazaki fragments) with DNA ligase (joins them). DNA Pol I removes primers; ligase seals nicks. Different enzymes, different jobs."},
+
+{q:"Feedback inhibition of an enzyme involves:", opts:["Denaturation of enzyme","Product acting as inhibitor","Substrate acting as inhibitor","Co-factor removal"], ans:1, diff:"easy", chapter:"Biomolecules", pyq:"NEET 2018",
+exp:"In feedback (end-product) inhibition, the final product of a metabolic pathway inhibits an enzyme earlier in the pathway — usually the first committed step. This is allosteric inhibition.",
+tip:"Feedback = product hits back on early enzyme. Classic example: ATP inhibits phosphofructokinase in glycolysis.",
+trick:"Trick: \"Substrate acting as inhibitor\" sounds intuitive (too much substrate = slow down). But feedback inhibition is specifically the PRODUCT inhibiting an earlier enzyme — not the substrate."},
+
+{q:"Secondary structure of protein is stabilized by:", opts:["Disulfide bonds","Peptide bonds","Hydrogen bonds","Van der Waals forces"], ans:2, diff:"easy", chapter:"Biomolecules", pyq:"NEET 2019",
+exp:"Secondary structure (α-helix, β-pleated sheet) is maintained by hydrogen bonds between the CO and NH groups of the polypeptide backbone. Disulfide bonds stabilize tertiary structure.",
+tip:"1° = peptide bonds (covalent). 2° = H-bonds (backbone). 3° = disulfide, hydrophobic, ionic. 4° = subunit interactions.",
+trick:"Trick: Disulfide bonds appear in multiple levels — they stabilize tertiary structure, not secondary. H-bonds in secondary structure are between BACKBONE groups (CO and NH), not side chains."},
+
+{q:"Amylose, a component of starch, is a:", opts:["Branched polymer of α-glucose with α-1,6 linkages","Linear polymer of α-glucose with α-1,4 linkages","Branched polymer of β-glucose","Linear polymer of β-glucose"], ans:1, diff:"medium", chapter:"Biomolecules", pyq:"NEET 2017",
+exp:"Amylose is linear, unbranched, with α-1,4 glycosidic bonds. Amylopectin (branched starch) has α-1,4 bonds in chain + α-1,6 at branch points. Cellulose has β-1,4 glycosidic bonds.",
+tip:"Amylose = Alone (linear). Amylopectin = Packed branches. Glycogen = Most branches (animal starch).",
+trick:"Trick: Both amylose and amylopectin have α-1,4 bonds — the difference is branching (α-1,6 in amylopectin). Option A describes amylopectin. Don't confuse the two starch components."},
+
+{q:"Which of the following is NOT a reducing sugar?", opts:["Glucose","Fructose","Maltose","Sucrose"], ans:3, diff:"medium", chapter:"Biomolecules", pyq:"NEET 2016",
+exp:"Sucrose is a non-reducing sugar because both anomeric carbons (C1 of glucose and C2 of fructose) are involved in the glycosidic bond — no free aldehyde/ketone group remains.",
+tip:"Non-reducing sugars = both anomeric carbons locked. Sucrose = Stuck (non-reducing). All monosaccharides are reducing.",
+trick:"Trick: Students assume all carbohydrates reduce — but sucrose is a disaccharide where both anomeric carbons are locked in the glycosidic bond. Rule: any free aldehyde/ketone = reducing sugar."},
+
+{q:"The number of ATP molecules produced per molecule of glucose in aerobic respiration is:", opts:["36–38","30–32","18–20","24"], ans:0, diff:"medium", chapter:"Biomolecules", pyq:"NEET 2020",
+exp:"Aerobic respiration yields 36–38 ATP per glucose (varies with shuttle system). Glycolysis = 2 ATP net, Krebs = 2 ATP, Oxidative phosphorylation = 32–34 ATP.",
+tip:"NEET accepts 36-38 as standard. Don't confuse with older 38 value; modern estimates give 30-32 but NEET still uses 36-38.",
+trick:"Trick: Older textbooks say 38 ATP; newer biochemistry gives 30-32. NEET still uses 36-38. Don't apply updated values in NEET — use what NCERT states."},
+
+// ── CELL DIVISION ──
+{q:"Synapsis occurs during which phase of meiosis?", opts:["Leptotene","Zygotene","Pachytene","Diplotene"], ans:1, diff:"easy", chapter:"Cell Cycle and Cell Division", pyq:"NEET 2014",
+exp:"Synapsis (pairing of homologous chromosomes) occurs during Zygotene (zygos = yoke/pair). Leptotene = chromosomes become visible. Pachytene = crossing over. Diplotene = bivalents separate slightly, chiasmata visible.",
+tip:"Mnemonic: Lazy Zebras Play Double Games (Leptotene, Zygotene, Pachytene, Diplotene, Diakinesis).",
+trick:"Trick: Pachytene (crossing over) and Zygotene (synapsis) are frequently swapped. Synapsis = pairing = zygote-like joining → Zygotene. Crossing over comes AFTER pairing is complete."},
+
+{q:"At which checkpoint does the cell check for DNA damage before entering S phase?", opts:["G2/M checkpoint","G1/S checkpoint","Metaphase checkpoint","G0 checkpoint"], ans:1, diff:"medium", chapter:"Cell Cycle and Cell Division", pyq:null,
+exp:"G1/S checkpoint (restriction point) checks for DNA damage, cell size, and nutrient availability before committing to DNA synthesis. G2/M checks for complete DNA replication. Metaphase (spindle assembly) checkpoint ensures all chromosomes attached to spindle.",
+tip:"G1/S = go or no-go for replication. G2/M = go or no-go for division.",
+trick:"Trick: Students confuse G2/M with G1/S. G1/S = before DNA copying (checks damage BEFORE replication). G2/M = after copying (checks if replication is complete). Logical order = logical checkpoint."},
+
+{q:"Which of the following events occurs during Telophase?", opts:["Chromosomes move to poles","Nuclear envelope reforms","Centromeres split","Spindle fibres form"], ans:1, diff:"easy", chapter:"Cell Cycle and Cell Division", pyq:"NEET 2018",
+exp:"During Telophase: nuclear envelope reforms around chromosomes at each pole, chromosomes decondense, nucleolus reappears, spindle fibres disappear. Centromeres split in Anaphase.",
+tip:"Telophase = reverse of Prophase. Everything that disappeared in Prophase comes back.",
+trick:"Trick: \"Chromosomes move to poles\" is Anaphase, not Telophase. \"Spindle fibres form\" is Prophase/Prometaphase. Telophase = everything that disappeared in prophase REAPPEARS."},
+
+{q:"Crossing over during meiosis results in:", opts:["Gene duplication","Genetic recombination","Chromosome deletion","Polyploidy"], ans:1, diff:"easy", chapter:"Cell Cycle and Cell Division", pyq:"NEET 2016",
+exp:"Crossing over (during Pachytene) involves exchange of segments between non-sister chromatids of homologous chromosomes, producing new combinations of alleles = genetic recombination. This is the main source of variation.",
+tip:"Crossing over = recombination = new allele combinations = variation. No crossing over = identical chromatids.",
+trick:"Trick: Gene duplication and polyploidy are mutations/events that increase genetic material — not the result of crossing over. Crossing over = exchange = recombination = variation. No new genes created."},
+
+{q:"A cell in G2 phase has a DNA content of 4n. What would be the DNA content in each daughter cell after mitosis?", opts:["4n","2n","n","8n"], ans:1, diff:"medium", chapter:"Cell Cycle and Cell Division", pyq:null,
+exp:"G2 phase cell has 4n DNA (DNA replicated in S phase). After mitosis (no meiosis), each daughter cell gets 2n DNA content. Chromosome number remains 2n (diploid).",
+tip:"G2 = 4n DNA, 2n chromosomes. After mitosis → 2n DNA, 2n chromosomes. DNA content halves, ploidy unchanged.",
+trick:"Trick: Confusing DNA content (4n) with chromosome number (still 2n in G2). After mitosis, DNA content halves (2n) but chromosome number stays 2n. Ploidy = chromosome number, not DNA content."},
+
+// ── PHOTOSYNTHESIS ──
+{q:"The oxygen released during photosynthesis comes from:", opts:["CO₂","H₂O","Both CO₂ and H₂O","Glucose"], ans:1, diff:"easy", chapter:"Photosynthesis", pyq:"NEET 2013, 2017",
+exp:"Proved by van Niel (using purple sulfur bacteria) and confirmed by ¹⁸O labeling experiments. Water is split (photolysis) during the light reactions: 2H₂O → 4H⁺ + 4e⁻ + O₂↑. CO₂ is fixed in dark reactions.",
+tip:"Classic PYQ: O₂ comes from water. ¹⁸O₂ released only when H₂¹⁸O used (not C¹⁸O₂). Van Niel's hypothesis.",
+trick:"Trick: Intuition says O₂ comes from CO₂ (since CO₂ has oxygen). The ¹⁸O isotope experiment and van Niel's hypothesis definitively proved it comes from water. This is a top-3 most repeated Bio PYQ."},
+
+{q:"C4 plants avoid photorespiration because:", opts:["They lack RuBisCO","CO₂ is concentrated in bundle sheath cells","They fix CO₂ at night","They have more chloroplasts"], ans:1, diff:"medium", chapter:"Photosynthesis", pyq:"NEET 2016, 2019",
+exp:"In C4 plants (e.g., sugarcane, maize), CO₂ is first fixed by PEP carboxylase in mesophyll cells into OAA (C4), then transported to bundle sheath cells where it's released — creating high CO₂ concentration. This suppresses RuBisCO's oxygenase activity → no photorespiration.",
+tip:"C4 pump CO₂ to bundle sheath → floods RuBisCO with CO₂ → oxygenase reaction can't compete.",
+trick:"Trick: Option A (lack RuBisCO) is wrong — C4 plants HAVE RuBisCO in bundle sheath. The key is that PEP carboxylase in mesophyll concentrates CO₂ so RuBisCO's oxygenase activity is suppressed."},
+
+{q:"Which pigment absorbs light in the red and blue-violet regions and reflects green?", opts:["Carotenoids","Chlorophyll a","Chlorophyll b","Xanthophyll"], ans:1, diff:"easy", chapter:"Photosynthesis", pyq:"NEET 2015",
+exp:"Chlorophyll a (most abundant, primary photosynthetic pigment) absorbs red (~660–680 nm) and blue-violet (~430 nm) wavelengths, reflecting green. Chlorophyll b absorbs more blue. Carotenoids absorb blue-green.",
+tip:"Chl a = primary pigment, in both PS-I (P700) and PS-II (P680). Chl b = accessory. Both absorb red + blue.",
+trick:"Trick: Carotenoids also absorb blue-green and reflect yellow-orange — not green. Only chlorophylls reflect green. Know each pigment's absorption AND reflection spectrum."},
+
+{q:"In the Calvin cycle, the primary CO₂ acceptor is:", opts:["OAA","Ribulose-1,5-bisphosphate (RuBP)","PGA","PGAL"], ans:1, diff:"easy", chapter:"Photosynthesis", pyq:"NEET 2017",
+exp:"RuBP (5C) combines with CO₂ via RuBisCO to form 2 molecules of 3-PGA (3C). This is carboxylation — the first step of the Calvin cycle. OAA is the product in C4 plants.",
+tip:"C3 cycle: CO₂ + RuBP (5C) → 2 × 3-PGA (3C). Acceptor = RuBP. First product = 3-PGA.",
+trick:"Trick: OAA (oxaloacetate) is the first product in C4 plants, not C3. In C3/Calvin cycle, first product = 3-PGA (3C). CO₂ acceptor = RuBP. First STABLE product = 3-PGA."},
+
+{q:"Emerson's enhancement effect proved:", opts:["O₂ is from water","Two photosystems work together","C4 pathway exists","PS-I works alone"], ans:1, diff:"medium", chapter:"Photosynthesis", pyq:"NEET 2018",
+exp:"Emerson found that simultaneously using red light (>680 nm) + far-red light (700 nm) gave higher photosynthetic rate than the sum of both separately. This Red Drop effect + Enhancement Effect proved that two photosystems (PS-I at 700 nm, PS-II at 680 nm) cooperate.",
+tip:"Red drop = PS-II inactive beyond 680nm alone. Enhancement = both together. Proved TWO photosystems exist.",
+trick:"Trick: Emerson's Red Drop (photosynthesis drops with >680nm alone) and Enhancement Effect (rate exceeds sum when both wavelengths used) are two separate observations. The Enhancement Effect PROVED two photosystems cooperate."},
+
+{q:"Which of the following processes occurs in the stroma of chloroplast?", opts:["Photolysis of water","Light-dependent reactions","Calvin cycle (dark reactions)","Electron transport chain"], ans:2, diff:"easy", chapter:"Photosynthesis", pyq:"NEET 2014",
+exp:"Stroma = Calvin cycle (CO₂ fixation, dark reactions). Thylakoid membrane = light reactions, ETC, photolysis of water. Stroma also contains enzymes, ribosomes, DNA.",
+tip:"Stroma = DARK reactions. Thylakoid = LIGHT reactions. Same compartment distinction as mitochondria (matrix = Krebs, inner membrane = ETC).",
+trick:"Trick: The word \"dark\" reactions misleads — Calvin cycle CAN occur in light, it just doesn't need light directly. \"Light-independent\" is more accurate. Location is the key: stroma = Calvin, thylakoid = light reactions."},
+
+// ── RESPIRATION ──
+{q:"During aerobic respiration, the net gain of ATP from glycolysis is:", opts:["4 ATP","2 ATP","8 ATP","6 ATP"], ans:1, diff:"easy", chapter:"Respiration in Plants", pyq:"NEET 2013",
+exp:"Glycolysis uses 2 ATP (for glucose activation) and produces 4 ATP → net gain = 2 ATP. It also produces 2 NADH. Occurs in cytoplasm.",
+tip:"Glycolysis: 2 ATP invested, 4 ATP produced = 2 net ATP. Plus 2 NADH = 5 more ATP via ETC.",
+trick:"Trick: Gross yield = 4 ATP, net = 2 ATP. NEET questions may ask \"net gain\" or \"total produced\" — different answers. Always check which one is being asked."},
+
+{q:"In which organism does anaerobic respiration produce lactic acid?", opts:["Yeast","E. coli","Human RBCs","All of the above"], ans:2, diff:"easy", chapter:"Respiration in Plants", pyq:"NEET 2019",
+exp:"Human RBCs (and muscle cells under vigorous exercise) produce lactic acid by lactic acid fermentation. Yeast produces ethanol + CO₂ by alcoholic fermentation. Both regenerate NAD⁺ for continued glycolysis.",
+tip:"Yeast = ethanol + CO₂. RBCs and muscle = lactic acid. Both are anaerobic and regenerate NAD⁺.",
+trick:"Trick: Muscle cells do produce lactic acid during vigorous exercise, but RBCs ALWAYS produce lactic acid (they have no mitochondria). The question asks which organism — RBCs are the most specific correct answer. Also: yeast fermentation gives ethanol + CO₂, never lactic acid."},
+
+{q:"The respiratory quotient (RQ) for fats is approximately:", opts:["1.0","0.7","0.8","More than 1"], ans:1, diff:"medium", chapter:"Respiration in Plants", pyq:"NEET 2016",
+exp:"RQ = CO₂ produced / O₂ consumed. For carbohydrates: RQ = 1.0. For fats: RQ ≈ 0.7 (more oxygen needed to oxidize). For proteins: RQ ≈ 0.9. For organic acids: RQ > 1.",
+tip:"Fats need MORE oxygen (high H:O ratio) → less CO₂ per O₂ → RQ < 1. Carbs = perfect balance = RQ = 1.",
+trick:"Trick: Students assume more energy = more CO₂. But fats need more O₂ to oxidize (high H:O ratio) → proportionally less CO₂ per O₂ → RQ <1. More oxygen IN, not more CO₂ out."},
+
+{q:"The Krebs cycle is also called:", opts:["Glycolytic pathway","Citric acid cycle","Pentose phosphate pathway","Ornithine cycle"], ans:1, diff:"easy", chapter:"Respiration in Plants", pyq:"NEET 2015",
+exp:"Krebs cycle = Citric acid cycle (first product is citric acid, 6C) = TCA cycle (TriCarboxylic Acid). Discovered by Hans Krebs. Occurs in mitochondrial matrix.",
+tip:"Krebs = TCA = Citric acid cycle. All three names used in NEET questions interchangeably.",
+trick:"Trick: \"Ornithine cycle\" (urea cycle) sounds like it could be a Krebs-related term. It's a completely separate pathway for nitrogen metabolism in the liver. Don't confuse with TCA."},
+
+// ── PLANT GROWTH & DEVELOPMENT ──
+{q:"Which plant hormone is responsible for apical dominance?", opts:["Gibberellin","Cytokinin","Auxin","Abscisic acid"], ans:2, diff:"easy", chapter:"Plant Growth and Development", pyq:"NEET 2013, 2018",
+exp:"Auxin (IAA) produced at the apical bud suppresses growth of lateral buds — apical dominance. Removal of apex → lateral bud growth. Cytokinin promotes lateral bud growth and overcomes apical dominance.",
+tip:"Apical dominance = Auxin. Remove apex → cytokinin wins → lateral buds grow. Auxin:cytokinin ratio is key.",
+trick:"Trick: Cytokinin PROMOTES lateral bud growth and BREAKS apical dominance — so it's the antagonist. The question asks what CAUSES apical dominance, which is auxin. Get the cause vs. the cure straight."},
+
+{q:"Bolting (elongation of internodes before flowering) is induced by:", opts:["Auxin","Cytokinin","Gibberellin","Ethylene"], ans:2, diff:"medium", chapter:"Plant Growth and Development", pyq:"NEET 2017",
+exp:"Gibberellins cause bolting in rosette plants (cabbage, spinach) — dramatic internode elongation before flowering. They also promote seed germination, fruit development without fertilization (parthenocarpy).",
+tip:"Gibberellin = Growth in length. Bolting, seed germination, breaking dormancy, parthenocarpy.",
+trick:"Trick: Auxin also promotes elongation — so why gibberellin? Because bolting = internode elongation in rosette plants, which is specifically gibberellin's role, not auxin. Auxin = shoot tip elongation. GA = internode elongation."},
+
+{q:"Abscisic acid (ABA) is also called:", opts:["Stress hormone","Growth hormone","Wound hormone","Death hormone"], ans:0, diff:"easy", chapter:"Plant Growth and Development", pyq:"NEET 2016",
+exp:"ABA = 'Stress hormone' — promotes stomatal closure during water stress, seed dormancy, senescence. Also called 'dormin' (promotes dormancy) and 'abscisin II'. Counteracts GA's growth effects.",
+tip:"ABA = Abscisic = Absent growth = Stress. Closes stomata (guard cells shrink), promotes dormancy.",
+trick:"Trick: ABA was originally called \"abscisin\" because it was thought to promote leaf fall (abscission). That's not its primary role — ethylene causes abscission. ABA = stress hormone = stomatal closure. Don't be fooled by the name."},
+
+{q:"Ethylene is used commercially for:", opts:["Promoting root elongation","Fruit ripening","Inducing flowering in mango","Breaking dormancy"], ans:1, diff:"easy", chapter:"Plant Growth and Development", pyq:"NEET 2018",
+exp:"Ethylene promotes fruit ripening (climacteric fruits). Commercial application: ripening of mangoes, tomatoes using ethrel (ethylene-releasing compound). It also promotes senescence, abscission, and inhibits longitudinal growth.",
+tip:"Ethylene = ripening agent. Also the only GASEOUS plant hormone. Promotes horizontal growth.",
+trick:"Trick: Auxin at LOW concentrations promotes growth; at HIGH concentrations inhibits and can promote fruit ripening. But ethylene is the specific ripening hormone used commercially. The question is about commercial use specifically."},
+
+// ── GENETICS & MOLECULAR BIOLOGY ──
+{q:"In a dihybrid cross between AABB and aabb, the F₂ ratio is:", opts:["9:3:3:1","1:2:1","3:1","1:1:1:1"], ans:0, diff:"easy", chapter:"Principles of Inheritance", pyq:"NEET 2013",
+exp:"Dihybrid cross (AaBb × AaBb) gives 9:3:3:1 in F₂. This demonstrates Mendel's Law of Independent Assortment (provided genes are on non-homologous chromosomes).",
+tip:"Monohybrid F₂ = 3:1. Dihybrid F₂ = 9:3:3:1. Test cross = 1:1 or 1:1:1:1.",
+trick:"Trick: Test cross (Aa × aa) gives 1:1, not 9:3:3:1. Dihybrid F₂ = 9:3:3:1 only when genes are on DIFFERENT chromosomes. If linked = ratios deviate. NEET assumes independent assortment unless stated."},
+
+{q:"Which one of the following disorders is caused by trisomy of chromosome 21?", opts:["Klinefelter syndrome","Turner syndrome","Down syndrome","Patau syndrome"], ans:2, diff:"easy", chapter:"Principles of Inheritance", pyq:"NEET 2013, 2019",
+exp:"Down syndrome = trisomy 21 (2n+1 = 47 chromosomes). Klinefelter = XXY (47, male). Turner = XO (45, female). Patau syndrome = trisomy 13. Edward syndrome = trisomy 18.",
+tip:"Down = 21 (21-gun salute 'Down'). Klinefelter = Extra X in male. Turner = Missing X in female.",
+trick:"Trick: Multiple syndromes with similar names. Trisomy 13 = Patau (P comes before other letters, 13 is first). Trisomy 18 = Edwards. Trisomy 21 = Down. Klinefelter = XXY (male), Turner = XO (female). Sex chromosome vs autosome."},
+
+{q:"Lac operon is a classic example of:", opts:["Positive regulation","Inducible operon","Repressible operon","Both A and B"], ans:1, diff:"medium", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2018",
+exp:"Lac operon is an inducible operon — normally OFF (repressed), turned ON in presence of lactose (inducer). The inducer binds the repressor, preventing it from blocking the operator. It's primarily negatively regulated.",
+tip:"Lac = Inducible (inducer = lactose). Trp operon = Repressible (corepressor = tryptophan).",
+trick:"Trick: Lac operon also has positive regulation via CAP-cAMP, so option D (Both A and B = positive + inducible) is tempting. But lac operon is PRIMARILY classified as an inducible (negatively regulated) operon. The positive regulation is secondary."},
+
+{q:"The process of making RNA from DNA is called:", opts:["Translation","Replication","Transcription","Transduction"], ans:2, diff:"easy", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2014",
+exp:"Transcription: DNA → RNA (mRNA, tRNA, rRNA), catalyzed by RNA polymerase. Translation: mRNA → protein. Replication: DNA → DNA. Transduction: gene transfer via bacteriophage.",
+tip:"Central Dogma: DNA → (Transcription) → RNA → (Translation) → Protein. Never forget the direction.",
+trick:"Trick: Transduction sounds like it could be molecular (similar to transcription). Transduction = bacteriophage gene transfer (genetics). Transcription = RNA synthesis (molecular biology). Completely different fields — don't let similar-sounding words fool you."},
+
+{q:"In eukaryotes, which RNA polymerase transcribes mRNA?", opts:["RNA Pol I","RNA Pol II","RNA Pol III","All three equally"], ans:1, diff:"medium", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2017",
+exp:"RNA Polymerase II transcribes mRNA (hnRNA). RNA Pol I transcribes rRNA (28S, 18S, 5.8S). RNA Pol III transcribes tRNA, 5S rRNA, and small RNAs.",
+tip:"Pol I = rRNA (big). Pol II = mRNA (message). Pol III = tRNA (transport). Remember: 1-rRNA, 2-mRNA, 3-tRNA.",
+trick:"Trick: rRNA is the most ABUNDANT RNA (>80%) so students think Pol I makes mRNA (most important). But abundance ≠ mRNA. Pol II = mRNA. Pol I = rRNA (28S, 18S, 5.8S — the large ribosomal ones)."},
+
+{q:"Which technique uses thermal cycling to amplify DNA?", opts:["Southern blotting","PCR","Gel electrophoresis","DNA fingerprinting"], ans:1, diff:"easy", chapter:"Biotechnology: Principles and Processes", pyq:"NEET 2018",
+exp:"PCR (Polymerase Chain Reaction) uses repeated cycles of: (1) Denaturation at 94°C, (2) Annealing of primers at ~55°C, (3) Extension at 72°C by Taq polymerase. DNA fingerprinting uses PCR as a component.",
+tip:"PCR = in vitro DNA amplification. Taq polymerase = thermostable (from Thermus aquaticus). Invented by Kary Mullis.",
+trick:"Trick: DNA fingerprinting USES PCR as a step but is not PCR itself. Southern blotting uses gel electrophoresis but is a separate technique. The question asks specifically about thermal cycling amplification = PCR only."},
+
+{q:"Restriction endonucleases cut DNA at:", opts:["Any random site","Specific palindromic sequences","Only at gene ends","AT-rich regions only"], ans:1, diff:"easy", chapter:"Biotechnology: Principles and Processes", pyq:"NEET 2016",
+exp:"Restriction endonucleases recognize specific palindromic sequences (read same on both strands 5'→3') and cut at or near these sites. E.g., EcoRI cuts at G↓AATTC. They produce sticky ends or blunt ends.",
+tip:"Restriction enzyme = molecular scissors. Cut at palindromic sequences. EcoRI = EcoRI cuts GAATTC (classic exam sequence).",
+trick:"Trick: Restriction enzymes don't cut at AT-rich regions (that's a different concept). They cut at specific palindromic sequences regardless of AT/GC content. GAATTC = EcoRI site — 6 base palindrome."},
+
+{q:"The first recombinant DNA molecule was created by:", opts:["Kary Mullis","Stanley Cohen and Herbert Boyer","Watson and Crick","Frederick Sanger"], ans:1, diff:"medium", chapter:"Biotechnology: Principles and Processes", pyq:"NEET 2015",
+exp:"Stanley Cohen and Herbert Boyer (1972) created the first recombinant DNA molecule using EcoRI to cut two plasmids and join them using DNA ligase. This is the foundation of recombinant DNA technology.",
+tip:"Cohen + Boyer = first rDNA. Boyer also co-founded Genentech. Kary Mullis = PCR.",
+trick:"Trick: Watson and Crick are famous DNA scientists — they discovered double helix structure, not rDNA technology. Kary Mullis invented PCR. Frederick Sanger = DNA sequencing. Match scientists to their SPECIFIC contribution."},
+
+// ── EVOLUTION ──
+{q:"Hardy-Weinberg principle states that allele frequencies in a population remain constant when:", opts:["Natural selection operates","Random mating occurs with no evolutionary forces","Genetic drift operates","Migration occurs"], ans:1, diff:"medium", chapter:"Evolution", pyq:"NEET 2015, 2019",
+exp:"Hardy-Weinberg equilibrium requires: (1) large population, (2) random mating, (3) no mutation, (4) no gene flow, (5) no natural selection. Any violation = evolution is occurring.",
+tip:"HWE = p² + 2pq + q² = 1. Violations = evolutionary forces. Real populations always violate HWE somewhat.",
+trick:"Trick: Large population alone is not sufficient — ALL five conditions must be met simultaneously. Students often think \"no natural selection\" alone = HWE. It requires ALL: large pop + random mating + no mutation + no migration + no selection."},
+
+{q:"Which of the following is an example of convergent evolution?", opts:["Forelimbs of horse and human","Wings of bat and bird","Vertebrate eye and octopus eye","All of the above"], ans:2, diff:"medium", chapter:"Evolution", pyq:"NEET 2018",
+exp:"Convergent evolution = unrelated lineages evolving similar structures (analogous structures) due to similar selective pressures. Vertebrate eye and octopus eye are classic. Wings of bat and bird = analogous BUT share common ancestor → more accurately parallel evolution. Forelimbs = homologous = divergent evolution.",
+tip:"Convergent = analogous structures (different ancestry, similar function). Divergent = homologous (same ancestry, different function).",
+trick:"Trick: Bat wings and bird wings share a common ancestor (both vertebrates) — technically parallel evolution, not pure convergent evolution. The BEST example of convergent evolution is vertebrate eye vs octopus eye (no common ancestor with camera eyes)."},
+
+{q:"Industrial melanism in peppered moths is an example of:", opts:["Genetic drift","Natural selection","Founder effect","Mutation"], ans:1, diff:"easy", chapter:"Evolution", pyq:"NEET 2014, 2019",
+exp:"Before industrialization: light-colored Biston betularia survived (camouflaged on light bark). After: dark (melanic) moths had better survival (industrial soot darkened bark). This directional natural selection shifted allele frequency — direct proof of evolution.",
+tip:"Industrial melanism = Natural selection in action. Directional selection. Anti-evolution creationists' nightmare.",
+trick:"Trick: This could be confused with mutation (dark moths appeared by mutation) or genetic drift (random change). But the SELECTION of pre-existing dark moths by changed environment = directional natural selection. Mutation creates variation; selection acts on it."},
+
+{q:"Which era is known as the 'Age of Reptiles'?", opts:["Paleozoic","Mesozoic","Cenozoic","Proterozoic"], ans:1, diff:"easy", chapter:"Evolution", pyq:"NEET 2016",
+exp:"Mesozoic era (252–66 MYA) = Age of Reptiles (dominated by dinosaurs, pterosaurs, marine reptiles). Paleozoic = fishes, amphibians. Cenozoic = Age of Mammals. Proterozoic = first eukaryotes.",
+tip:"Meso = Middle era = 'age of dinosaurs'. Paleo = Old (fish, amphibians). Ceno = New (mammals, us).",
+trick:"Trick: Cenozoic = present era but doesn't mean it has all the animals. Mesozoic = 252–66 MYA = reptiles. Cenozoic = 66 MYA–present = mammals. Proterozoic sounds ancient and biological (proto = first) but it predates complex animals."},
+
+{q:"Analogous organs have:", opts:["Same origin, different function","Different origin, same function","Same origin, same function","Different origin, different function"], ans:1, diff:"easy", chapter:"Evolution", pyq:"NEET 2014, 2018",
+exp:"Analogous organs: different evolutionary origin but similar function due to convergent evolution. Example: wings of insects and birds, thorns of Bougainvillea and tendrils of Cucurbita. Homologous = same origin, different function.",
+tip:"Analogous = Adapted similarly (function-based). Homologous = History-based (structure/origin).",
+trick:"Trick: \"Same function = analogous\" and \"same origin = homologous.\" Forelimbs of horse and human = HOMOLOGOUS (same bone pattern: humerus, radius, ulna), different function. Wings of bat vs bird = homologous bones, analogous structure. Don't just go by function."},
+
+// ── HUMAN PHYSIOLOGY ──
+{q:"The pacemaker of the heart is:", opts:["AV node","Purkinje fibres","SA node","Bundle of His"], ans:2, diff:"easy", chapter:"Body Fluids and Circulation", pyq:"NEET 2013, 2017",
+exp:"SA node (Sinoatrial node) in the right atrium generates 70-75 action potentials/min, setting heart rate → pacemaker. Order of conduction: SA node → AV node → Bundle of His → Purkinje fibres.",
+tip:"SA node = pacemaker = sets rhythm (sinoatrial = sinus rhythm). AV node = gateway to ventricles.",
+trick:"Trick: AV node sounds like it could be the pacemaker since it's the \"gateway.\" AV node has an intrinsic rate of 40-60 bpm (backup). SA node = 70-75 bpm (primary). The fastest pacemaker controls the heart rate."},
+
+{q:"During which phase of the cardiac cycle are both valves closed?", opts:["Atrial systole","Ventricular diastole","Isovolumetric contraction","Ventricular filling"], ans:2, diff:"hard", chapter:"Body Fluids and Circulation", pyq:"NEET 2019",
+exp:"During isovolumetric contraction (early ventricular systole), both atrioventricular valves (mitral, tricuspid) and semilunar valves are closed. Ventricles contract but volume doesn't change until pressure exceeds aortic/pulmonary pressure.",
+tip:"Isovolumetric = volume constant. Both valves closed = pressure builds. Classic 'trick' NEET question.",
+trick:"Trick: This is a hard question because \"both valves closed\" is counterintuitive — you expect at least one valve to be open during contraction. During ISOVOLUMETRIC contraction, the ventricle is building pressure before any valve opens. Classic NEET trap."},
+
+{q:"Which of the following is NOT a function of blood plasma proteins?", opts:["Osmotic regulation","Transport of hormones","Clotting of blood","Oxygen transport by hemoglobin"], ans:3, diff:"easy", chapter:"Body Fluids and Circulation", pyq:"NEET 2016",
+exp:"Hemoglobin is in RBCs (not plasma). Plasma proteins: albumin (osmotic pressure/transport), globulins (antibodies/transport), fibrinogen (clotting). O₂ transport is by hemoglobin in RBCs, not plasma proteins.",
+tip:"Plasma = fluid part. Serum = plasma minus clotting factors. Plasma proteins don't carry O₂ — Hb does (inside RBC).",
+trick:"Trick: Hemoglobin is a PROTEIN but it's inside RBCs, not dissolved in plasma. Question asks about PLASMA proteins specifically. Albumin (transport), fibrinogen (clotting), globulins (antibodies) — none carry O₂."},
+
+{q:"The exchange of gases in the lungs occurs at the:", opts:["Bronchioles","Alveoli","Bronchi","Trachea"], ans:1, diff:"easy", chapter:"Breathing and Exchange of Gases", pyq:"NEET 2013",
+exp:"Alveoli are the site of gas exchange — thin squamous epithelium with rich capillary network allows diffusion of O₂ into blood and CO₂ out. Human lungs have ~300-700 million alveoli, providing huge surface area (~70 m²).",
+tip:"Alveoli = functional unit of lung. Gas exchange = diffusion across alveolar membrane. Area ≈ 70 m² (tennis court).",
+trick:"Trick: Bronchioles reach deep into the lung and students think they're the exchange site. Bronchioles = airways (conduction zone). Gas exchange ONLY at alveoli (respiratory zone). Bronchioles have no alveoli attached."},
+
+{q:"Which of the following carries CO₂ in the maximum amount in blood?", opts:["Dissolved in plasma","Carbaminohemoglobin","Bicarbonate ions (HCO₃⁻)","Oxyhemoglobin"], ans:2, diff:"medium", chapter:"Breathing and Exchange of Gases", pyq:"NEET 2015, 2018",
+exp:"CO₂ transport: ~70% as HCO₃⁻ (bicarbonate) in plasma — formed by carbonic anhydrase in RBCs. ~20-23% as carbaminohemoglobin (bound to Hb). ~7% dissolved in plasma.",
+tip:"CO₂ transport: 70% bicarbonate, 23% carbamate, 7% dissolved. 70-23-7 is the classic NEET trio.",
+trick:"Trick: Students assume CO₂ is carried like O₂ (bound to hemoglobin). Most CO₂ travels as HCO₃⁻ in plasma. Carbaminohemoglobin (CO₂ bound to Hb) = only 23%. O₂ and CO₂ use different transport mechanisms."},
+
+{q:"The enzyme responsible for conversion of fibrinogen to fibrin during clotting is:", opts:["Thrombin","Prothrombin","Thromboplastin","Factor X"], ans:0, diff:"medium", chapter:"Body Fluids and Circulation", pyq:"NEET 2017",
+exp:"Thrombin (serine protease) cleaves fibrinogen (soluble) → fibrin (insoluble mesh). Thrombin itself is derived from prothrombin (zymogen) by prothrombinase complex. Fibrin network traps blood cells → clot.",
+tip:"Clotting cascade: Prothrombin → (Thrombin) → Fibrinogen → Fibrin → Clot. Two conversions, remember both.",
+trick:"Trick: Prothrombin and thrombin sound like the same thing — students pick prothrombin. Prothrombin = INACTIVE precursor. Thrombin = ACTIVE enzyme. Prothrombinase converts prothrombin → thrombin. Then thrombin converts fibrinogen → fibrin."},
+
+{q:"Which type of nephrotic cells are involved in reabsorption in the kidney?", opts:["JG cells","Macula densa cells","Podocytes","Epithelial cells of PCT"], ans:3, diff:"medium", chapter:"Excretory Products and Their Elimination", pyq:"NEET 2017",
+exp:"PCT (Proximal Convoluted Tubule) epithelial cells are the primary site of reabsorption (glucose, amino acids, Na⁺, water). PCT reabsorbs ~70-80% of filtrate. Podocytes form filtration slits in Bowman's capsule.",
+tip:"PCT = maximum reabsorption. DCT = selective reabsorption. Loop of Henle = concentration gradient. Collecting duct = final concentration.",
+trick:"Trick: All options sound like they could be involved in kidney function. JG cells = renin secretion (blood pressure regulation). Macula densa = salt sensing. Podocytes = filtration. PCT epithelial cells = reabsorption. Match cell type to function."},
+
+{q:"The functional unit of kidney is:", opts:["Glomerulus","Nephron","Bowman's capsule","Loop of Henle"], ans:1, diff:"easy", chapter:"Excretory Products and Their Elimination", pyq:"NEET 2013",
+exp:"Nephron is the functional unit of kidney. Each human kidney has ~1 million nephrons. Nephron = Bowman's capsule + glomerulus + PCT + Loop of Henle + DCT. Collecting duct is shared.",
+tip:"Nephron = functional unit (kidney). Sarcomere = functional unit (muscle). Neuron = functional unit (nervous system).",
+trick:"Trick: Glomerulus is the filtration unit but it's only a PART of the nephron. The full functional unit includes glomerulus + tubules = nephron. Don't confuse the part with the whole."},
+
+{q:"Which of the following neurotransmitter is released at the neuromuscular junction?", opts:["Dopamine","Serotonin","Acetylcholine","Norepinephrine"], ans:2, diff:"easy", chapter:"Neural Control and Coordination", pyq:"NEET 2014",
+exp:"Acetylcholine (ACh) is released at the neuromuscular junction (skeletal muscle). Also at parasympathetic synapses. ACh binds nicotinic receptors (NMJ) or muscarinic receptors (smooth muscle, glands).",
+tip:"NMJ = Acetylcholine always. Cholinergic (ACh) vs Adrenergic (norepinephrine). ACh can be excitatory or inhibitory.",
+trick:"Trick: Norepinephrine (adrenergic) is released at sympathetic synapses and is associated with the \"fight or flight\" response. Students link adrenaline/norepinephrine with muscles. NMJ = ALWAYS acetylcholine (cholinergic), regardless of muscle type."},
+
+{q:"Which part of the brain regulates body temperature?", opts:["Cerebellum","Medulla oblongata","Hypothalamus","Thalamus"], ans:2, diff:"easy", chapter:"Neural Control and Coordination", pyq:"NEET 2016",
+exp:"Hypothalamus is the 'thermostat' of the body — regulates temperature, hunger, thirst, circadian rhythms, and hormone secretion. Medulla = involuntary functions (breathing, heart rate). Cerebellum = balance/coordination.",
+tip:"Hypothalamus = master regulator. Controls pituitary → master gland. Also controls hunger, thirst, temperature, circadian rhythm.",
+trick:"Trick: Medulla oblongata controls many vital functions (breathing, heart rate) so it sounds like the body's control center. But temperature regulation specifically = hypothalamus. Medulla = autonomic, Hypothalamus = homeostasis."},
+
+{q:"The hormone that promotes milk ejection (let-down reflex) is:", opts:["Prolactin","Estrogen","Oxytocin","Progesterone"], ans:2, diff:"medium", chapter:"Chemical Coordination and Integration", pyq:"NEET 2018",
+exp:"Oxytocin (posterior pituitary) causes milk ejection by stimulating myoepithelial cells. Prolactin (anterior pituitary) stimulates milk production. Also: oxytocin causes uterine contractions during labor.",
+tip:"Oxytocin = Milk ejection + Uterine contraction (let-down + labor). Prolactin = Milk PRODUCTION (not ejection).",
+trick:"Trick: Prolactin and oxytocin both relate to milk — prolactin for PRODUCTION, oxytocin for EJECTION (let-down). Progesterone maintains pregnancy but doesn't cause milk ejection. The \"let-down reflex\" = oxytocin specifically."},
+
+{q:"Addison's disease is caused by:", opts:["Hypersecretion of cortisol","Hyposecretion of adrenal cortex hormones","Hypersecretion of aldosterone","Hyposecretion of epinephrine"], ans:1, diff:"medium", chapter:"Chemical Coordination and Integration", pyq:"NEET 2015",
+exp:"Addison's disease = deficiency of adrenal cortex hormones (cortisol + aldosterone). Symptoms: hyperpigmentation, hypotension, fatigue, hyponatremia. Cushing's syndrome = excess cortisol.",
+tip:"Addison = ADrenal Deficiency (ADD). Cushing = Cortisol excess (C=Cortisol, C=Cushing).",
+trick:"Trick: Both Addison's and Cushing's involve cortisol — one too little, one too much. Addison = hypopigmentation? No — HYPER-pigmentation (MSH increases to compensate for low cortisol). This counter-intuitive fact is a NEET trap."},
+
+// ── REPRODUCTION ──
+{q:"Which of the following is NOT correctly matched?", opts:["Corpus luteum — Progesterone","FSH — Follicle stimulation","LH surge — Ovulation","Estrogen — Corpus luteum formation"], ans:3, diff:"hard", chapter:"Reproductive Health", pyq:"NEET 2019",
+exp:"Estrogen is produced by the developing follicle (granulosa cells), not the corpus luteum. The LH surge triggers ovulation; the ruptured follicle then forms the corpus luteum which produces progesterone (+ some estrogen).",
+tip:"Follicle → Estrogen. Corpus luteum → Progesterone. LH surge → Ovulation → Corpus luteum formation.",
+trick:"Trick: The question asks what is NOT correctly matched. Estrogen is produced by follicle (granulosa cells), not corpus luteum. Students assume corpus luteum = estrogen because CL forms after ovulation. CL = progesterone primarily."},
+
+{q:"Spermatogenesis occurs in:", opts:["Sertoli cells","Seminiferous tubules","Epididymis","Vas deferens"], ans:1, diff:"easy", chapter:"Human Reproduction", pyq:"NEET 2014",
+exp:"Spermatogenesis (formation of sperm) occurs in the seminiferous tubules of the testis. Sertoli cells (nurse cells) support spermatogenesis. Epididymis = sperm maturation + storage. Vas deferens = transport.",
+tip:"Seminiferous tubules = sperm factory. Sertoli = support. Epididymis = maturation. Interstitial (Leydig) cells = testosterone.",
+trick:"Trick: Sertoli cells are IN the seminiferous tubules but are not the site of sperm production — they SUPPORT it. Spermatogenesis happens in the germinal epithelium of seminiferous tubules, with Sertoli cell support."},
+
+{q:"Which of the following is the correct sequence of events in female reproductive cycle?", opts:["Ovulation → Menstruation → Proliferative → Secretory","Menstruation → Proliferative → Ovulation → Secretory","Proliferative → Ovulation → Secretory → Menstruation","Secretory → Ovulation → Proliferative → Menstruation"], ans:1, diff:"medium", chapter:"Human Reproduction", pyq:"NEET 2016",
+exp:"Menstrual cycle sequence: Menstruation (1-5 days) → Proliferative/Follicular phase (6-13 days, estrogen) → Ovulation (day 14, LH surge) → Secretory/Luteal phase (15-28 days, progesterone) → Menstruation again.",
+tip:"M-P-O-S: Menstruation → Proliferative → Ovulation → Secretory. 28-day cycle.",
+trick:"Trick: The order of phases is frequently asked. Proliferative phase comes BEFORE ovulation (it's when the follicle grows under estrogen). Secretory/luteal phase is AFTER ovulation (corpus luteum, progesterone). Don't swap proliferative and secretory."},
+
+{q:"Cu-T (copper-T) acts as a contraceptive by:", opts:["Preventing fertilization and implantation","Killing sperm by copper ions and blocking implantation","Preventing ovulation","Causing hormonal changes"], ans:1, diff:"medium", chapter:"Reproductive Health", pyq:"NEET 2017",
+exp:"Copper ions from Cu-T are spermicidal (kill sperm). The IUD also creates a hostile endometrial environment preventing implantation. It does NOT prevent ovulation.",
+tip:"Cu-T = IUD. Two mechanisms: Cu ions kill sperm + prevents implantation. NOT hormonal.",
+trick:"Trick: Students assume Cu-T prevents ovulation (like hormonal pills). It does NOT prevent ovulation — copper ions are spermicidal and it creates hostile uterine environment. Completely different mechanism from OCP."},
+
+// ── HUMAN HEALTH AND DISEASE ──
+{q:"Which blood group is called 'Universal donor'?", opts:["A","B","O","AB"], ans:2, diff:"easy", chapter:"Human Health and Disease", pyq:"NEET 2013",
+exp:"Blood group O (O negative, RhD-) is the universal donor — no A or B antigens on RBCs, so no antibody reaction. Blood group AB is universal recipient (has both antigens, no antibodies).",
+tip:"O = dOnOr (two O's in dOnOr). AB = universal recipient (A+B = All, accepts Both).",
+trick:"Trick: O positive (not O negative) is the most common blood type (~38% of people). Universal DONOR = O NEGATIVE (no ABO antigens, no Rh antigen). For emergency use, O negative packed RBCs are given. Don't just say 'O' — O negative specifically."},
+
+{q:"AIDS is caused by HIV, which primarily attacks:", opts:["B-lymphocytes","T-helper cells (CD4+ cells)","Macrophages only","NK cells"], ans:1, diff:"easy", chapter:"Human Health and Disease", pyq:"NEET 2015, 2018",
+exp:"HIV (Human Immunodeficiency Virus) preferentially infects T-helper cells (CD4+ T lymphocytes) using gp120 protein to bind CD4 receptors. Loss of these cells → immunodeficiency → opportunistic infections.",
+tip:"HIV → CD4+ T cells → Immunodeficiency. CD4 count <200/μL = AIDS diagnosis. CD4 = 'Cluster of Destruction 4'.",
+trick:"Trick: HIV affects macrophages too (for initial entry and reservoir), but the PRIMARY target is CD4+ T cells. Loss of CD4+ cells = AIDS. CD4 count is the clinical measure of HIV progression."},
+
+{q:"Widal test is done to diagnose:", opts:["Malaria","Typhoid","AIDS","Cholera"], ans:1, diff:"easy", chapter:"Human Health and Disease", pyq:"NEET 2017",
+exp:"Widal test detects antibodies against Salmonella typhi (O and H antigens) in blood → diagnoses typhoid fever. ELISA = AIDS. Rapid antigen test = malaria. Cholera diagnosed by stool culture.",
+tip:"Widal = Typhoid. ELISA = HIV. Mantoux = Tuberculosis. Remember: diagnostic tests are NEET favorites.",
+trick:"Trick: Multiple diagnostic tests are high-yield NEET material. Widal = Salmonella typhi antibodies = Typhoid. Don't confuse: ELISA = HIV, Mantoux = TB, VDRL = syphilis. Each disease has a specific named test."},
+
+{q:"Histamine, which causes allergic reactions, is released by:", opts:["Neutrophils","Mast cells","Lymphocytes","Basophils (in blood)"], ans:1, diff:"medium", chapter:"Human Health and Disease", pyq:"NEET 2019",
+exp:"Mast cells (in tissue) and basophils (in blood) release histamine during allergic reactions. IgE antibodies on mast cell surface bind antigen → degranulation → histamine release → allergic symptoms.",
+tip:"IgE → Mast cell → Histamine → Allergy. Antihistamines block histamine receptors. Mast cells = tissue, Basophils = blood.",
+trick:"Trick: Neutrophils are the most common WBCs and are involved in inflammation — students pick them. But histamine is specifically from mast cells (tissue) and basophils (blood). Neutrophils release different mediators."},
+
+// ── ECOLOGY ──
+{q:"Which type of interaction benefits one organism without affecting the other?", opts:["Mutualism","Commensalism","Parasitism","Amensalism"], ans:1, diff:"easy", chapter:"Organisms and Populations", pyq:"NEET 2015",
+exp:"Commensalism (+/0): one organism benefits, the other is neither helped nor harmed. Example: Orchid on tree (epiphyte). Mutualism (+/+). Parasitism (+/-). Amensalism (0/-) — one inhibited, other unaffected.",
+tip:"NEET table: (+/+)=Mutualism, (+/0)=Commensalism, (+/-)=Parasitism, (0/-)=Amensalism, (-/-)=Competition.",
+trick:"Trick: Amensalism (0/-) and commensalism (+/0) look like mirror images. In commensalism: one gains, one is neutral. In amensalism: one is harmed, one is neutral. The neutral organism is different in each — in commensalism it's the host, in amensalism it's the inhibitor."},
+
+{q:"The full form of IUCN is:", opts:["International Unit for Conservation of Nature","International Union for Conservation of Nature","Indian Union for Conservation of Nature","International Union for Conservation of Nutrients"], ans:1, diff:"easy", chapter:"Biodiversity and Conservation", pyq:"NEET 2014",
+exp:"IUCN = International Union for Conservation of Nature. Maintains the Red List of Threatened Species. Categories: Extinct (EX), Extinct in Wild (EW), Critically Endangered (CR), Endangered (EN), Vulnerable (VU).",
+tip:"IUCN Red List categories: EX → EW → CR → EN → VU → NT → LC. Know the full form exactly.",
+trick:"Trick: IUCN = International, not Indian. The full form matters in NEET. Also know the hierarchy: CR (Critically Endangered) is more threatened than EN (Endangered) which is more than VU (Vulnerable)."},
+
+{q:"Which of the following is a pyramid of energy that is always upright?", opts:["Pyramid of biomass in sea","Pyramid of numbers in a tree ecosystem","Pyramid of energy","Pyramid of biomass in grassland only"], ans:2, diff:"medium", chapter:"Ecosystem", pyq:"NEET 2018",
+exp:"Pyramid of energy is ALWAYS upright (never inverted) because energy decreases at each trophic level (~10% rule, Lindeman's law). Pyramids of numbers and biomass can be inverted (e.g., tree ecosystem).",
+tip:"Energy pyramid = ALWAYS upright. Numbers pyramid = can invert (tree). Biomass in aquatic = inverted (phytoplankton small, but high turnover).",
+trick:"Trick: Biomass pyramid in aquatic ecosystem is INVERTED (phytoplankton have small biomass but high turnover). Numbers pyramid in tree ecosystem = inverted (one tree supports many insects). Energy pyramid = NEVER inverted. This distinction is NEET gold."},
+
+{q:"The percentage of energy transferred from one trophic level to the next is approximately:", opts:["1%","10%","50%","90%"], ans:1, diff:"easy", chapter:"Ecosystem", pyq:"NEET 2013, 2017",
+exp:"Ten percent law (Lindeman, 1942): only ~10% of energy at one trophic level is transferred to the next. Remaining 90% lost as heat, respiration, decomposition. This limits food chains to 4-5 levels.",
+tip:"10% law = Lindeman. 1000J → 100J → 10J → 1J across trophic levels. 90% lost as heat each step.",
+trick:"Trick: Students confuse 10% with other ecological numbers. 10% = energy transfer efficiency (Lindeman). Pyramid of energy always uses this. Don't confuse with biomass or numbers pyramids — they follow different patterns."},
+
+{q:"Ozone layer is present in:", opts:["Troposphere","Stratosphere","Mesosphere","Thermosphere"], ans:1, diff:"easy", chapter:"Environmental Issues", pyq:"NEET 2016",
+exp:"Ozone (O₃) layer is present in the stratosphere, 15-35 km above Earth. Absorbs harmful UV-B and UV-C radiation. Depleted by CFCs (chlorofluorocarbons) and other halogenated compounds.",
+tip:"Troposphere = weather. Stratosphere = ozone layer. Mesosphere = meteors burn. Thermosphere = auroras.",
+trick:"Trick: Ozone is found in the stratosphere, not the troposphere (where we live). Tropospheric ozone = pollutant (bad). Stratospheric ozone = UV shield (good). Same molecule, different altitude = completely different role."},
+
+{q:"Biodiversity hotspots are characterized by:", opts:["High species richness and high endemism","Low species richness with high threat","High species richness with low endemism","Any region with forests"], ans:0, diff:"medium", chapter:"Biodiversity and Conservation", pyq:"NEET 2015, 2019",
+exp:"Biodiversity hotspots (Norman Myers, 1988) must have: (1) ≥1500 endemic plant species, (2) lost ≥70% of original habitat. India has 4 hotspots: Western Ghats + Sri Lanka, Eastern Himalaya, Indo-Burma, Sundaland.",
+tip:"Hotspot criteria: HIGH endemism + HIGH threat (habitat loss). India's 4 hotspots memorize by WEIS: Western Ghats, Eastern Himalaya, Indo-Burma, Sundaland.",
+trick:"Trick: High species richness alone doesn't make a hotspot. The key criteria are: >1500 endemic plant species AND >70% habitat loss. The COMBINATION of diversity AND threat defines a hotspot."},
+
+{q:"Which of the following is an example of in situ conservation?", opts:["Zoological park","Botanical garden","National park","Seed bank"], ans:2, diff:"easy", chapter:"Biodiversity and Conservation", pyq:"NEET 2017",
+exp:"In situ = conservation in natural habitat. Includes: national parks, wildlife sanctuaries, biosphere reserves, sacred groves. Ex situ = away from natural habitat: zoos, botanical gardens, seed banks, culture collections.",
+tip:"In situ = In natural place. Ex situ = Extracted from nature. National park = in situ. Zoo = ex situ.",
+trick:"Trick: \"National park\" sounds artificial (human-made boundaries), so students might pick zoo as in situ. But in situ = natural habitat conservation regardless of human management. Zoos = captive = ex situ always."},
+
+// ── ADDITIONAL HIGH-YIELD QUESTIONS ──
+{q:"Which tissue is responsible for secondary growth in plants?", opts:["Apical meristem","Lateral meristem (Cambium)","Intercalary meristem","Pericycle"], ans:1, diff:"easy", chapter:"Anatomy of Flowering Plants", pyq:"NEET 2014",
+exp:"Lateral meristems (vascular cambium + cork cambium) cause secondary growth — increase in girth. Apical meristem = primary growth (length). Intercalary = grasses (regrowth after grazing).",
+tip:"Primary growth = length (apical). Secondary growth = girth (lateral/cambium). Monocots lack cambium → no secondary growth.",
+trick:"Trick: Intercalary meristem sounds like it could cause girth (it's \"in between\"). It actually causes elongation at the base of internodes in grasses. Only LATERAL meristems = secondary growth/girth."},
+
+{q:"Phloem in angiosperms consists of:", opts:["Sieve tube elements and companion cells","Sieve cells only","Tracheids and vessel elements","Fibers and sclereids"], ans:0, diff:"easy", chapter:"Anatomy of Flowering Plants", pyq:"NEET 2013",
+exp:"Phloem in angiosperms: Sieve tube elements (enucleate, for transport) + Companion cells (nucleate, metabolic support) + Phloem fibers + Phloem parenchyma. Gymnosperm phloem has sieve cells (no companion cells).",
+tip:"Angiosperm phloem = Sieve tubes + Companion cells. Xylem = Vessels + Tracheids + Xylem fibers.",
+trick:"Trick: Gymnosperm phloem = sieve CELLS (not sieve tube elements) and has no companion cells (has albuminous cells instead). Angiosperm vs gymnosperm phloem is a specific NEET distinction."},
+
+{q:"The phenomenon where a single gene controls more than one character is called:", opts:["Codominance","Pleiotropy","Polygeny","Epistasis"], ans:1, diff:"medium", chapter:"Principles of Inheritance", pyq:"NEET 2017",
+exp:"Pleiotropy: one gene → multiple phenotypic effects. Example: PKU (phenylalanine metabolism gene → intellectual disability + reduced pigmentation). Sickle cell disease (one gene → anemia + malaria resistance).",
+tip:"Pleiotropy = one gene, MANY effects. Polygeny = MANY genes, one trait. Epistasis = one gene masks another.",
+trick:"Trick: Polygeny (multiple genes → one trait) is the opposite of pleiotropy (one gene → multiple traits). Epistasis = interaction between genes where one masks the other. Three distinct genetic phenomena, often confused."},
+
+{q:"In which structure does fertilization occur in humans?", opts:["Uterus","Fallopian tube (Ampullary-isthmic junction)","Cervix","Ovary"], ans:1, diff:"easy", chapter:"Human Reproduction", pyq:"NEET 2014, 2018",
+exp:"Fertilization occurs in the ampullary-isthmic junction of the fallopian tube (uterine tube/oviduct). The fertilized egg (zygote) then undergoes cleavage while traveling to the uterus for implantation (6-7 days after fertilization).",
+tip:"Fertilization = ampullary-isthmic junction (fallopian tube). Implantation = uterus (endometrium). 6-7 days for implantation.",
+trick:"Trick: The uterus seems like the most important reproductive organ so students say fertilization occurs there. It doesn't — implantation does. Fertilization happens in the fallopian tube. Ectopic pregnancy = fertilization and implantation outside uterus."},
+
+{q:"Which hormone is measured in a home pregnancy test?", opts:["LH","Progesterone","hCG (human Chorionic Gonadotropin)","Estrogen"], ans:2, diff:"easy", chapter:"Human Reproduction", pyq:"NEET 2018",
+exp:"hCG is produced by the trophoblast (later placenta) after implantation — detectable in urine ~10 days after fertilization. It maintains corpus luteum (which produces progesterone to maintain pregnancy). Pregnancy tests detect hCG.",
+tip:"hCG = pregnancy hormone. Trophoblast → Placenta produces it. Maintains corpus luteum → progesterone → no menstruation.",
+trick:"Trick: LH and hCG are structurally similar (both glycoproteins with similar alpha subunit). LH triggers ovulation; hCG maintains corpus luteum after fertilization. Pregnancy tests detect hCG, not LH or progesterone."},
+
+{q:"Which of the following is NOT a method of vegetative reproduction?", opts:["Budding in Hydra","Runner in grasses","Rhizome in ginger","Seed germination"], ans:3, diff:"easy", chapter:"Sexual Reproduction in Flowering Plants", pyq:"NEET 2013",
+exp:"Seed germination is sexual reproduction (involves seeds produced by fertilization). Budding (Hydra), runners (grasses), rhizomes (ginger), tubers (potato), bulbs (onion) are all vegetative/asexual reproduction.",
+tip:"Vegetative = asexual, no gametes, no fertilization. Any structure that's not a seed = likely vegetative reproduction.",
+trick:"Trick: Budding in Hydra sounds like it could be sexual (buds look like new organisms). It's asexual — no gametes involved. Seed germination is often listed with vegetative examples as a trick option."},
+
+{q:"Which of the following is the site of light-dependent reactions in chloroplast?", opts:["Stroma","Outer membrane","Thylakoid membrane","Intermembrane space"], ans:2, diff:"easy", chapter:"Photosynthesis", pyq:"NEET 2015",
+exp:"Light reactions occur on the thylakoid membrane: photosystems (PS-I, PS-II), ETC, ATP synthase (CF₀-CF₁). Products: ATP, NADPH, O₂. These then drive Calvin cycle in the stroma.",
+tip:"Thylakoid = light reactions (water splitting, ATP, NADPH). Stroma = dark reactions (CO₂ fixation, Calvin cycle).",
+trick:"Trick: Both chloroplast compartments (stroma and thylakoid) are involved in photosynthesis. The key is which SPECIFIC reactions occur where. Light reactions = thylakoid membrane (not just inside thylakoid — the MEMBRANE itself)."},
+
+{q:"ECG is a graphical representation of:", opts:["Brain activity","Electrical activity of heart","Muscle contraction","Blood pressure"], ans:1, diff:"easy", chapter:"Body Fluids and Circulation", pyq:"NEET 2016",
+exp:"ECG (Electrocardiogram) records electrical activity of the heart. P wave = atrial depolarization. QRS complex = ventricular depolarization. T wave = ventricular repolarization. Used to detect cardiac arrhythmias.",
+tip:"ECG: P = atrial depolarization. QRS = ventricular depolarization. T = ventricular repolarization. EEG = brain activity.",
+trick:"Trick: ECG measures ELECTRICAL activity, not mechanical contraction. P wave = electrical trigger for atrial contraction (not the contraction itself). T wave = ventricular repolarization (not contraction). QRS = ventricular depolarization."},
+
+{q:"Which of the following is an example of Batesian mimicry?", opts:["Monarch and Viceroy butterflies","Two poisonous frogs with similar coloring","Owl's large eyes pattern on wings of moth","Harmless species resembling a poisonous species"], ans:3, diff:"hard", chapter:"Organisms and Populations", pyq:"NEET 2019",
+exp:"Batesian mimicry: harmless species mimics a dangerous/unpalatable species. Monarch-Viceroy = previously called Batesian (both are actually unpalatable = Müllerian). True Batesian: King snake (harmless) mimics Coral snake (venomous).",
+tip:"Batesian = harmless mimics harmful. Müllerian = two harmful species both advertise (both toxic). Both fool predators.",
+trick:"Trick: Monarch-Viceroy was the textbook Batesian example but is now reclassified as Müllerian (both are unpalatable). NEET may still use old classification. The cleanest Batesian example = harmless king snake mimics venomous coral snake."},
+
+{q:"DNA is a double helix because:", opts:["Each strand is coiled separately","Two strands are antiparallel and complementary, held by H-bonds","It has more G than A","It is right-handed only"], ans:1, diff:"easy", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2014",
+exp:"Watson-Crick model (1953): two antiparallel polynucleotide chains, held together by H-bonds (A=T: 2 bonds, G≡C: 3 bonds), with base pairs inside and sugar-phosphate backbone outside. Right-handed B-form is predominant.",
+tip:"Double helix keys: antiparallel (5'→3' and 3'→5'), complementary base pairing (A=T, G≡C), H-bonds. Width = 2 nm, pitch = 3.4 nm, 10 bp per turn.",
+trick:"Trick: Option D (right-handed only) is tempting since B-DNA is right-handed. But Z-DNA is left-handed — so 'right-handed only' is false. The correct reason for double helix structure is antiparallel complementary strands held by H-bonds. Also GC = 3 H-bonds, AT = 2 H-bonds — more GC = higher melting temperature."},
+
+{q:"Biodiversity loss is primarily caused by:", opts:["Natural disasters","Habitat loss and fragmentation","Predation","Climate change alone"], ans:1, diff:"easy", chapter:"Biodiversity and Conservation", pyq:"NEET 2018",
+exp:"The HIPPO acronym: Habitat loss and fragmentation is the #1 cause of biodiversity loss globally. Followed by: Invasive species, Pollution, Population growth (human), and Over-exploitation. 'Evil quartet' (Diamond): habitat loss, overexploitation, invasives, co-extinctions.",
+tip:"HIPPO = Habitat loss (most critical), Invasive species, Pollution, Population, Over-exploitation. Habitat loss = #1.",
+trick:"Trick: Climate change gets the most news coverage so students default to it. But habitat loss is the leading DIRECT cause of current biodiversity loss globally. Climate change amplifies existing threats but is not yet ranked #1 in standard NEET biology answers."},
+
+{q:"Which of the following is a non-specific immunity mechanism?", opts:["Antibody production","T-cell response","Skin as physical barrier","Memory cell formation"], ans:2, diff:"easy", chapter:"Human Health and Disease", pyq:"NEET 2013",
+exp:"Non-specific (innate) immunity: physical barriers (skin, mucus), chemical barriers (tears, saliva, lysozyme), phagocytic cells (neutrophils, macrophages), inflammation, fever. Specific immunity: antibodies, T cells, memory cells.",
+tip:"Innate = non-specific, first line, no memory. Adaptive = specific, slower, has memory (B cells, T cells).",
+trick:"Trick: Fever and inflammation are innate responses but they're not considered \"specific\" even though the body responds to infection. Non-specific = same response regardless of pathogen. Specific = adaptive, tailored to antigen."},
+
+{q:"Which of the following is NOT a feature of cancer cells?", opts:["Contact inhibition","Uncontrolled division","Metastasis","Angiogenesis"], ans:0, diff:"medium", chapter:"Human Health and Disease", pyq:"NEET 2018",
+exp:"Normal cells show contact inhibition — stop dividing when they touch neighboring cells. Cancer cells LOSE contact inhibition → uncontrolled division. Cancer cells also show angiogenesis (new blood vessel formation) and metastasis (spreading).",
+tip:"Cancer = loss of contact inhibition. Normal cells = stop when touching. Oncogenes drive cell division; tumor suppressors (e.g., p53) brake it.",
+trick:"Trick: Contact inhibition is a feature of NORMAL cells (they stop when touching). Cancer cells LACK it. The question asks what is NOT a feature of cancer cells — contact inhibition is normal cell behavior, not cancer behavior."},
+
+{q:"Respiratory pigment in humans is:", opts:["Haemocyanin","Chlorocruorin","Haemoglobin","Haemerythrin"], ans:2, diff:"easy", chapter:"Breathing and Exchange of Gases", pyq:"NEET 2013",
+exp:"Hemoglobin (in RBCs, contains Fe²⁺ in heme) is the respiratory pigment of humans. Hemocyanin (copper-based, blue) = arthropods/molluscs. Chlorocruorin (green) = some polychaetes. Haemerythrin (pink/violet) = some invertebrates.",
+tip:"Human = Hemoglobin (iron, red). Octopus/shrimp = Hemocyanin (copper, blue). Earthworm = dissolved in plasma.",
+trick:"Trick: Earthworm has hemoglobin dissolved in plasma (not in RBCs). Some invertebrates use alternative respiratory pigments. Hemocyanin (copper-based, blue) = arthropods/molluscs. Know: iron = red, copper = blue pigments."},
+
+{q:"Which statement about meiosis is correct?", opts:["It occurs in somatic cells","It results in 4 genetically identical cells","It reduces chromosome number by half","It produces diploid cells"], ans:2, diff:"easy", chapter:"Cell Cycle and Cell Division", pyq:"NEET 2016",
+exp:"Meiosis: occurs in gonads/germ cells (reproductive cells). Results in 4 haploid (n) cells, genetically diverse (due to crossing over and independent assortment). Chromosome number halved: 2n → n. Diploid parent → haploid gametes.",
+tip:"Mitosis = 2 identical diploid. Meiosis = 4 genetically diverse haploid. Mitosis maintains ploidy; meiosis halves it.",
+trick:"Trick: \"4 genetically identical cells\" describes a mitosis that divided twice — not meiosis. Meiosis II products are identical to each other IF no crossing over occurred — but crossing over (meiosis I) ensures they're genetically diverse."},
+
+{q:"Which of the following is correctly matched?", opts:["Chitin — plant cell wall","Inulin — storage carbohydrate in potato","Starch — energy store in plants","Glycogen — found only in bacteria"], ans:2, diff:"medium", chapter:"Biomolecules", pyq:"NEET 2017",
+exp:"Starch is the storage carbohydrate in plants (amylose + amylopectin). Chitin = exoskeleton of arthropods and fungal cell wall (NOT plants). Plant cell wall = cellulose. Inulin = storage in dahlia (not potato). Glycogen = animal/fungi.",
+tip:"Starch = plant storage. Glycogen = animal/fungi storage. Cellulose = plant cell wall. Chitin = insect/fungal wall.",
+trick:"Trick: Inulin sounds like insulin (a hormone) — students confuse them. Inulin = storage carbohydrate in dahlia tubers, NOT potato (potato = starch). Glycogen is in animals AND fungi, not only bacteria. \"Found only in bacteria\" is completely wrong."},
+
+];
+
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+let timerInterval;
+let totalSeconds = 60 * 60;
+let paletteOpen = false;
+let revealed = new Array(questions.length).fill(false);
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+function startTest() {
+  document.getElementById('intro-screen').classList.remove('active');
+  document.getElementById('test-screen').classList.add('active');
+  buildPalette();
+  renderQuestion();
+  startTimer();
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    totalSeconds--;
+    updateTimerDisplay();
+    if (totalSeconds <= 0) {
+      clearInterval(timerInterval);
+      submitTest();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  const display = document.getElementById('timerDisplay');
+  display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  display.className = 'timer';
+  if (totalSeconds < 600) display.classList.add('warning');
+  if (totalSeconds < 180) display.classList.add('danger');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER QUESTION
+// ═══════════════════════════════════════════════════════════
+function renderQuestion() {
+  const q = questions[currentQ];
+  const area = document.getElementById('questionArea');
+  const diffClass = q.diff === 'easy' ? 'diff-easy' : q.diff === 'medium' ? 'diff-medium' : 'diff-hard';
+  const pyqHtml = q.pyq ? `<span class="pyq-badge">📌 ${q.pyq}</span>` : '';
+
+  const optLetters = ['A','B','C','D'];
+  let optsHtml = '';
+  q.opts.forEach((opt, i) => {
+    let cls = 'option';
+    if (revealed[currentQ]) {
+      if (i === q.ans) cls += ' correct';
+      else if (answers[currentQ] === i && i !== q.ans) cls += ' wrong';
+      else if (answers[currentQ] === i) cls += ' selected';
+    } else {
+      if (answers[currentQ] === i) cls += ' selected';
+    }
+    optsHtml += `<button class="${cls}" onclick="selectAnswer(${i})" ${revealed[currentQ] ? 'disabled' : ''}><span class="opt-label">${optLetters[i]}</span>${opt}</button>`;
+  });
+
+  const expDisplay = revealed[currentQ] ? 'visible' : '';
+  const navHtml = `
+    <div class="q-nav">
+      ${currentQ > 0 ? `<button class="nav-btn" onclick="navigate(-1)">← Prev</button>` : ''}
+      ${currentQ < questions.length-1 ? `<button class="nav-btn primary" onclick="navigate(1)">Next →</button>` : ''}
+      <button class="nav-btn submit" onclick="confirmSubmit()">Submit Test</button>
+    </div>
+  `;
+
+  area.innerHTML = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-num">Q.${currentQ + 1}</span>
+        <span class="diff-badge ${diffClass}">${q.diff}</span>
+        ${pyqHtml}
+        <span class="chapter-badge">${q.chapter}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optsHtml}</div>
+      ${!revealed[currentQ] && answers[currentQ] !== null ? `<div style="margin-top:12px"><button class="nav-btn" onclick="revealAnswer()" style="background:#fce4ec;border-color:var(--accent2);color:var(--accent);font-size:13px">Check Answer</button></div>` : ''}
+      <div class="explanation ${expDisplay}">
+        <div class="exp-title">✦ Explanation</div>
+        <div>${q.exp}</div>
+        <div class="tip-box"><b>💡 NEET Tip / Memory Aid</b>${q.tip}</div>
+      </div>
+    </div>
+    ${navHtml}
+  `;
+
+  document.getElementById('qNumDisplay').textContent = currentQ + 1;
+  updateProgress();
+  updatePalette();
+}
+
+function selectAnswer(idx) {
+  if (revealed[currentQ]) return;
+  answers[currentQ] = idx;
+  renderQuestion();
+}
+
+function revealAnswer() {
+  revealed[currentQ] = true;
+  renderQuestion();
+}
+
+function navigate(dir) {
+  currentQ = Math.max(0, Math.min(questions.length - 1, currentQ + dir));
+  renderQuestion();
+  window.scrollTo(0, 0);
+  if (paletteOpen) togglePalette();
+}
+
+function updateProgress() {
+  const pct = ((currentQ + 1) / questions.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  PALETTE
+// ═══════════════════════════════════════════════════════════
+function buildPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  questions.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'palette-dot';
+    dot.textContent = i + 1;
+    dot.onclick = () => { currentQ = i; renderQuestion(); window.scrollTo(0,0); togglePalette(); };
+    grid.appendChild(dot);
+  });
+}
+
+function updatePalette() {
+  const dots = document.querySelectorAll('.palette-dot');
+  dots.forEach((dot, i) => {
+    dot.className = 'palette-dot';
+    if (i === currentQ) dot.classList.add('current');
+    else if (answers[i] !== null) dot.classList.add('answered');
+    else if (i < currentQ) dot.classList.add('skipped');
+  });
+}
+
+function togglePalette() {
+  paletteOpen = !paletteOpen;
+  document.getElementById('palettePanel').classList.toggle('open', paletteOpen);
+  updatePalette();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SUBMIT
+// ═══════════════════════════════════════════════════════════
+function confirmSubmit() {
+  submitTest();
+}
+
+function submitTest() {
+  clearInterval(timerInterval);
+  document.getElementById('test-screen').classList.remove('active');
+  document.getElementById('result-screen').classList.add('active');
+  renderResults();
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════════════════
+function renderResults() {
+  // Calculate scores
+  let correct = 0, wrong = 0, skip = 0;
+  const chapterStats = {};
+  const mistakes = [];
+
+  questions.forEach((q, i) => {
+    if (!chapterStats[q.chapter]) chapterStats[q.chapter] = { correct: 0, total: 0 };
+    chapterStats[q.chapter].total++;
+
+    if (answers[i] === null) {
+      skip++;
+    } else if (answers[i] === q.ans) {
+      correct++;
+      chapterStats[q.chapter].correct++;
+    } else {
+      wrong++;
+      mistakes.push({ q, i, chosen: answers[i] });
+    }
+  });
+
+  const marks = (correct * 4) - (wrong * 1);
+  const maxMarks = 360;
+  const pct = Math.max(0, Math.round((marks / maxMarks) * 100));
+
+  // Grade
+  let gradeColor = 'var(--red)';
+  let gradeLabel = 'Needs Work';
+  let gradeEmoji = '📚';
+  if (pct >= 85) { gradeColor = 'var(--green)'; gradeLabel = 'Excellent!'; gradeEmoji = '🏆'; }
+  else if (pct >= 70) { gradeColor = 'var(--accent2)'; gradeLabel = 'Good'; gradeEmoji = '✅'; }
+  else if (pct >= 50) { gradeColor = 'var(--orange)'; gradeLabel = 'Average'; gradeEmoji = '⚡'; }
+
+  // Chapter breakdown HTML
+  const sortedChapters = Object.entries(chapterStats).sort((a,b) => (b[1].correct/b[1].total) - (a[1].correct/a[1].total));
+  let chapterHtml = sortedChapters.map(([name, stat]) => {
+    const ratio = stat.correct / stat.total;
+    const barColor = ratio >= 0.7 ? 'var(--green)' : ratio >= 0.4 ? 'var(--orange)' : 'var(--red)';
+    return `
+      <div class="chapter-row">
+        <div class="chapter-name">${name}</div>
+        <div class="chapter-bar-wrap">
+          <div class="chapter-bar" style="width:${ratio*100}%;background:${barColor}"></div>
+        </div>
+        <div class="chapter-score">${stat.correct}/${stat.total}</div>
+      </div>`;
+  }).join('');
+
+  // Mistake analysis HTML — ALL mistakes shown with trick analysis
+  let mistakesHtml = mistakes.map(({q, i, chosen}) => `
+    <div class="mistake-item">
+      <div class="mistake-q"><b>Q${i+1}:</b> ${q.q}</div>
+      <div class="mistake-ans-row">
+        <span class="your-ans">❌ You chose: ${['A','B','C','D'][chosen]}. ${q.opts[chosen]}</span>
+        <span class="correct-ans">✅ Correct: ${['A','B','C','D'][q.ans]}. ${q.opts[q.ans]}</span>
+      </div>
+      <div class="mistake-section-label">📖 Why the correct answer is right:</div>
+      <div class="mistake-exp">${q.exp}</div>
+      <div class="trick-box"><b>🪤 Why it was tricky & how to avoid next time</b>${q.trick || q.tip}</div>
+    </div>`).join('');
+
+  if (mistakes.length === 0) {
+    mistakesHtml = '<div style="color:var(--green);text-align:center;padding:20px;font-size:16px">🎉 No mistakes! Absolutely perfect. Baby, you are unstoppable.</div>';
+  }
+
+  // Smart tips based on performance
+  const weakChapters = sortedChapters.filter(([,s]) => s.correct/s.total < 0.5).map(([n]) => n);
+  const strongChapters = sortedChapters.filter(([,s]) => s.correct/s.total >= 0.8).map(([n]) => n);
+
+  let tipsHtml = '';
+  if (marks < 0) tipsHtml += `<div class="tip-card danger"><b>🚨 Negative Marking Alert</b>Your net marks are negative. You're attempting too many uncertain questions. For NEET: if you're <50% confident, SKIP. Negative marking can tank your score even with many correct answers.</div>`;
+  if (wrong > correct * 0.5) tipsHtml += `<div class="tip-card warn"><b>⚠️ Accuracy Problem</b>${wrong} wrong vs ${correct} correct. Your accuracy ratio is too low. This suggests guessing. Practice: attempt only when >60% confident. Unanswered = 0. Wrong = -1. Skipping is smarter than guessing.</div>`;
+  if (skip > 20) tipsHtml += `<div class="tip-card warn"><b>⚠️ Too Many Skips</b>You left ${skip} questions unanswered. Some of these may be leaves on the table. Increase practice to boost confidence on attempted questions.</div>`;
+  if (weakChapters.length > 0) tipsHtml += `<div class="tip-card danger"><b>🔴 Weak Chapters — Prioritize These</b>${weakChapters.slice(0,5).join(', ')} — score below 50%. Do targeted PYQs from these chapters + revision notes immediately.</div>`;
+  if (strongChapters.length > 0) tipsHtml += `<div class="tip-card good"><b>✅ Strong Chapters — Maintain These</b>${strongChapters.slice(0,5).join(', ')} — excellent performance. Quick revision every 3 days to maintain retention.</div>`;
+  tipsHtml += `<div class="tip-card"><b>📊 NEET Strategy Reminder</b>Target: 300+ in Bio for 600 total. Botany and Zoology each = 45 questions. High-yield: Human Physiology (20%), Genetics (15%), Ecology (14%), Cell Biology (10%). Mock analysis is your best weapon.</div>`;
+
+  const timeUsed = (60 * 60) - totalSeconds;
+  const timeMin = Math.floor(timeUsed / 60);
+
+  // Marks visual bar
+  const cPct = (correct / questions.length * 100).toFixed(1);
+  const wPct = (wrong / questions.length * 100).toFixed(1);
+
+  document.getElementById('resultContent').innerHTML = `
+    <div class="result-header">
+      <div class="result-grade" style="color:${gradeColor}">${marks}</div>
+      <div class="result-label">${gradeEmoji} ${gradeLabel}</div>
+      <div class="result-sub">out of ${maxMarks} marks · ${pct}% · Time: ${timeMin} min</div>
+      <div class="marks-visual" style="margin-top:20px;border-radius:8px;height:10px">
+        <div class="mv-correct" style="width:${cPct}%;border-radius:8px 0 0 8px"></div>
+        <div class="mv-wrong" style="width:${wPct}%"></div>
+        <div class="mv-skip" style="flex:1;border-radius:0 8px 8px 0"></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--green)">${correct}</div>
+        <div class="stat-lbl">Correct (+${correct*4})</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--red)">${wrong}</div>
+        <div class="stat-lbl">Wrong (−${wrong})</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--muted)">${skip}</div>
+        <div class="stat-lbl">Skipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent2)">${pct}%</div>
+        <div class="stat-lbl">Accuracy</div>
+      </div>
+    </div>
+
+    <div class="motivation-card">
+      <span class="motivation-emoji">💜</span>
+      <div class="motivation-text">Good luck Baby, I am always there to support you.</div>
+      <div class="motivation-sub">
+        Every wrong answer today is one less mistake in the real exam.<br>
+        You've already done the hard part — you showed up and gave it your best.<br>
+        That's exactly what toppers do. Keep going. NEET is yours. 🏆
+      </div>
+      <div class="motivation-sig">~ Harsh</div>
+    </div>
+
+    <div class="tips-section">
+      <div class="section-title">🎯 Smart Analysis & Action Plan</div>
+      ${tipsHtml}
+    </div>
+
+    <div class="chapter-breakdown">
+      <div class="section-title">📊 Chapter-wise Performance</div>
+      ${chapterHtml}
+    </div>
+
+    <div class="mistake-section">
+      <div class="section-title">🔍 Mistake Analysis — ${mistakes.length} wrong · Full breakdown below</div>
+      ${mistakesHtml}
+    </div>
+
+    <button class="retry-btn" onclick="retryTest()">🔄 Retry Test</button>
+  `;
+}
+
+function retryTest() {
+  answers = new Array(questions.length).fill(null);
+  revealed = new Array(questions.length).fill(false);
+  currentQ = 0;
+  totalSeconds = 60 * 60;
+  document.getElementById('result-screen').classList.remove('active');
+  document.getElementById('test-screen').classList.add('active');
+  updatePalette();
+  renderQuestion();
+  startTimer();
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
