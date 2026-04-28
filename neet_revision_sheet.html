@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEET Scientist Revision Sheet</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #090d14;
+      --surface: #111824;
+      --surface-2: #172231;
+      --surface-3: #1e2b3d;
+      --text: #f5f7fb;
+      --muted: #aab6c8;
+      --line: rgba(255, 255, 255, 0.12);
+      --accent: #5eead4;
+      --accent-2: #facc15;
+      --accent-soft: rgba(94, 234, 212, 0.12);
+      --star-soft: rgba(250, 204, 21, 0.13);
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
+      --radius: 8px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f4f7fb;
+        --surface: #ffffff;
+        --surface-2: #edf3f8;
+        --surface-3: #e4edf5;
+        --text: #101828;
+        --muted: #526173;
+        --line: rgba(16, 24, 40, 0.12);
+        --accent-soft: rgba(20, 184, 166, 0.12);
+        --star-soft: rgba(202, 138, 4, 0.14);
+        --shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(94, 234, 212, 0.12), transparent 30rem),
+        linear-gradient(180deg, rgba(250, 204, 21, 0.06), transparent 18rem),
+        var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 18px 14px 54px;
+    }
+
+    .hero {
+      padding: 14px 2px 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.65rem, 5vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .stat {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.25rem;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      padding: 10px 0 12px;
+      background: linear-gradient(180deg, var(--bg) 78%, rgba(9, 13, 20, 0));
+      backdrop-filter: blur(12px);
+    }
+
+    .search {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: none;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    .search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow);
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      background: var(--surface);
+      text-decoration: none;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .section {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.035);
+      overflow: clip;
+    }
+
+    .section[open] {
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      position: sticky;
+      top: 70px;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 52px;
+      padding: 12px 14px;
+      cursor: pointer;
+      background: linear-gradient(180deg, var(--surface-2), var(--surface));
+      border-bottom: 1px solid var(--line);
+      list-style: none;
+    }
+
+    .section-title::-webkit-details-marker {
+      display: none;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .count {
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--surface-3);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .card.important {
+      border-color: rgba(250, 204, 21, 0.55);
+      background: linear-gradient(180deg, var(--star-soft), var(--surface) 74%);
+    }
+
+    .card-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: start;
+      padding: 12px 12px 4px;
+    }
+
+    .name {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .star {
+      color: var(--accent-2);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .contribution {
+      margin: 0;
+      padding: 4px 12px 12px;
+      color: var(--text);
+      font-size: 0.94rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 0 12px 12px;
+    }
+
+    .pill {
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.76rem;
+    }
+
+    .year {
+      color: var(--text);
+      border-color: rgba(94, 234, 212, 0.44);
+      background: var(--accent-soft);
+    }
+
+    .empty {
+      margin: 0;
+      padding: 16px 12px;
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .quick,
+    .questions {
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .quick h2,
+    .questions h2 {
+      margin: 0 0 12px;
+      font-size: 1.08rem;
+    }
+
+    .quick-list,
+    .question-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .quick-list li,
+    .question-list li {
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .quick-list strong,
+    .question-list strong {
+      color: var(--accent-2);
+    }
+
+    .question-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .question-list span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .no-results {
+      display: none;
+      margin: 14px 0;
+      padding: 14px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: var(--surface);
+      text-align: center;
+    }
+
+    mark {
+      color: inherit;
+      background: rgba(250, 204, 21, 0.32);
+      border-radius: 4px;
+    }
+
+    @media (min-width: 720px) {
+      .page {
+        padding: 28px 20px 70px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .quick-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>NEET Scientist Revision Sheet</h1>
+      <p class="subtitle">Topic-wise NCERT Biology scientist facts with verified years only. Blank year means no exact year was added, so there is no forced guessing.</p>
+      <div class="stats" aria-label="Revision stats">
+        <div class="stat"><strong>52</strong><span>CSV rows</span></div>
+        <div class="stat"><strong>9</strong><span>Topics</span></div>
+        <div class="stat"><strong>25</strong><span>Practice prompts</span></div>
+      </div>
+    </header>
+
+    <nav class="toolbar" aria-label="Search and topic links">
+      <input class="search" id="searchInput" type="search" autocomplete="off" placeholder="Search scientist name...">
+      <div class="chips">
+        <a class="chip" href="#cell-biology">Cell Biology</a>
+        <a class="chip" href="#genetics">Genetics</a>
+        <a class="chip" href="#evolution">Evolution</a>
+        <a class="chip" href="#human-physiology">Human Physiology</a>
+        <a class="chip" href="#plant-physiology">Plant Physiology</a>
+        <a class="chip" href="#biotechnology">Biotechnology</a>
+        <a class="chip" href="#ecology">Ecology</a>
+        <a class="chip" href="#reproduction">Reproduction</a>
+        <a class="chip" href="#microbiology">Microbiology</a>
+      </div>
+    </nav>
+
+    <section class="quick" id="top-20">
+      <h2>Top 20 Must-Remember Scientists</h2>
+      <ol class="quick-list">
+        <li><strong>Gregor Mendel</strong> - laws of inheritance, pea plant experiments, 1866.</li>
+        <li><strong>Charles Darwin</strong> - natural selection, 1859.</li>
+        <li><strong>Watson and Crick</strong> - double-helix model of DNA, 1953.</li>
+        <li><strong>Frederick Griffith</strong> - bacterial transformation, 1928.</li>
+        <li><strong>Avery, MacLeod and McCarty</strong> - DNA as transforming principle, 1944.</li>
+        <li><strong>Thomas Hunt Morgan</strong> - chromosomal inheritance using Drosophila, 1910.</li>
+        <li><strong>Sutton and Boveri</strong> - chromosome behaviour linked with Mendelism, 1902.</li>
+        <li><strong>Frederick Sanger</strong> - DNA sequencing method, 1977.</li>
+        <li><strong>Alec Jeffreys</strong> - DNA fingerprinting, 1985.</li>
+        <li><strong>Monod</strong> - lac operon model with Jacob, 1961.</li>
+        <li><strong>Khorana and Nirenberg</strong> - genetic code studies.</li>
+        <li><strong>Alexander Fleming</strong> - penicillin, 1928.</li>
+        <li><strong>Louis Pasteur</strong> - life arises from pre-existing life, 1862.</li>
+        <li><strong>Linnaeus</strong> - binomial nomenclature and classification, 1758.</li>
+        <li><strong>Whittaker</strong> - five-kingdom classification, 1969.</li>
+        <li><strong>Antonie van Leeuwenhoek</strong> - first observed living cells, 1674.</li>
+        <li><strong>Robert Brown</strong> - nucleus, 1831.</li>
+        <li><strong>Camillo Golgi</strong> - Golgi apparatus, 1898.</li>
+        <li><strong>William Harvey</strong> - blood circulation, 1628.</li>
+        <li><strong>Blackman</strong> - law of limiting factors, 1905.</li>
+      </ol>
+    </section>
+
+    <p class="no-results" id="noResults">No scientist names matched your search.</p>
+
+    <details class="section" id="cell-biology" open>
+      <summary class="section-title"><h2>Cell Biology</h2><span class="count">6 entries</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="Antonie van Leeuwenhoek">
+          <div class="card-head"><h3 class="name">Antonie van Leeuwenhoek</h3><span class="star">★</span></div>
+          <p class="contribution">First observed and described living cells</p>
+          <div class="meta"><span class="pill year">Year: 1674</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+        <article class="card important" data-name="Camillo Golgi">
+          <div class="card-head"><h3 class="name">Camillo Golgi</h3><span class="star">★</span></div>
+          <p class="contribution">Discovered the Golgi apparatus</p>
+          <div class="meta"><span class="pill year">Year: 1898</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+        <article class="card important" data-name="George Palade">
+          <div class="card-head"><h3 class="name">George Palade</h3><span class="star">★</span></div>
+          <p class="contribution">First observed ribosomes under the electron microscope</p>
+          <div class="meta"><span class="pill year">Year: 1955</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+        <article class="card" data-name="Linus Pauling">
+          <div class="card-head"><h3 class="name">Linus Pauling</h3></div>
+          <p class="contribution">Proposed alpha-helix and beta-sheet models of protein structure</p>
+          <div class="meta"><span class="pill year">Year: 1951</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+        <article class="card important" data-name="Matthias Schleiden">
+          <div class="card-head"><h3 class="name">Matthias Schleiden</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed that plants are made of cells</p>
+          <div class="meta"><span class="pill year">Year: 1838</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+        <article class="card important" data-name="Robert Brown">
+          <div class="card-head"><h3 class="name">Robert Brown</h3><span class="star">★</span></div>
+          <p class="contribution">Discovered the nucleus</p>
+          <div class="meta"><span class="pill year">Year: 1831</span><span class="pill">Chapter/Topic: Unit 3</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="genetics" open>
+      <summary class="section-title"><h2>Genetics</h2><span class="count">24 entries</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="Mendel">
+          <div class="card-head"><h3 class="name">Mendel</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the laws of inheritance using pea plant experiments</p>
+          <div class="meta"><span class="pill year">Year: 1866</span><span class="pill">Chapter/Topic: Foreword</span></div>
+        </article>
+        <article class="card important" data-name="Gregor Mendel">
+          <div class="card-head"><h3 class="name">Gregor Mendel</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the laws of inheritance using pea plant experiments</p>
+          <div class="meta"><span class="pill year">Year: 1866</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Mendel">
+          <div class="card-head"><h3 class="name">Mendel</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the laws of inheritance using pea plant experiments</p>
+          <div class="meta"><span class="pill year">Year: 1866</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Alec Jeffreys">
+          <div class="card-head"><h3 class="name">Alec Jeffreys</h3><span class="star">★</span></div>
+          <p class="contribution">Developed DNA fingerprinting</p>
+          <div class="meta"><span class="pill year">Year: 1985</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Francis Crick">
+          <div class="card-head"><h3 class="name">Francis Crick</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the double-helix model of DNA with Watson</p>
+          <div class="meta"><span class="pill year">Year: 1953</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="J. D. Watson">
+          <div class="card-head"><h3 class="name">J. D. Watson</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the double-helix model of DNA with Crick</p>
+          <div class="meta"><span class="pill year">Year: 1953</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Watson">
+          <div class="card-head"><h3 class="name">Watson</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the double-helix model of DNA with Crick</p>
+          <div class="meta"><span class="pill year">Year: 1953</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Crick">
+          <div class="card-head"><h3 class="name">Crick</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the double-helix model of DNA with Watson</p>
+          <div class="meta"><span class="pill year">Year: 1953</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Frederick Griffith">
+          <div class="card-head"><h3 class="name">Frederick Griffith</h3><span class="star">★</span></div>
+          <p class="contribution">Discovered bacterial transformation</p>
+          <div class="meta"><span class="pill year">Year: 1928</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Oswald Avery">
+          <div class="card-head"><h3 class="name">Oswald Avery</h3><span class="star">★</span></div>
+          <p class="contribution">Showed that DNA is the transforming principle with MacLeod and McCarty</p>
+          <div class="meta"><span class="pill year">Year: 1944</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Maclyn McCarty">
+          <div class="card-head"><h3 class="name">Maclyn McCarty</h3><span class="star">★</span></div>
+          <p class="contribution">Showed that DNA is the transforming principle with Avery and MacLeod</p>
+          <div class="meta"><span class="pill year">Year: 1944</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Frederick Sanger">
+          <div class="card-head"><h3 class="name">Frederick Sanger</h3><span class="star">★</span></div>
+          <p class="contribution">Developed a DNA sequencing method</p>
+          <div class="meta"><span class="pill year">Year: 1977</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card" data-name="Har Gobind Khorana">
+          <div class="card-head"><h3 class="name">Har Gobind Khorana</h3></div>
+          <p class="contribution">Helped decipher the genetic code</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Khorana">
+          <div class="card-head"><h3 class="name">Khorana</h3><span class="star">★</span></div>
+          <p class="contribution">Helped decipher the genetic code</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Nirenberg">
+          <div class="card-head"><h3 class="name">Nirenberg</h3><span class="star">★</span></div>
+          <p class="contribution">Helped decipher the genetic code</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card" data-name="Maurice Wilkins">
+          <div class="card-head"><h3 class="name">Maurice Wilkins</h3></div>
+          <p class="contribution">Provided X-ray diffraction evidence for DNA structure</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card important" data-name="Rosalind Franklin">
+          <div class="card-head"><h3 class="name">Rosalind Franklin</h3><span class="star">★</span></div>
+          <p class="contribution">Provided X-ray diffraction evidence for DNA structure</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Molecular Basis Of Inheritance</span></div>
+        </article>
+        <article class="card" data-name="Benzer">
+          <div class="card-head"><h3 class="name">Benzer</h3></div>
+          <p class="contribution">Contributed to molecular biology and gene mapping studies</p>
+          <div class="meta"><span class="pill year">Year: 1955</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card" data-name="Brenner">
+          <div class="card-head"><h3 class="name">Brenner</h3></div>
+          <p class="contribution">Contributed to molecular biology and genetic code studies</p>
+          <div class="meta"><span class="pill year">Year: 1961</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card" data-name="Langdon Down">
+          <div class="card-head"><h3 class="name">Langdon Down</h3></div>
+          <p class="contribution">First described Down's syndrome</p>
+          <div class="meta"><span class="pill year">Year: 1866</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Monod">
+          <div class="card-head"><h3 class="name">Monod</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the lac operon model with Jacob</p>
+          <div class="meta"><span class="pill year">Year: 1961</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Theodore Boveri">
+          <div class="card-head"><h3 class="name">Theodore Boveri</h3><span class="star">★</span></div>
+          <p class="contribution">Linked chromosome behaviour with Mendel's laws of inheritance</p>
+          <div class="meta"><span class="pill year">Year: 1902</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Thomas Hunt Morgan">
+          <div class="card-head"><h3 class="name">Thomas Hunt Morgan</h3><span class="star">★</span></div>
+          <p class="contribution">Established the chromosomal theory of inheritance using Drosophila</p>
+          <div class="meta"><span class="pill year">Year: 1910</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+        <article class="card important" data-name="Walter Sutton">
+          <div class="card-head"><h3 class="name">Walter Sutton</h3><span class="star">★</span></div>
+          <p class="contribution">Linked chromosome behaviour with Mendel's laws of inheritance</p>
+          <div class="meta"><span class="pill year">Year: 1902</span><span class="pill">Chapter/Topic: Principles Of Inheritance And Variation</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="evolution" open>
+      <summary class="section-title"><h2>Evolution</h2><span class="count">7 entries</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="Charles Darwin">
+          <div class="card-head"><h3 class="name">Charles Darwin</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed natural selection as the mechanism of evolution</p>
+          <div class="meta"><span class="pill year">Year: 1859</span><span class="pill">Chapter/Topic: Foreword</span></div>
+        </article>
+        <article class="card important" data-name="Charles Darwin">
+          <div class="card-head"><h3 class="name">Charles Darwin</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed natural selection as the mechanism of evolution</p>
+          <div class="meta"><span class="pill year">Year: 1859</span><span class="pill">Chapter/Topic: Organisms And Populations</span></div>
+        </article>
+        <article class="card" data-name="Ernst Heckel">
+          <div class="card-head"><h3 class="name">Ernst Heckel</h3></div>
+          <p class="contribution">Proposed embryological evidence for evolution</p>
+          <div class="meta"><span class="pill year">Year: 1866</span><span class="pill">Chapter/Topic: Evolution</span></div>
+        </article>
+        <article class="card important" data-name="Hardy">
+          <div class="card-head"><h3 class="name">Hardy</h3><span class="star">★</span></div>
+          <p class="contribution">Formulated the Hardy-Weinberg principle with Weinberg</p>
+          <div class="meta"><span class="pill year">Year: 1908</span><span class="pill">Chapter/Topic: Evolution</span></div>
+        </article>
+        <article class="card" data-name="Karl Ernst von Baer">
+          <div class="card-head"><h3 class="name">Karl Ernst von Baer</h3></div>
+          <p class="contribution">Rejected Haeckel's embryological recapitulation idea</p>
+          <div class="meta"><span class="pill year">Year: 1828</span><span class="pill">Chapter/Topic: Evolution</span></div>
+        </article>
+        <article class="card important" data-name="Weinberg">
+          <div class="card-head"><h3 class="name">Weinberg</h3><span class="star">★</span></div>
+          <p class="contribution">Formulated the Hardy-Weinberg principle with Hardy</p>
+          <div class="meta"><span class="pill year">Year: 1908</span><span class="pill">Chapter/Topic: Evolution</span></div>
+        </article>
+        <article class="card important" data-name="Linnaeus">
+          <div class="card-head"><h3 class="name">Linnaeus</h3><span class="star">★</span></div>
+          <p class="contribution">Gave the two-kingdom system and binomial nomenclature</p>
+          <div class="meta"><span class="pill year">Year: 1758</span><span class="pill">Chapter/Topic: Unit 1</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="human-physiology" open>
+      <summary class="section-title"><h2>Human Physiology</h2><span class="count">1 entry</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="William Harvey">
+          <div class="card-head"><h3 class="name">William Harvey</h3><span class="star">★</span></div>
+          <p class="contribution">Discovered blood circulation using experimental methods</p>
+          <div class="meta"><span class="pill year">Year: 1628</span><span class="pill">Chapter/Topic: Human Health And Disease</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="plant-physiology" open>
+      <summary class="section-title"><h2>Plant Physiology</h2><span class="count">4 entries</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="Charles Darwin">
+          <div class="card-head"><h3 class="name">Charles Darwin</h3><span class="star">★</span></div>
+          <p class="contribution">Observed phototropism in canary grass coleoptiles with Francis Darwin</p>
+          <div class="meta"><span class="pill year">Year: 1880</span><span class="pill">Chapter/Topic: Plant Growth And Development</span></div>
+        </article>
+        <article class="card important" data-name="Blackman">
+          <div class="card-head"><h3 class="name">Blackman</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the law of limiting factors</p>
+          <div class="meta"><span class="pill year">Year: 1905</span><span class="pill">Chapter/Topic: Unit 4</span></div>
+        </article>
+        <article class="card" data-name="Cornelius van Niel">
+          <div class="card-head"><h3 class="name">Cornelius van Niel</h3></div>
+          <p class="contribution">Showed that photosynthesis uses hydrogen from an oxidisable compound</p>
+          <div class="meta"><span class="pill year">Year: 1931</span><span class="pill">Chapter/Topic: Unit 4</span></div>
+        </article>
+        <article class="card important" data-name="Jan Ingenhousz">
+          <div class="card-head"><h3 class="name">Jan Ingenhousz</h3><span class="star">★</span></div>
+          <p class="contribution">Showed that sunlight is essential for photosynthesis</p>
+          <div class="meta"><span class="pill year">Year: 1779</span><span class="pill">Chapter/Topic: Unit 4</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="biotechnology" open>
+      <summary class="section-title"><h2>Biotechnology</h2><span class="count">2 entries</span></summary>
+      <div class="grid">
+        <article class="card important" data-name="Stanley Cohen">
+          <div class="card-head"><h3 class="name">Stanley Cohen</h3><span class="star">★</span></div>
+          <p class="contribution">Constructed recombinant DNA with Herbert Boyer</p>
+          <div class="meta"><span class="pill year">Year: 1972</span><span class="pill">Chapter/Topic: Biotechnology : Principles And Processes</span></div>
+        </article>
+        <article class="card important" data-name="Eli Lilly">
+          <div class="card-head"><h3 class="name">Eli Lilly</h3><span class="star">★</span></div>
+          <p class="contribution">Prepared human insulin using recombinant DNA technology</p>
+          <div class="meta"><span class="pill year">Year: 1983</span><span class="pill">Chapter/Topic: Biotechnology And Its Applications</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="ecology" open>
+      <summary class="section-title"><h2>Ecology</h2><span class="count">3 entries</span></summary>
+      <div class="grid">
+        <article class="card" data-name="Alexander von Humboldt">
+          <div class="card-head"><h3 class="name">Alexander von Humboldt</h3></div>
+          <p class="contribution">Observed the species-area relationship in biodiversity studies</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Biodiversity And Conservation</span></div>
+        </article>
+        <article class="card important" data-name="Paul Ehrlich">
+          <div class="card-head"><h3 class="name">Paul Ehrlich</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the rivet popper hypothesis for biodiversity loss</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Biodiversity And Conservation</span></div>
+        </article>
+        <article class="card important" data-name="Whittaker">
+          <div class="card-head"><h3 class="name">Whittaker</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the five-kingdom classification</p>
+          <div class="meta"><span class="pill year">Year: 1969</span><span class="pill">Chapter/Topic: Biological Classification</span></div>
+        </article>
+      </div>
+    </details>
+
+    <details class="section" id="reproduction">
+      <summary class="section-title"><h2>Reproduction</h2><span class="count">0 entries</span></summary>
+      <p class="empty">No direct Reproduction scientist entries are present in final_scientists_with_years.csv.</p>
+    </details>
+
+    <details class="section" id="microbiology" open>
+      <summary class="section-title"><h2>Microbiology</h2><span class="count">5 entries</span></summary>
+      <div class="grid">
+        <article class="card" data-name="Aristotle">
+          <div class="card-head"><h3 class="name">Aristotle</h3></div>
+          <p class="contribution">Classified animals using simple morphological characters</p>
+          <div class="meta"><span class="pill">Year: Not specified</span><span class="pill">Chapter/Topic: Biological Classification</span></div>
+        </article>
+        <article class="card important" data-name="Linnaeus">
+          <div class="card-head"><h3 class="name">Linnaeus</h3><span class="star">★</span></div>
+          <p class="contribution">Gave the two-kingdom system and binomial nomenclature</p>
+          <div class="meta"><span class="pill year">Year: 1758</span><span class="pill">Chapter/Topic: Biological Classification</span></div>
+        </article>
+        <article class="card important" data-name="Whittaker">
+          <div class="card-head"><h3 class="name">Whittaker</h3><span class="star">★</span></div>
+          <p class="contribution">Proposed the five-kingdom classification</p>
+          <div class="meta"><span class="pill year">Year: 1969</span><span class="pill">Chapter/Topic: Plant Kingdom</span></div>
+        </article>
+        <article class="card important" data-name="Alexander Fleming">
+          <div class="card-head"><h3 class="name">Alexander Fleming</h3><span class="star">★</span></div>
+          <p class="contribution">Discovered penicillin</p>
+          <div class="meta"><span class="pill year">Year: 1928</span><span class="pill">Chapter/Topic: Microbes In Human Welfare</span></div>
+        </article>
+        <article class="card important" data-name="Louis Pasteur">
+          <div class="card-head"><h3 class="name">Louis Pasteur</h3><span class="star">★</span></div>
+          <p class="contribution">Showed that life arises from pre-existing life</p>
+          <div class="meta"><span class="pill year">Year: 1862</span><span class="pill">Chapter/Topic: Evolution</span></div>
+        </article>
+      </div>
+    </details>
+
+    <section class="questions" id="questions">
+      <h2>Top 25 Most Important Scientist Questions for NEET</h2>
+      <ol class="question-list">
+        <li><span>1.</span><div><strong>Who proposed the laws of inheritance?</strong><br>Gregor Mendel, based on pea plant experiments.</div></li>
+        <li><span>2.</span><div><strong>Who proposed natural selection?</strong><br>Charles Darwin.</div></li>
+        <li><span>3.</span><div><strong>Who proposed the double-helix model of DNA?</strong><br>J. D. Watson and Francis Crick.</div></li>
+        <li><span>4.</span><div><strong>Who discovered bacterial transformation?</strong><br>Frederick Griffith.</div></li>
+        <li><span>5.</span><div><strong>Who proved DNA is the transforming principle?</strong><br>Oswald Avery, MacLeod and Maclyn McCarty.</div></li>
+        <li><span>6.</span><div><strong>Who developed DNA fingerprinting?</strong><br>Alec Jeffreys.</div></li>
+        <li><span>7.</span><div><strong>Who developed a DNA sequencing method?</strong><br>Frederick Sanger.</div></li>
+        <li><span>8.</span><div><strong>Who gave X-ray diffraction evidence for DNA structure?</strong><br>Rosalind Franklin and Maurice Wilkins.</div></li>
+        <li><span>9.</span><div><strong>Who helped decipher the genetic code?</strong><br>Khorana and Nirenberg.</div></li>
+        <li><span>10.</span><div><strong>Who proposed the lac operon model?</strong><br>Jacob and Monod.</div></li>
+        <li><span>11.</span><div><strong>Who established chromosomal inheritance using Drosophila?</strong><br>Thomas Hunt Morgan.</div></li>
+        <li><span>12.</span><div><strong>Who linked chromosome behaviour with Mendel's laws?</strong><br>Walter Sutton and Theodore Boveri.</div></li>
+        <li><span>13.</span><div><strong>Who first described Down's syndrome?</strong><br>Langdon Down.</div></li>
+        <li><span>14.</span><div><strong>Who discovered penicillin?</strong><br>Alexander Fleming.</div></li>
+        <li><span>15.</span><div><strong>Who showed that life arises from pre-existing life?</strong><br>Louis Pasteur.</div></li>
+        <li><span>16.</span><div><strong>Who discovered blood circulation?</strong><br>William Harvey.</div></li>
+        <li><span>17.</span><div><strong>Who gave binomial nomenclature?</strong><br>Linnaeus.</div></li>
+        <li><span>18.</span><div><strong>Who proposed the five-kingdom classification?</strong><br>R. H. Whittaker.</div></li>
+        <li><span>19.</span><div><strong>Who first observed and described living cells?</strong><br>Antonie van Leeuwenhoek.</div></li>
+        <li><span>20.</span><div><strong>Who discovered the nucleus?</strong><br>Robert Brown.</div></li>
+        <li><span>21.</span><div><strong>Who discovered the Golgi apparatus?</strong><br>Camillo Golgi.</div></li>
+        <li><span>22.</span><div><strong>Who first observed ribosomes under the electron microscope?</strong><br>George Palade.</div></li>
+        <li><span>23.</span><div><strong>Who proposed alpha-helix and beta-sheet models?</strong><br>Linus Pauling.</div></li>
+        <li><span>24.</span><div><strong>Who proposed the law of limiting factors?</strong><br>Blackman.</div></li>
+        <li><span>25.</span><div><strong>Who showed sunlight is essential for photosynthesis?</strong><br>Jan Ingenhousz.</div></li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    const input = document.getElementById("searchInput");
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const sections = Array.from(document.querySelectorAll(".section"));
+    const noResults = document.getElementById("noResults");
+
+    function highlightName(nameElement, query) {
+      const original = nameElement.dataset.original || nameElement.textContent;
+      nameElement.dataset.original = original;
+
+      if (!query) {
+        nameElement.textContent = original;
+        return;
+      }
+
+      const index = original.toLowerCase().indexOf(query);
+      if (index === -1) {
+        nameElement.textContent = original;
+        return;
+      }
+
+      const before = original.slice(0, index);
+      const match = original.slice(index, index + query.length);
+      const after = original.slice(index + query.length);
+      nameElement.innerHTML = `${before}<mark>${match}</mark>${after}`;
+    }
+
+    function filterCards() {
+      const query = input.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const name = card.dataset.name.toLowerCase();
+        const isVisible = !query || name.includes(query);
+        card.classList.toggle("hidden", !isVisible);
+        highlightName(card.querySelector(".name"), query);
+        if (isVisible) visibleCount += 1;
+      });
+
+      sections.forEach((section) => {
+        const visibleCards = section.querySelectorAll(".card:not(.hidden)").length;
+        const hasCards = section.querySelectorAll(".card").length > 0;
+        section.classList.toggle("hidden", query && hasCards && visibleCards === 0);
+        if (query && visibleCards > 0) section.open = true;
+      });
+
+      noResults.style.display = visibleCount === 0 && query ? "block" : "none";
+    }
+
+    input.addEventListener("input", filterCards);
+  </script>
+</body>
+</html>
