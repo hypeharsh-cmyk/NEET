@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEET Biology Mock Test 02</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    packages: {'[+]': ['mhchem']}
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root {
+    --bg: #fff5f7;
+    --surface: #ffffff;
+    --card: #ffffff;
+    --border: #fce4ec;
+    --border2: #f8bbd0;
+    --accent: #e91e8c;
+    --accent2: #f06292;
+    --accent3: #ec407a;
+    --gold: #ff7043;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --green-border: #a5d6a7;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --red-border: #ef9a9a;
+    --orange: #e65100;
+    --orange-bg: #fff3e0;
+    --orange-border: #ffcc80;
+    --text: #1a0a10;
+    --text2: #4a1028;
+    --muted: #ad6b82;
+    --dim: #d4a0b0;
+    --shadow: rgba(233,30,140,0.08);
+    --shadow2: rgba(233,30,140,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* INTRO */
+  #intro-screen { min-height: 100vh; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; background: radial-gradient(ellipse at 60% 10%, #fce4ec 0%, #fff5f7 60%); }
+  #intro-screen.active { display: flex; }
+  .intro-badge { display: inline-block; background: linear-gradient(135deg, var(--accent), #f48fb1); color: white; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; text-transform: uppercase; box-shadow: 0 4px 16px var(--shadow2); }
+  .intro-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 6vw, 52px); font-weight: 800; line-height: 1.1; margin-bottom: 12px; background: linear-gradient(135deg, #880e4f 30%, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .intro-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; max-width: 480px; }
+  .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 480px; width: 100%; margin-bottom: 28px; }
+  .info-card { background: white; border: 1px solid var(--border2); border-radius: 12px; padding: 16px; box-shadow: 0 2px 12px var(--shadow); }
+  .info-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-family: 'Space Mono', monospace; margin-bottom: 4px; }
+  .info-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .chapter-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 560px; margin-bottom: 36px; }
+  .chapter-tag { background: white; border: 1px solid var(--border2); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--text2); font-weight: 500; }
+  .start-btn { background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; border: none; border-radius: 14px; padding: 16px 48px; font-size: 17px; font-weight: 700; font-family: 'Syne', sans-serif; cursor: pointer; box-shadow: 0 6px 24px var(--shadow2); transition: transform 0.15s, box-shadow 0.15s; }
+  .start-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px var(--shadow2); }
+
+  /* PROGRESS BAR */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent3)); z-index: 1000; transition: width 0.3s; }
+
+  /* TEST HEADER */
+  .test-header { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 12px var(--shadow); }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .subject-pill { background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .q-counter { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--text2); }
+  .diff-badge { font-size: 11px; font-family: 'Space Mono', monospace; padding: 2px 9px; border-radius: 10px; font-weight: 700; letter-spacing: 0.5px; }
+  .diff-easy { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .diff-medium { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .diff-hard { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .pyq-badge { background: linear-gradient(135deg, #ede7f6, #e1bee7); color: #6a1b9a; border: 1px solid #ce93d8; font-size: 11px; font-family: 'Space Mono', monospace; padding: 2px 9px; border-radius: 10px; font-weight: 700; }
+
+  /* TEST BODY */
+  .test-body { max-width: 760px; margin: 0 auto; padding: 24px 20px 120px; }
+  .q-card { background: white; border: 1.5px solid var(--border2); border-radius: 18px; padding: 24px; box-shadow: 0 4px 24px var(--shadow); margin-bottom: 16px; }
+  .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .q-num-badge { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--accent); }
+  .chapter-pill { font-size: 11px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 2px 10px; }
+  .q-text { font-size: 15.5px; line-height: 1.75; color: var(--text); margin-bottom: 20px; font-weight: 500; }
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn { background: white; border: 1.5px solid var(--border2); border-radius: 12px; padding: 13px 18px; font-size: 14.5px; font-family: 'DM Sans', sans-serif; color: var(--text); cursor: pointer; text-align: left; transition: all 0.15s; line-height: 1.5; }
+  .opt-btn:hover:not(:disabled) { background: #fce4ec; border-color: var(--accent); }
+  .opt-btn.selected { background: #fce4ec; border: 2px solid var(--accent); color: var(--accent); font-weight: 600; }
+  .opt-btn.correct { background: var(--green-bg); border: 2px solid var(--green); color: var(--green); font-weight: 600; }
+  .opt-btn.wrong { background: var(--red-bg); border: 2px solid var(--red); color: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+  .check-btn { margin-top: 16px; background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; border: none; border-radius: 12px; padding: 12px 32px; font-size: 15px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; box-shadow: 0 4px 16px var(--shadow2); transition: transform 0.15s; }
+  .check-btn:hover { transform: translateY(-1px); }
+  .exp-panel { margin-top: 18px; background: #f3e5f5; border: 1px solid #ce93d8; border-radius: 14px; padding: 18px; }
+  .exp-text { font-size: 14px; line-height: 1.7; color: #3e1a50; margin-bottom: 12px; }
+  .tip-box { background: #fff8e1; border-left: 4px solid #ffb300; border-radius: 0 10px 10px 0; padding: 12px 14px; margin-bottom: 10px; font-size: 13.5px; color: #4e3c00; }
+  .tip-box strong { display: block; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 1px; color: #b8860b; margin-bottom: 5px; }
+  .trick-box { background: #fff3e0; border-left: 4px solid var(--gold); border-radius: 0 10px 10px 0; padding: 12px 14px; font-size: 13.5px; color: #4e2800; }
+  .trick-box strong { display: block; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--gold); margin-bottom: 5px; }
+
+  /* NAV BUTTONS */
+  .nav-row { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+  .nav-btn { background: white; border: 1.5px solid var(--border2); border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; color: var(--text2); transition: all 0.15s; }
+  .nav-btn:hover:not(:disabled) { background: var(--bg); border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: 0.35; cursor: default; }
+  .submit-btn { margin-left: auto; background: linear-gradient(135deg, #c62828, #e53935); color: white; border: none; border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; box-shadow: 0 3px 12px rgba(198,40,40,0.25); }
+  .submit-btn:hover { transform: translateY(-1px); }
+
+  /* PALETTE */
+  .palette-toggle { position: fixed; bottom: 24px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; border: none; font-size: 22px; cursor: pointer; box-shadow: 0 4px 18px var(--shadow2); z-index: 200; display: flex; align-items: center; justify-content: center; }
+  .palette-panel { position: fixed; bottom: 84px; right: 20px; width: 280px; max-height: 400px; background: white; border: 1.5px solid var(--border2); border-radius: 16px; padding: 16px; box-shadow: 0 8px 32px var(--shadow2); z-index: 200; overflow-y: auto; display: none; }
+  .palette-panel.open { display: block; }
+  .palette-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 12px; }
+  .palette-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; margin-bottom: 12px; }
+  .pal-dot { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: 'Space Mono', monospace; font-weight: 700; cursor: pointer; border: 1.5px solid var(--border); color: var(--muted); transition: transform 0.1s; }
+  .pal-dot:hover { transform: scale(1.15); }
+  .pal-dot.current { background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; border-color: var(--accent); }
+  .pal-dot.answered { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+  .pal-dot.skipped { background: rgba(255,154,60,0.15); border-color: var(--orange); color: var(--orange); }
+  .palette-legend { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pal-leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+
+  /* RESULTS */
+  .result-wrap { max-width: 800px; margin: 0 auto; padding: 24px 20px 60px; }
+  .score-header { text-align: center; padding: 40px 24px 32px; background: white; border: 1.5px solid var(--border2); border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 24px var(--shadow); }
+  .score-big { font-family: 'Syne', sans-serif; font-size: clamp(48px, 10vw, 80px); font-weight: 800; line-height: 1; }
+  .score-label { font-size: 15px; color: var(--muted); margin-top: 8px; }
+  .score-grade { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; margin-top: 12px; }
+  .breakdown-bar { display: flex; height: 10px; border-radius: 10px; overflow: hidden; margin-top: 20px; gap: 2px; }
+  .bar-correct { background: var(--green); }
+  .bar-wrong { background: var(--red); }
+  .bar-skip { background: var(--orange-border); }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; box-shadow: 0 2px 12px var(--shadow); }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 4px; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+  .motivation-card { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border: 1.5px solid #f48fb1; border-radius: 18px; padding: 28px; margin-bottom: 24px; box-shadow: 0 6px 24px rgba(233,30,140,0.15); text-align: center; }
+  .motivation-card .emoji { font-size: 40px; margin-bottom: 12px; }
+  .motivation-card .msg { font-size: 16px; line-height: 1.8; color: var(--text2); margin-bottom: 12px; font-weight: 500; }
+  .motivation-card .sub { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .motivation-card .sig { font-family: 'Space Mono', monospace; font-size: 14px; color: var(--accent); font-weight: 700; margin-top: 12px; }
+  .analysis-section { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 18px; box-shadow: 0 2px 12px var(--shadow); }
+  .analysis-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text2); margin-bottom: 14px; }
+  .alert-card { border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; font-size: 13.5px; }
+  .alert-red { background: var(--red-bg); border-left: 4px solid var(--red); color: var(--red); }
+  .alert-orange { background: var(--orange-bg); border-left: 4px solid var(--orange); color: var(--orange); }
+  .alert-green { background: var(--green-bg); border-left: 4px solid var(--green); color: var(--green); }
+  .chapter-bar-row { margin-bottom: 10px; }
+  .chapter-bar-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--text2); margin-bottom: 4px; }
+  .chapter-bar-track { background: var(--bg); border-radius: 6px; height: 8px; overflow: hidden; }
+  .chapter-bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  .mistake-card { background: white; border: 1.5px solid var(--border2); border-radius: 14px; padding: 20px; margin-bottom: 14px; box-shadow: 0 2px 12px var(--shadow); }
+  .mistake-q { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 12px; line-height: 1.6; }
+  .mistake-ans-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .wrong-ans { background: var(--red-bg); border: 1px solid var(--red-border); border-radius: 8px; padding: 8px 12px; font-size: 13.5px; color: var(--red); }
+  .right-ans { background: var(--green-bg); border: 1px solid var(--green-border); border-radius: 8px; padding: 8px 12px; font-size: 13.5px; color: var(--green); }
+  .exp-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; margin-top: 12px; }
+  .retry-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; border: none; border-radius: 14px; padding: 18px; font-size: 17px; font-weight: 700; font-family: 'Syne', sans-serif; cursor: pointer; box-shadow: 0 6px 24px var(--shadow2); margin-top: 24px; transition: transform 0.15s; }
+  .retry-btn:hover { transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .test-header { padding: 10px 14px; }
+    .q-card { padding: 16px 12px; }
+    .palette-grid { grid-template-columns: repeat(8, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="intro-screen" class="screen active">
+  <div class="intro-badge">🧬 NEET 2026 · Mock Test 02</div>
+  <h1 class="intro-title">Biology Mock 02</h1>
+  <p class="intro-sub">Harder. Deeper. Closer to the real exam. Only confirmed PYQs as easy — everything else is medium/hard. Full-syllabus coverage.</p>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Questions</div><div class="info-val">90</div></div>
+    <div class="info-card"><div class="info-label">Total Marks</div><div class="info-val">360</div></div>
+    <div class="info-card"><div class="info-label">Marking</div><div class="info-val">+4 / −1</div></div>
+    <div class="info-card"><div class="info-label">Difficulty</div><div class="info-val">↑ Hard</div></div>
+  </div>
+  <div class="chapter-tags">
+    <span class="chapter-tag">Molecular Biology</span>
+    <span class="chapter-tag">Cell Biology</span>
+    <span class="chapter-tag">Genetics</span>
+    <span class="chapter-tag">Plant Kingdom</span>
+    <span class="chapter-tag">Animal Kingdom</span>
+    <span class="chapter-tag">Biotechnology</span>
+    <span class="chapter-tag">Ecology</span>
+    <span class="chapter-tag">Human Physiology</span>
+    <span class="chapter-tag">Reproduction</span>
+    <span class="chapter-tag">Evolution</span>
+    <span class="chapter-tag">Plant Physiology</span>
+  </div>
+  <button class="start-btn" onclick="startTest()">Start Mock 02 →</button>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen" class="screen">
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="test-header">
+    <div class="header-left">
+      <span class="subject-pill">BIO</span>
+      <span class="q-counter">Q <span id="qNumDisplay">1</span> of 90</span>
+    </div>
+  </div>
+  <div class="test-body" id="questionArea"></div>
+  <button class="palette-toggle" id="paletteToggle" onclick="togglePalette()">⊞</button>
+  <div class="palette-panel" id="palettePanel">
+    <div class="palette-title">Question Navigator</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+    <div class="palette-legend">
+      <div class="pal-leg"><div class="pal-dot answered" style="width:14px;height:14px;border-radius:4px;display:inline-block;"></div> Answered</div>
+      <div class="pal-leg"><div class="pal-dot current" style="width:14px;height:14px;border-radius:4px;display:inline-block;"></div> Current</div>
+      <div class="pal-leg"><div class="pal-dot skipped" style="width:14px;height:14px;border-radius:4px;display:inline-block;"></div> Skipped</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen" class="screen">
+  <div class="result-wrap" id="resultContent"></div>
+</div>
+
+<script>
+const TOTAL_QUESTIONS = 90;
+const MAX_MARKS = TOTAL_QUESTIONS * 4;
+
+// ═══════════════════════════════════════════════════════════
+//  QUESTION BANK — 90 NEET Biology Questions (Mock 02)
+//  Difficulty: ~20% easy (PYQ only), ~45% medium, ~35% hard
+// ═══════════════════════════════════════════════════════════
+
+const questions = [
+
+// ── MOLECULAR BASIS OF INHERITANCE ──
+{q:"Which of the following statements about the lac operon is INCORRECT?",
+opts:["A. CAP-cAMP complex acts as a positive regulator","B. Lactose acts as an inducer by directly binding to the operator","C. The repressor protein is coded by the i gene","D. In the absence of lactose, the repressor blocks transcription at the operator"],
+ans:1, diff:"hard", chapter:"Molecular Basis of Inheritance", pyq:null,
+exp:"Lactose itself is NOT the inducer — it is converted to allolactose (by β-galactosidase) which then binds the repressor and inactivates it. The inducer = allolactose, not lactose directly. CAP-cAMP = positive regulation (when glucose is absent). The i gene codes for the repressor. The repressor blocks the operator in absence of lactose — all correct.",
+tip:"Key distinction: lactose (substrate) ≠ allolactose (inducer). β-galactosidase converts lactose → allolactose. The real inducer is allolactose.",
+trick:"The trap here is that lac operon questions always say 'lactose is the inducer' in simplified NCERT language. But NCERT Class 12 also mentions allolactose specifically. When a statement says 'lactose binds the repressor directly' or 'binds the operator' — both are wrong. Lactose → allolactose → binds repressor. Never the operator."},
+
+{q:"In DNA replication, which enzyme removes the RNA primers and fills in the gaps with DNA?",
+opts:["A. DNA Pol III","B. DNA Pol I","C. DNA ligase","D. Primase"],
+ans:1, diff:"medium", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2022",
+exp:"DNA Polymerase I (Pol I) has 5'→3' exonuclease activity that removes RNA primers, and 5'→3' polymerase activity to fill the gap with DNA. DNA Pol III = main replicative polymerase. DNA ligase = seals nicks between Okazaki fragments. Primase = synthesizes RNA primers.",
+tip:"Pol I = primer removal + gap filling. Pol III = actual DNA synthesis. Ligase = sealing. Remember: I = fIxer. III = maIn workhorse.",
+trick:"Students often think ligase removes primers because it's associated with 'joining.' Ligase only joins the phosphodiester bond between the last filled nucleotide and the next fragment. Pol I does the removal and filling. Two separate events, two separate enzymes."},
+
+{q:"Consider the following statements about tRNA:\n1. It has an anticodon loop at one end and an amino acid attachment site (CCA-3') at the other\n2. The anticodon loop is complementary to the codon on mRNA\n3. tRNA has extensive secondary structure due to intramolecular base pairing\n4. All tRNAs have the same anticodon\nWhich statements are CORRECT?",
+opts:["A. 1, 2 and 3 only","B. 2 and 3 only","C. 1, 2, 3 and 4","D. 1 and 4 only"],
+ans:0, diff:"hard", chapter:"Molecular Basis of Inheritance", pyq:null,
+exp:"Statements 1, 2, 3 are correct. tRNA has a cloverleaf secondary structure with: anticodon loop (specific to amino acid), TψC loop, D-loop, and the 3'-CCA acceptor end where amino acid attaches. Statement 4 is FALSE — each tRNA has a UNIQUE anticodon specific to its amino acid. If all tRNAs had the same anticodon, only one amino acid could be incorporated.",
+tip:"tRNA = cloverleaf shape. CCA at 3' end = universal amino acid attachment. Anticodon = specific per amino acid = 64 codons (61 sense + 3 stop). ~61 different tRNAs exist.",
+trick:"Statement 4 is the obvious trap — if tRNAs all had the same anticodon, proteins would be a single amino acid polymer. The 'every tRNA is unique' rule is fundamental. Also: tRNA doesn't have anticodon at 'one end' (as statement 1 implies positionally) — but the CCA-3' acceptor stem IS at the 3' end, and anticodon IS in the middle loop. Statement 1 is conceptually correct even if the word 'end' is loose."},
+
+{q:"The 'central dogma' of molecular biology was proposed by:",
+opts:["A. Watson and Crick","B. Francis Crick","C. Jacob and Monod","D. Meselson and Stahl"],
+ans:1, diff:"easy", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2021",
+exp:"Francis Crick proposed the Central Dogma (1958): DNA → RNA → Protein. Watson & Crick discovered the double-helix structure (1953). Jacob & Monod proposed the operon model. Meselson & Stahl demonstrated semi-conservative replication.",
+tip:"Crick = two contributions: double helix (with Watson) AND central dogma. Central dogma = Crick alone.",
+trick:"Watson is always paired with Crick so students credit both for central dogma. Watson's contribution = double helix structure. Central dogma = Crick's independent work. Separate the two contributions by year: double helix = 1953, central dogma = 1958."},
+
+{q:"A cell has a mutation where Adenine pairs with Cytosine instead of Thymine. After 3 rounds of replication starting from 1 mutant cell, how many daughter DNA molecules will have the mutant A-C base pair?",
+opts:["A. 2","B. 4","C. 8","D. 1"],
+ans:0, diff:"hard", chapter:"Molecular Basis of Inheritance", pyq:null,
+exp:"Semi-conservative replication: after round 1, 2 daughter molecules (1 mutant strand + 1 new normal strand each). The mutant strand (A-C) is conserved in one daughter each generation. After 3 rounds → 8 total molecules. But the A-C mutant base pair can only exist on the strand that was originally mutant. After round 1: 2 DNA molecules, 1 has the A-C pair. Round 2: 4 molecules, 1 has the A-C pair. Round 3: 8 molecules, 1 has the A-C pair. So only 2 molecules? Actually: 1 mutant strand preserved throughout → 1 molecule has the original A:C pairing. But after round 1, the complementary strand has C:G (corrected). So only 1 molecule per generation retains the A:C mismatch. After 3 rounds = 8 molecules total, 1 retains the A:C mismatch, and 1 retains the complementary C:G change. Answer = 2 molecules have the 'mutant region': 1 with A:C and 1 with C:G change propagated. Best answer = 2.",
+tip:"Semi-conservative = each daughter gets 1 old strand. Mutant strand is preserved in exactly 1 molecule per generation. After n rounds: 2ⁿ total, only 2 carry the mutant locus (1 original + 1 complementary change).",
+trick:"This requires tracking which strand carries the mutation through semi-conservative replication. The mutant strand (A on it) is never destroyed — just diluted. After 3 rounds, only the molecule that inherited the original mutant strand carries A:C. But its complement also has the C:A change. So 2 molecules carry the mutation region. This is why NEET sometimes asks 'which daughter has the mutation' — semi-conservative = mutation diluted but never destroyed."},
+
+{q:"Assertion (A): In eukaryotes, transcription and translation occur simultaneously.\nReason (R): The nuclear envelope physically separates transcription from translation in eukaryotes.",
+opts:["A. Both A and R are true, and R is the correct explanation of A","B. Both A and R are true, but R is NOT the correct explanation of A","C. A is false but R is true","D. A is true but R is false"],
+ans:2, diff:"hard", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2023",
+exp:"A is FALSE. In eukaryotes, transcription occurs in the nucleus and translation in the cytoplasm — they are spatially and temporally SEPARATED. (Simultaneous transcription + translation = PROKARYOTIC feature = polysome formation while RNA is still being made.) R is TRUE — the nuclear envelope does physically separate these two processes in eukaryotes. Since A is false and R is true: option C.",
+tip:"Eukaryotes: transcription (nucleus) → mRNA processing → export → translation (cytoplasm) = SEQUENTIAL. Prokaryotes: no nuclear membrane → simultaneous (coupled transcription-translation). NEET frequently reverses this.",
+trick:"This assertion is a classic reversal trap. Coupled transcription-translation = prokaryotes (E. coli). Nuclear membrane in eukaryotes physically prevents coupling. If assertion says eukaryotes have simultaneous transcription+translation → always FALSE. The reason is true and correctly explains WHY the assertion is false."},
+
+// ── CELL: THE UNIT OF LIFE ──
+{q:"Which of the following correctly describes the 9+2 arrangement of cilia and flagella?",
+opts:["A. 9 peripheral doublets + 2 central singlets","B. 9 peripheral singlets + 2 central doublets","C. 9 peripheral triplets + 2 central singlets","D. 11 peripheral doublets with no central pair"],
+ans:0, diff:"medium", chapter:"Cell: Unit of Life", pyq:"NEET 2020",
+exp:"Cilia/flagella axoneme: 9 peripheral doublet microtubules + 2 central singlet microtubules = '9+2 arrangement.' Movement powered by dynein ATPase arms. Centrioles have 9+0 arrangement (9 triplets, no central pair). Basal bodies also = 9+0.",
+tip:"9+2 = cilia/flagella (motile). 9+0 = centrioles/basal bodies (non-motile/organizing). The '2' in the middle = central pair = required for movement.",
+trick:"The confusion: centrioles and cilia both have '9-something.' Centrioles = 9 triplets + 0 central pair (9+0). Cilia = 9 doublets + 2 central singlets (9+2). Also: the central elements in cilia are SINGLETS (not doublets). The peripheral ones are DOUBLETS (A + B tubule)."},
+
+{q:"Match the following organelles with their correct membrane compositions:\nI. Mitochondria — (a) single membrane\nII. Chloroplast — (b) double membrane with thylakoids\nIII. Lysosome — (c) double membrane, no thylakoids\nIV. Vacuole — (d) single membrane (tonoplast)\nChoose the CORRECT matching:",
+opts:["A. I-(c), II-(b), III-(a), IV-(d)","B. I-(b), II-(c), III-(a), IV-(d)","C. I-(c), II-(a), III-(b), IV-(d)","D. I-(a), II-(b), III-(c), IV-(d)"],
+ans:0, diff:"hard", chapter:"Cell: Unit of Life", pyq:null,
+exp:"Mitochondria = double membrane (outer + inner with cristae), no thylakoids → (c). Chloroplast = double membrane (outer + inner) + internal thylakoid system → (b). Lysosome = single membrane (contains hydrolytic enzymes) → (a). Vacuole = single membrane = tonoplast → (d). Correct: I-(c), II-(b), III-(a), IV-(d).",
+tip:"Double membrane organelles: mitochondria, chloroplast, nucleus. Single membrane: ER, Golgi, lysosomes, vacuoles, peroxisomes. Only chloroplasts have thylakoids.",
+trick:"The trap is confusing mitochondria (double membrane, cristae not thylakoids) with chloroplasts (double membrane + thylakoids). Both have double membranes but chloroplast is the ONLY one with thylakoids. Students sometimes match chloroplast with (c) because they forget the thylakoid criterion."},
+
+{q:"The enzyme responsible for unwinding the DNA double helix during replication is:",
+opts:["A. DNA Polymerase III","B. Topoisomerase","C. Helicase","D. Primase"],
+ans:2, diff:"medium", chapter:"Cell: Unit of Life", pyq:"NEET 2019",
+exp:"Helicase unwinds the double helix at the replication fork by breaking H-bonds between base pairs. Topoisomerase relieves torsional strain (supercoiling) ahead of the fork. DNA Pol III = synthesis. Primase = RNA primer synthesis.",
+tip:"Helicase = helix breaker (unwinds). Topoisomerase = torsion reliever (cuts/rejoins to relieve supercoiling). Both work at replication fork but different roles.",
+trick:"Topoisomerase and helicase are both needed at the replication fork — different functions. Helicase = opens the helix (breaks H-bonds). Topoisomerase = prevents supercoiling buildup. Question asks 'unwinding' = helicase. 'Supercoiling relief' = topoisomerase. Don't mix them."},
+
+{q:"Which of the following statements about the Golgi apparatus is INCORRECT?",
+opts:["A. The cis face receives vesicles from the ER","B. The trans face is the shipping end — vesicles bud from here","C. Glycosylation of proteins occurs in the Golgi","D. The Golgi produces ribosomes and exports them to the cytoplasm"],
+ans:3, diff:"medium", chapter:"Cell: Unit of Life", pyq:null,
+exp:"Ribosomes are produced in the NUCLEOLUS (rRNA synthesis) and assembled in the nucleus/cytoplasm — NOT in the Golgi. Golgi functions: protein modification (glycosylation, phosphorylation), sorting, packaging into vesicles. Cis face = receives from ER. Trans face = exports vesicles. All other options are correct.",
+tip:"Golgi = post office of the cell. Cis (receiving) → medial (processing) → trans (shipping). Ribosomes = nucleolus → cytoplasm. Never involves Golgi.",
+trick:"The incorrect statement sounds plausible because the Golgi does handle secretory proteins that go to the cytoplasm eventually. But ribosomes are made in the NUCLEOLUS (rRNA) and assembled at the nucleus. The Golgi handles proteins, not ribosome production. If a question mentions 'Golgi + ribosomes' in the same production sentence — it's wrong."},
+
+// ── PLANT KINGDOM ──
+{q:"In which group of plants does alternation of generations show a dominant sporophyte and reduced gametophyte?",
+opts:["A. Bryophytes","B. Pteridophytes","C. Gymnosperms","D. Both B and C"],
+ans:3, diff:"hard", chapter:"Plant Kingdom", pyq:null,
+exp:"In bryophytes: gametophyte is dominant, sporophyte is dependent on it. In pteridophytes AND gymnosperms/angiosperms: sporophyte is dominant and independent; gametophyte is reduced. In gymnosperms: male gametophyte = pollen grain (3 cells); female gametophyte = highly reduced endosperm (inside ovule). Pteridophytes have free-living but small gametophyte (prothallus). So both B and C are correct.",
+tip:"Evolutionary trend: bryophytes (G dominant) → pteridophytes (S dominant, G free-living) → seed plants (S dominant, G fully dependent). Gametophyte progressively reduced through evolution.",
+trick:"Students choose just gymnosperms (C) or just pteridophytes (B). Pteridophytes also have dominant sporophyte (the fern plant you see = sporophyte). Gametophyte = small prothallus. Both B and C fit 'dominant sporophyte.' Bryophytes = the OPPOSITE (dominant gametophyte = the moss you see)."},
+
+{q:"Which of the following is the CORRECT sequence of events in the life cycle of Funaria (moss)?",
+opts:["A. Spore → Protonema → Gametophore → Sporophyte","B. Spore → Gametophore → Protonema → Sporophyte","C. Spore → Sporophyte → Protonema → Gametophyte","D. Protonema → Spore → Gametophore → Sporophyte"],
+ans:0, diff:"hard", chapter:"Plant Kingdom", pyq:"NEET 2022",
+exp:"Funaria life cycle: Spore (haploid) germinates → Protonema (filamentous juvenile gametophyte) → Gametophore (leafy gametophyte with archegonia/antheridia) → Fertilization → Sporophyte (dependent on gametophore). Protonema comes BEFORE the mature gametophore, not after.",
+tip:"Funaria: Spore → Protonema → Gametophore → (fertilization) → Sporophyte. The protonema is the first stage after spore germination — like a juvenile phase.",
+trick:"The most common error is skipping the protonema stage or placing gametophore before protonema. Protonema = transient filamentous structure (looks like Spirogyra). It differentiates INTO the gametophore. Never reversed. NEET has tested this sequence specifically."},
+
+{q:"Identify the INCORRECT match among heterosporous plants:",
+opts:["A. Selaginella — heterosporous pteridophyte","B. Salvinia — heterosporous pteridophyte","C. Equisetum — heterosporous pteridophyte","D. All gymnosperms — heterosporous"],
+ans:2, diff:"hard", chapter:"Plant Kingdom", pyq:null,
+exp:"Equisetum (horsetail) is HOMOSPOROUS — it produces only one type of spore. Selaginella and Salvinia are heterosporous pteridophytes (produce microspores and megaspores). All gymnosperms and angiosperms are heterosporous (pollen = microspore; megaspore inside ovule). So C is the incorrect match.",
+tip:"Heterosporous pteridophytes: Selaginella, Salvinia, Marsilea. Homosporous: Equisetum, most ferns. Heterospory = evolutionary pre-adaptation for seed habit.",
+trick:"Equisetum is a pteridophyte, so students assume it shares heterospory with Selaginella. It doesn't — Equisetum is homosporous. The heterosporous pteridophytes are specifically: Selaginella, Salvinia, Marsilea. Memorize these as exceptions within pteridophytes."},
+
+{q:"Which algae produces agar-agar used in microbiological culture media?",
+opts:["A. Sargassum","B. Gelidium and Gracilaria","C. Volvox","D. Laminaria"],
+ans:1, diff:"medium", chapter:"Plant Kingdom", pyq:"NEET 2020",
+exp:"Agar-agar is obtained from red algae — specifically Gelidium and Gracilaria. Sargassum and Laminaria are brown algae. Volvox is a green alga. Alginic acid is obtained from brown algae (Sargassum, Laminaria). Carrageenan = Chondrus (red alga).",
+tip:"Agar-agar = Gelidium/Gracilaria (red algae). Alginic acid = brown algae. Chlorella (green alga) = high protein food supplement.",
+trick:"Laminaria and Sargassum are brown algae — they produce alginic acid, NOT agar. Students confuse 'algae' with 'agar' phonetically. Agar = red algae exclusively. Alginic acid = brown algae. Iodine = also from brown algae (Laminaria)."},
+
+// ── ANIMAL KINGDOM ──
+{q:"Which of the following correctly describes the coelom in Annelida?",
+opts:["A. Pseudocoelom formed from blastocoel","B. Schizocoel — true coelom formed by splitting of mesoderm","C. Enterocoel — formed from archenteron pouches","D. Acoelomate — no coelom present"],
+ans:1, diff:"hard", chapter:"Animal Kingdom", pyq:null,
+exp:"Annelids have a TRUE coelom (eucoelomate) that forms by schizocoel — the mesoderm splits to form the coelom. Echinoderms and chordates have enterocoelom (coelom from archenteron). Pseudocoelom = Nematodes (Aschelminthes). Acoelomate = Platyhelminthes (flatworms).",
+tip:"Coelom types: Acoelomate (Platyhelminthes) → Pseudocoelomate (Nematoda) → Eucoelomate: Schizocoely (Annelida, Mollusca, Arthropoda) vs Enterocoely (Echinodermata, Chordata).",
+trick:"Students often confuse Annelida with enterocoely because 'annelid = advanced.' Annelids use schizocoely (mesoderm splits). Only deuterostomes (Echinoderms + Chordates) use enterocoely. The protostome-deuterostome divide tracks with the type of coelom formation."},
+
+{q:"In which phylum is the nerve ring around the oesophagus the primary nervous coordination structure?",
+opts:["A. Annelida","B. Arthropoda","C. Echinodermata","D. Mollusca"],
+ans:2, diff:"hard", chapter:"Animal Kingdom", pyq:null,
+exp:"Echinoderms have a radially symmetrical nervous system with a nerve ring around the oesophagus and radial nerves. They lack a true brain or ganglia. Annelids have ventral nerve cord with ganglia. Arthropods have ganglia + ventral nerve cord. Molluscs have ganglia network.",
+tip:"Echinoderms: radial symmetry + water vascular system + nerve ring (no brain). Nerve ring = radial coordination for tube feet movement.",
+trick:"The nerve ring sounds like it could belong to a simpler animal (cnidarians have a nerve net, not ring). Echinoderm nerve ring is around the OESOPHAGUS specifically. Don't confuse with cnidarian nerve net. Echinoderms = unique: radially symmetric as adults, bilaterally symmetric as larvae."},
+
+{q:"Which of the following features distinguishes Aves from Reptilia?",
+opts:["A. Scales on legs","B. Poikilothermic metabolism","C. Four-chambered heart with complete separation","D. Amniotic egg"],
+ans:2, diff:"medium", chapter:"Animal Kingdom", pyq:"NEET 2021",
+exp:"Birds (Aves) have a 4-chambered heart with complete oxygenated/deoxygenated blood separation — feature shared with mammals. Crocodiles (Reptilia) also have 4-chambered hearts (partial in others). BEST distinguishing feature: Birds = homeothermic (warm-blooded) + 4-chambered complete. Reptiles: poikilothermic + most have 3-chambered heart (except crocodiles). Amniotic egg = both Aves and Reptilia. Scales = both have.",
+tip:"Aves unique features: feathers (modified scales), hollow bones, warm-blooded, 4-chambered heart, no teeth, high metabolic rate. These distinguish from most reptiles.",
+trick:"Amniotic egg is shared by reptiles AND birds AND mammals — it's a synapomorphy of amniotes, not unique to birds. Scales on legs = shared. Poikilothermic = reptiles (opposite of birds). The 4-chambered heart question: crocodilians also have 4 chambers — but the question asks Aves vs Reptilia as classes, and complete 4-chambered heart is the standard distinguishing criterion."},
+
+// ── PRINCIPLES OF INHERITANCE & VARIATION ──
+{q:"A man with blood group A (genotype \(I^A i\)) and a woman with blood group B (genotype \(I^B i\)) have children. What is the probability that their child will have blood group O?",
+opts:["A. \(\\frac{1}{4}\\)","B. \(\\frac{1}{2}\\)","C. \(\\frac{3}{4}\\)","D. 0"],
+ans:0, diff:"medium", chapter:"Principles of Inheritance", pyq:"NEET 2019",
+exp:"Cross: \(I^A i\\) × \(I^B i\\). Gametes: \(I^A, i\\) and \(I^B, i\\). Offspring: \(I^A I^B\\) (AB) : \(I^A i\\) (A) : \(I^B i\\) (B) : \(ii\\) (O) = 1:1:1:1. Probability of O = \(\\frac{1}{4}\\).",
+tip:"ABO blood group: \(I^A\\) and \(I^B\\) are codominant; i is recessive. Heterozygous parents can always produce O offspring if both carry the i allele.",
+trick:"Students see 'A × B' parents and think O is impossible because neither parent is O. But both parents are HETEROZYGOUS (\(I^A i\\) and \(I^B i\\)) — each contributes 50% chance of i. Two i's together = blood group O. Always check the GENOTYPE, not just the phenotype of parents."},
+
+{q:"Which of the following statements about chromosomal aberrations is INCORRECT?",
+opts:["A. Deletion — loss of a chromosomal segment","B. Duplication — a segment is repeated in the chromosome","C. Inversion — a segment is detached and reattached in the reversed orientation","D. Translocation — exchange of segments between homologous chromosomes only"],
+ans:3, diff:"hard", chapter:"Principles of Inheritance", pyq:null,
+exp:"Translocation = exchange of segments between NON-HOMOLOGOUS chromosomes (not between homologous ones — that's crossing over/recombination). Crossing over between homologs = normal recombination. Translocation specifically involves non-homologous chromosomes (e.g., Philadelphia chromosome: chr 9 ↔ chr 22 translocation causing CML).",
+tip:"Translocation = non-homologous chromosomes swap segments. Philadelphia chromosome = translocation between chr 9 and chr 22 (BCR-ABL fusion gene). Crossing over = homologous chromosomes = normal recombination (not aberration).",
+trick:"This is a precision-definition trap. 'Translocation' sounds like 'movement between chromosomes' without the crucial qualifier NON-HOMOLOGOUS. Exchange between homologous chromosomes = crossing over (not an aberration). Translocation = non-homologous. This distinction is consistently tested in NEET."},
+
+{q:"In a testcross of a trihybrid (\(AaBbCc\) × \(aabbcc\)), what fraction of offspring would show all three recessive traits (aabbcc phenotype), assuming independent assortment?",
+opts:["A. \(\\frac{1}{8}\\)","B. \(\\frac{1}{4}\\)","C. \(\\frac{3}{8}\\)","D. \(\\frac{1}{2}\\)"],
+ans:0, diff:"hard", chapter:"Principles of Inheritance", pyq:null,
+exp:"Testcross: \(AaBbCc\\) × \(aabbcc\\). Each locus: \(Aa × aa = \\frac{1}{2}\\) Aa + \(\\frac{1}{2}\\) aa. Probability of all recessive (aabbcc) = \(\\frac{1}{2} × \\frac{1}{2} × \\frac{1}{2} = \\frac{1}{8}\\). In a testcross, the recessive parent contributes all recessive alleles, so phenotype ratio = 1:1:1:1:1:1:1:1 (8 classes, each \(\\frac{1}{8}\\)).",
+tip:"Testcross: recessive parent always contributes lowercase alleles. Trihybrid testcross = 8 phenotypic classes each at \(\\frac{1}{8}\\) frequency. The all-recessive class = \(\\frac{1}{2}^3 = \\frac{1}{8}\\).",
+trick:"Some students calculate \(\\frac{1}{4}\\) thinking about F2 ratios (9:3:3:1). In a testcross with a trihybrid, it's NOT F2 — you're crossing with the homozygous recessive. Each gene independently contributes \(\\frac{1}{2}\\) chance of recessive. Three genes: \((\\frac{1}{2})^3 = \\frac{1}{8}\\)."},
+
+{q:"Sex-linked inheritance in Drosophila was discovered by:",
+opts:["A. Gregor Mendel","B. T.H. Morgan","C. Hugo de Vries","D. Walter Sutton"],
+ans:1, diff:"easy", chapter:"Principles of Inheritance", pyq:"NEET 2021",
+exp:"T.H. Morgan (1910) discovered sex-linked inheritance in Drosophila melanogaster (white-eye mutation). He also discovered linkage and recombination, establishing the chromosomal theory of heredity. Mendel = pea plant experiments. Hugo de Vries = mutation theory. Walter Sutton = chromosomal theory (with Boveri).",
+tip:"Morgan = Drosophila + sex-linked inheritance + linkage + recombination. White-eye male fly crossed with red-eye female = sex-linked inheritance. Nobel Prize 1933.",
+trick:"Sutton is often confused with Morgan — Sutton proposed the chromosomal theory of heredity (inheritance based on chromosomes). Morgan PROVED it experimentally using Drosophila sex-linked traits. Theory (Sutton) vs experimental proof (Morgan)."},
+
+{q:"In which of the following conditions does the Lyon hypothesis (X-inactivation) play a role?",
+opts:["A. Turner syndrome (45, X)","B. Klinefelter syndrome (47, XXY)","C. Down syndrome (trisomy 21)","D. Haemophilia in males"],
+ans:1, diff:"hard", chapter:"Principles of Inheritance", pyq:null,
+exp:"Lyon hypothesis: in cells with more than one X chromosome, all but one X is inactivated (forms Barr body). Klinefelter males (47, XXY) have 1 Barr body (one X inactivated, one active). Turner (45, X) has 0 Barr bodies (only 1 X, no inactivation needed). Down syndrome = autosomal trisomy (X-inactivation irrelevant). Haemophilia males = one X (no inactivation).",
+tip:"Barr bodies = number of inactivated X chromosomes = (total X chromosomes − 1). XX female = 1 Barr body. XXY Klinefelter = 1 Barr body. XXX = 2 Barr bodies. Turner (XO) = 0 Barr bodies.",
+trick:"The trap is choosing Turner syndrome because it's a sex chromosome disorder. Turner has ONLY one X — there's nothing to inactivate. Lyon hypothesis applies ONLY when there are 2+ X chromosomes. Klinefelter (XXY) = 2 X chromosomes → 1 gets inactivated = 1 Barr body."},
+
+// ── BIOTECHNOLOGY ──
+{q:"The Ti plasmid used in Agrobacterium-mediated transformation contains a region called T-DNA. What happens to T-DNA after infection?",
+opts:["A. It replicates independently in the plant cell as an episome","B. It integrates into the plant nuclear genome","C. It remains in the cytoplasm and is transcribed there","D. It is destroyed by plant defense mechanisms"],
+ans:1, diff:"hard", chapter:"Biotechnology: Principles and Processes", pyq:"NEET 2023",
+exp:"T-DNA (Transfer DNA) from Ti plasmid integrates into the NUCLEAR genome of the plant host cell. This integration is stable. The T-DNA carries genes for opine synthesis (tumor nutrition) and plant hormone genes causing crown gall disease. Researchers replace these pathogenicity genes with genes of interest for plant transformation.",
+tip:"Ti plasmid = Agrobacterium's 'natural genetic engineer' tool. T-DNA integrates into plant nuclear DNA. Used to create transgenic plants. Remove pathogenicity genes, insert gene of interest into T-DNA region.",
+trick:"Students think T-DNA stays in the cytoplasm like a plasmid. It doesn't — that's the whole point. T-DNA integration into the nuclear genome means the transgene is heritable in the plant. If it remained cytoplasmic, it would be lost after cell division."},
+
+{q:"PCR amplification requires all of the following EXCEPT:",
+opts:["A. Thermostable DNA polymerase (Taq)","B. DNA template","C. Two specific primers (forward and reverse)","D. RNA primers synthesized de novo from scratch for each cycle"],
+ans:3, diff:"medium", chapter:"Biotechnology: Principles and Processes", pyq:"NEET 2022",
+exp:"PCR uses: (1) DNA template, (2) two specific DNA primers (forward + reverse flanking the target), (3) Taq polymerase (thermostable, from Thermus aquaticus), (4) dNTPs, (5) buffer with \(Mg^{2+}\\). PCR does NOT use RNA primers — the primers used IN PCR are short synthetic DNA oligonucleotides, not RNA. In vivo replication uses RNA primers (by primase) — NOT PCR.",
+tip:"PCR primers = short synthetic DNA (NOT RNA). This is different from in vivo replication where primase makes RNA primers. Taq polymerase has 5'→3' polymerase activity; no proofreading (unlike in vivo).",
+trick:"The confusing part: in vivo DNA replication uses RNA primers (made by primase). But PCR uses synthetic DNA oligonucleotide primers. These are two different contexts. PCR = laboratory technique = uses DNA primers (custom designed). In vivo replication = uses RNA primers. Don't conflate the two systems."},
+
+{q:"Which of the following vectors is used for cloning large DNA fragments (100–300 kb) in human genome projects?",
+opts:["A. pBR322 plasmid","B. Lambda phage","C. BAC (Bacterial Artificial Chromosome)","D. pUC19"],
+ans:2, diff:"hard", chapter:"Biotechnology: Principles and Processes", pyq:null,
+exp:"BACs (Bacterial Artificial Chromosomes) can carry inserts of 100–300 kb. YACs (Yeast Artificial Chromosomes) carry even larger inserts (200–800 kb). Lambda phage = up to ~20 kb. pBR322 = small plasmid (~5 kb inserts). Human Genome Project primarily used BAC libraries. pUC19 = small cloning vector.",
+tip:"Cloning capacity: Plasmids (pBR322, pUC19) = small (<10 kb). Lambda phage = ~20 kb. Cosmids = ~40 kb. BACs = 100–300 kb. YACs = 200–800 kb. For genome projects = BAC/YAC.",
+trick:"Lambda phage sounds large and capable, and it's a well-known cloning vector. But lambda's capacity (~20 kb) is far too small for genome-scale cloning. Human genome project needed BAC/YAC-scale vectors. This tests whether you know the numbers, not just the vector names."},
+
+{q:"Assertion (A): Restriction endonucleases like EcoRI produce 'sticky ends' that facilitate directional cloning.\nReason (R): EcoRI cuts both strands at the same position, producing blunt ends.",
+opts:["A. Both A and R are true, and R is the correct explanation of A","B. Both A and R are true, but R is NOT the correct explanation of A","C. A is true but R is false","D. Both A and R are false"],
+ans:2, diff:"hard", chapter:"Biotechnology: Principles and Processes", pyq:null,
+exp:"A is TRUE: EcoRI produces 4-base 5' overhangs (sticky ends: AATT overhangs) enabling directional cloning via complementary sticky ends. R is FALSE: EcoRI cuts the two strands at DIFFERENT positions (staggered cuts), producing STICKY ends (5' overhangs), NOT blunt ends. Blunt ends are produced by enzymes like HaeIII, SmaI (cut at same position on both strands).",
+tip:"EcoRI = staggered cut = 5' AATT sticky ends. HaeIII = straight cut = blunt ends. Sticky ends enable efficient directional ligation; blunt ends are less efficient.",
+trick:"The reason says EcoRI cuts at the 'same position' producing blunt ends — this is the complete opposite. EcoRI cuts STAGGERED: G↓AATTC (one strand) and CTTAA↑G (other strand). This produces 4-nucleotide 5' overhangs. Blunt-end enzymes cut at exactly the same position on both strands. Classic assertion-reason inversion trap."},
+
+// ── ECOLOGY ──
+{q:"The logistic growth equation \(\\frac{dN}{dt} = rN\\left(\\frac{K-N}{K}\\right)\\) produces an S-shaped curve. At which population size is the growth rate (\(\\frac{dN}{dt}\\)) maximum?",
+opts:["A. When N = K","B. When N is very small (N → 0)","C. When \(N = \\frac{K}{2}\\)","D. When N exceeds K"],
+ans:2, diff:"hard", chapter:"Organisms and Populations", pyq:"NEET 2022",
+exp:"In logistic growth: \(\\frac{dN}{dt} = rN\\left(\\frac{K-N}{K}\\right)\\). To maximize, differentiate with respect to N and set to 0: maximum \(\\frac{dN}{dt}\\) occurs at \(N = \\frac{K}{2}\\) (inflection point of the S-curve). At N = K, growth rate = 0 (population at carrying capacity). At N → 0, growth rate is also near 0 (few individuals). At N = K/2, the product N × (K-N) is maximum.",
+tip:"Logistic curve: maximum rate of growth = at K/2. This is the inflection point. Fisheries management: harvest at K/2 for maximum sustainable yield.",
+trick:"Students confuse 'maximum growth rate' with 'maximum population size.' Maximum POPULATION = K. Maximum RATE of change = K/2. These are completely different questions. In exponential growth, rate keeps increasing. In logistic, rate peaks at K/2 then decreases. Read whether the question asks for population size or growth rate."},
+
+{q:"Which of the following correctly pairs the ecological interaction with its effect on the two species involved?",
+opts:["A. Mutualism: (+/+), both benefit","B. Commensalism: (+/0), one benefits, one harmed","C. Parasitism: (+/+), parasite and host both benefit","D. Amensalism: (−/−), both species harmed"],
+ans:0, diff:"medium", chapter:"Organisms and Populations", pyq:"NEET 2020",
+exp:"Mutualism = (+/+). Commensalism = (+/0): one benefits, other unaffected (NOT harmed). Parasitism = (+/−): parasite benefits, host harmed. Amensalism = (0/−): one unaffected, other harmed (e.g., Penicillium killing bacteria). Competition = (−/−): both harmed.",
+tip:"Interaction signs: Mutualism (+/+), Commensalism (+/0), Parasitism (+/−), Amensalism (0/−), Competition (−/−), Predation (+/−). Memorize all 6 pairs.",
+trick:"Option B says commensalism = 'one harmed' — that's amensalism. Commensalism = one UNAFFECTED (0), not harmed. Options C and D are also reversed. Only A (mutualism = +/+) is correct. Don't rush through the sign combinations — each is specifically defined."},
+
+{q:"Which of the following is the CORRECT sequence of events in ecological succession from a bare rock?",
+opts:["A. Lichens → Mosses → Grasses → Shrubs → Trees","B. Mosses → Lichens → Grasses → Trees → Shrubs","C. Grasses → Lichens → Mosses → Shrubs → Trees","D. Lichens → Grasses → Mosses → Trees → Shrubs"],
+ans:0, diff:"medium", chapter:"Ecosystem", pyq:"NEET 2021",
+exp:"Primary succession on bare rock: Lichens (pioneer species — weather the rock, add organic matter) → Mosses (small soil begins forming) → Herbs/Grasses (more soil accumulation) → Shrubs → Trees (climax community in suitable climates). Lichens = first because they can survive on bare rock.",
+tip:"Primary succession on rock: L-M-G-S-T = 'Like Moss Grows Slowly Today.' Lichens always = pioneer on bare rock. Climax = forest (in humid conditions).",
+trick:"Students place mosses before lichens because mosses seem 'simpler.' Lichens come FIRST — they can survive on bare rock directly (their acid weathers rock). Mosses need a thin layer of soil/organic matter that lichens first provide. The sequence is mechanistic: what can survive with ZERO soil = lichens."},
+
+{q:"The 10% energy transfer rule in an ecosystem means that moving from producers to primary consumers to secondary consumers:",
+opts:["A. 90% of energy is lost as heat at each trophic level","B. Only 10% of biomass can be transferred to the next level","C. Energy is completely recycled within the food chain","D. Both A and B are correct"],
+ans:3, diff:"hard", chapter:"Ecosystem", pyq:null,
+exp:"The 10% rule (Lindeman's efficiency): ~10% of energy at one trophic level is transferred to the next. The remaining ~90% is lost as heat (respiration, excretion, decomposition) — not transferred. This limits food chains to 4-5 levels. Both A (90% lost as heat) and B (10% biomass transferred) are correct interpretations of the same rule.",
+tip:"Lindeman 10% rule: 1000 kcal producers → 100 kcal herbivores → 10 kcal carnivores → 1 kcal top carnivore. 90% lost at each step as heat/metabolic loss.",
+trick:"Students choose only A or only B, not both. The 10% rule means BOTH: 10% transferred (biomass/energy) AND 90% lost as heat. They are two sides of the same coin. Option D correctly combines both. Also: energy is NOT recycled (materials are recycled — biogeochemical cycles). Energy flow is unidirectional."},
+
+{q:"Which of the following biogeochemical cycles has no significant gaseous phase?",
+opts:["A. Nitrogen cycle","B. Carbon cycle","C. Phosphorus cycle","D. Sulfur cycle"],
+ans:2, diff:"medium", chapter:"Ecosystem", pyq:"NEET 2018",
+exp:"Phosphorus cycle = SEDIMENTARY cycle — no significant gaseous phase. Phosphorus moves through rock weathering → soil → organisms → back to rock/sediment. Carbon cycle has \(CO_2\\) (gaseous). Nitrogen cycle has \(N_2, N_2O\\) (gaseous). Sulfur cycle has \(SO_2, H_2S\\) (gaseous). Phosphorus lacks a volatile gaseous form.",
+tip:"Sedimentary cycles (no gas phase): Phosphorus, Calcium, Iron. Gaseous cycles: C, N, S, H₂O. Phosphorus = slowest cycling element — locked in rock/sediment.",
+trick:"Sulfur has gaseous forms (\(SO_2, H_2S\\)) so students often eliminate it and choose phosphorus correctly. But some also confuse phosphorus with nitrogen (since both involve soil bacteria and fertilizers). The KEY: phosphorus = no gas phase = sedimentary cycle. Nitrogen = gas phase (\(N_2\\) = 78% of atmosphere)."},
+
+// ── SEXUAL REPRODUCTION IN FLOWERING PLANTS ──
+{q:"Which of the following statements about double fertilization in angiosperms is CORRECT?",
+opts:["A. One sperm fertilizes the egg to form the zygote; the other fuses with the polar nuclei to form primary endosperm nucleus (PEN)","B. Both sperms fuse with the egg nucleus to produce a diploid zygote","C. The secondary nucleus (2n) fuses with a sperm to form a haploid endosperm","D. Double fertilization is unique to gymnosperms"],
+ans:0, diff:"medium", chapter:"Sexual Reproduction in Flowering Plants", pyq:"NEET 2022",
+exp:"Double fertilization (unique to angiosperms): Sperm 1 + egg (n) → zygote (2n) → embryo. Sperm 2 + 2 polar nuclei (n+n) → PEN (3n, triploid) → endosperm (nutritive tissue). This is syngamy + triple fusion. Gymnosperms = simple fertilization (no double fertilization).",
+tip:"Double fertilization = angiosperm exclusive. Products: zygote (2n) + PEN (3n). Endosperm = 3n (triploid). Embryo = 2n. Suspensor connects embryo to endosperm.",
+trick:"Option C reverses the ploidy — secondary nucleus is 2n (two polar nuclei), and fusing with a sperm (n) gives 3n, not haploid. Students get confused about PEN ploidy. Polar nuclei = 2 × n = 2n total. + 1 sperm (n) = 3n. Endosperm is always triploid in angiosperms. C states 'haploid endosperm' which is impossible."},
+
+{q:"In the development of male gametophyte in angiosperms, pollen mother cells undergo meiosis to form tetrads. Each pollen grain at the 3-celled stage consists of:",
+opts:["A. 1 generative cell + 2 male gametes","B. 1 tube cell + 1 generative cell (2-celled stage is also released)","C. 2 sperm cells + 1 vegetative (tube) cell","D. 1 vegetative cell + 2 vegetative cells"],
+ans:2, diff:"hard", chapter:"Sexual Reproduction in Flowering Plants", pyq:"NEET 2023",
+exp:"Angiosperm pollen development: Pollen mother cell → (meiosis) → tetrad (4 microspores) → each microspore → pollen grain. Mature pollen: 2-celled stage = 1 larger vegetative (tube) cell + 1 generative cell. Some species shed pollen at 3-celled stage: the generative cell divides → 2 male gametes (sperm cells) + 1 vegetative cell. So 3-celled pollen = 2 sperm + 1 tube cell.",
+tip:"Pollen stages: 2-celled (vegetative + generative). 3-celled (vegetative + 2 sperm). Grass pollen = 3-celled at shedding. Most others = 2-celled. Male gametes in angiosperms = non-motile sperm cells (unlike gymnosperms with flagellated sperms).",
+trick:"The confusion: 'generative cell' vs 'male gametes (sperm cells).' The generative cell DIVIDES to form 2 male gametes. At the 3-celled stage, the division has happened: result = 2 sperm + 1 tube cell. At 2-celled stage = tube cell + generative cell (undivided). Know which stage is being asked."},
+
+{q:"Apomixis in plants refers to:",
+opts:["A. Vegetative propagation via stolons and rhizomes","B. Development of seeds from unfertilized eggs (without fertilization)","C. Fusion of male and female gametes in gymnosperms","D. Self-pollination in cleistogamous flowers"],
+ans:1, diff:"medium", chapter:"Sexual Reproduction in Flowering Plants", pyq:"NEET 2019",
+exp:"Apomixis = reproduction that mimics sexual reproduction (seed production) but WITHOUT fertilization. Types: diplospory, apospory, adventitious embryony. Importance: produces clonal seeds — used in hybrid seed technology. NOT the same as vegetative propagation (no seeds). Cleistogamy = self-pollination in closed flowers (involves fertilization).",
+tip:"Apomixis = asexual seed formation. Seeds produced without meiosis/fertilization. Offspring = clones of mother plant. Used commercially to 'fix' hybrid vigor across generations.",
+trick:"Apomixis is confused with vegetative reproduction because both produce clones. But apomixis = seeds without fertilization (still forms seeds). Vegetative reproduction = no seeds at all (stolons, tubers, etc.). Also: cleistogamy = self-pollination (fertilization occurs, just in closed flowers) — not apomixis."},
+
+// ── HUMAN PHYSIOLOGY ──
+{q:"During muscle contraction, which of the following correctly describes the change in I-band and H-zone?",
+opts:["A. Both I-band and H-zone decrease in width","B. I-band decreases, H-zone increases","C. Both increase in width during contraction","D. I-band increases, H-zone decreases"],
+ans:0, diff:"hard", chapter:"Locomotion and Movement", pyq:"NEET 2021",
+exp:"Sliding filament theory: Actin (thin) slides over myosin (thick). During contraction — A-band: NO change (myosin length unchanged). I-band: DECREASES (actin slides in, reducing the actin-only zone). H-zone: DECREASES (myosin-only zone reduces as actin slides in). Sarcomere length decreases. During relaxation: I-band and H-zone both increase back.",
+tip:"During contraction: A-band (constant), I-band (decreases), H-zone (decreases), Sarcomere (decreases). Memory: 'I H(ate) contraction' = I and H decrease. A-band = Always same.",
+trick:"Students remember 'A-band stays the same' but then forget what happens to I and H. Both I and H DECREASE during contraction — they don't oppose each other. The A-band (full myosin length) never changes because myosin filaments don't shorten. Only the zones defined by actin (I = actin only) and the center of myosin (H = myosin only, no actin overlap) shrink."},
+
+{q:"Which of the following correctly describes the role of calcium in muscle contraction?",
+opts:["A. \(Ca^{2+}\\) binds to myosin, exposing the active site on actin","B. \(Ca^{2+}\\) binds to troponin, causing tropomyosin to shift and expose the myosin-binding site on actin","C. \(Ca^{2+}\\) directly powers the power stroke by providing energy","D. \(Ca^{2+}\\) binds to actin and allows troponin to dissociate from the filament"],
+ans:1, diff:"hard", chapter:"Locomotion and Movement", pyq:"NEET 2023",
+exp:"\(Ca^{2+}\\) is released from the sarcoplasmic reticulum. It binds to TROPONIN (part of troponin-tropomyosin complex on actin filaments). This causes a conformational change → tropomyosin shifts → exposes the myosin-binding site on actin. Myosin head can now bind actin → power stroke (ATP-driven). \(Ca^{2+}\\) doesn't provide energy — ATP does.",
+tip:"\(Ca^{2+}\\) → troponin → tropomyosin shifts → actin active sites exposed → myosin binds → ATP hydrolysis → power stroke → contraction. The full cascade: electrical signal → SR releases \(Ca^{2+}\\) → troponin → tropomyosin → actin-myosin interaction.",
+trick:"Option A reverses the binding: \(Ca^{2+}\\) binds TROPONIN (on actin filament), NOT myosin. Option C attributes energy to \(Ca^{2+}\\) — the energy comes from ATP hydrolysis by myosin ATPase. \(Ca^{2+}\\) is a SWITCH (enables binding) not the energy source. This is a multi-step cascade — know each step's component."},
+
+{q:"Which of the following is the CORRECT sequence of hormone changes during the ovarian cycle?",
+opts:["A. FSH surge → follicle growth → estrogen peak → LH surge → ovulation","B. LH surge → follicle growth → FSH peak → ovulation → estrogen decline","C. Estrogen peaks → FSH surge → LH decline → ovulation","D. Progesterone peak → LH surge → follicle growth → ovulation"],
+ans:0, diff:"hard", chapter:"Human Reproduction", pyq:null,
+exp:"Ovarian cycle: FSH (from pituitary) stimulates follicle development → growing follicle secretes estrogen → estrogen peaks → triggers positive feedback → LH surge (day 14) → ovulation → ruptured follicle becomes corpus luteum → corpus luteum secretes progesterone and estrogen → if no fertilization, corpus luteum degenerates → progesterone falls → menstruation.",
+tip:"Sequence: FSH → follicle → estrogen ↑ → LH surge → ovulation → corpus luteum → progesterone ↑ (→ menstruation if no fertilization). LH surge is triggered BY estrogen peak (positive feedback).",
+trick:"The key trap: LH surge comes AFTER estrogen peak, not before follicle growth. FSH stimulates follicle first. Then estrogen rises. Then estrogen peak triggers the LH surge. Students often say 'LH causes follicle growth' — LH causes OVULATION and corpus luteum formation. FSH = follicle stimulating (the name tells you)."},
+
+{q:"The reabsorption of glucose in the kidney occurs in which part of the nephron?",
+opts:["A. Proximal convoluted tubule (PCT)","B. Loop of Henle","C. Distal convoluted tubule (DCT)","D. Collecting duct"],
+ans:0, diff:"medium", chapter:"Excretory Products and their Elimination", pyq:"NEET 2022",
+exp:"Glucose is completely reabsorbed in the PCT (Proximal Convoluted Tubule) by secondary active transport (co-transport with \(Na^+\\)). Normally no glucose appears in urine. If blood glucose exceeds the renal threshold (~180 mg/dL), glucose appears in urine (glycosuria — as in diabetes). Loop of Henle = concentration gradient creation. DCT and collecting duct = fine-tuning of water/ion reabsorption.",
+tip:"PCT reabsorbs: glucose (100%), amino acids (100%), \(Na^+\\), water, \(HCO_3^-\\). 70% of filtrate reabsorbed here. Glucose threshold = 180 mg/dL blood glucose. Above threshold = glucosuria.",
+trick:"Loop of Henle is in the kidney and deals with water/ion concentration — students confuse it with glucose reabsorption. Glucose is reabsorbed EARLY (PCT), before even reaching the loop. By the time filtrate enters the Loop, glucose is already gone. DCT and collecting duct = ADH/aldosterone-controlled fine adjustments (not glucose)."},
+
+{q:"Which of the following statements about neural impulse transmission at a chemical synapse is INCORRECT?",
+opts:["A. Neurotransmitters are stored in synaptic vesicles in the pre-synaptic knob","B. Action potential arrival causes \(Ca^{2+}\\) influx into the pre-synaptic terminal","C. Neurotransmitter binding to the post-synaptic membrane can cause either depolarization or hyperpolarization","D. The impulse is conducted bidirectionally across a chemical synapse"],
+ans:3, diff:"hard", chapter:"Neural Control and Coordination", pyq:"NEET 2021",
+exp:"Chemical synapses are UNIDIRECTIONAL — impulse travels from pre-synaptic to post-synaptic neuron ONLY (because neurotransmitter vesicles are only in the pre-synaptic knob, and receptors only on the post-synaptic membrane). Option D says 'bidirectionally' — that's electrical synapses (gap junctions), not chemical. Options A, B, C are all correct.",
+tip:"Chemical synapse = unidirectional (one-way). \(Ca^{2+}\\) triggers vesicle fusion. NTs can excite (depolarize) or inhibit (hyperpolarize) post-synaptic cell. Electrical synapse = bidirectional (gap junctions).",
+trick:"The bidirectional vs unidirectional distinction: chemical synapses = unidirectional (structural asymmetry — vesicles only on one side). Electrical synapses (gap junctions) = bidirectional. Reflexes and neural pathways rely on chemical synaptic unidirectionality for directed signal flow."},
+
+{q:"Which part of the brain is primarily responsible for coordinating body movements and maintaining balance?",
+opts:["A. Cerebrum","B. Thalamus","C. Cerebellum","D. Medulla oblongata"],
+ans:2, diff:"easy", chapter:"Neural Control and Coordination", pyq:"NEET 2020",
+exp:"Cerebellum = balance, coordination, fine motor control, posture. Cerebrum = higher functions (thought, memory, voluntary movement). Thalamus = relay station for sensory signals. Medulla oblongata = vital reflex centers (breathing, heart rate, vomiting, swallowing).",
+tip:"Cerebellum = balance and coordination. 'Cerebellum' has 'bell' — bell of balance. Medulla = vital reflexes. Thalamus = sensory relay (not processing). Hypothalamus = homeostasis, hormone control.",
+trick:"Thalamus is the relay station that PASSES sensory information to the cerebrum — it doesn't coordinate movement. Cerebrum's motor cortex sends COMMANDS for voluntary movement, but the cerebellum fine-tunes and coordinates those commands. Damage to cerebellum = ataxia (loss of coordination), not paralysis."},
+
+{q:"Which of the following hormones regulates blood calcium levels and is secreted by the thyroid gland?",
+opts:["A. PTH (parathyroid hormone)","B. Calcitonin","C. Thyroxine","D. Calcitriol"],
+ans:1, diff:"medium", chapter:"Chemical Coordination and Integration", pyq:"NEET 2019",
+exp:"Calcitonin is secreted by parafollicular C cells of the thyroid gland — it LOWERS blood calcium (inhibits osteoclasts, promotes calcium deposition in bone). PTH (from parathyroid) RAISES blood calcium. Thyroxine = metabolic rate (not calcium). Calcitriol = active vitamin D (from kidneys) — raises calcium absorption from gut.",
+tip:"Calcitonin = 'calci-tone-down' = lowers calcium = from thyroid. PTH = raises calcium = from parathyroid. Opposite effects, different glands. Calcium regulation is a push-pull system.",
+trick:"PTH and calcitonin both regulate calcium — students mix up which raises and which lowers, and which gland each comes from. Rule: Calcitonin = thyroid = LOWERS calcium. PTH = parathyroid = RAISES calcium. 'Calci-TONE' = tone down calcium. 'Para-thyroid' = PARA (next to) thyroid = PTH raises calcium."},
+
+{q:"In which of the following conditions would you expect to see a decrease in GFR (Glomerular Filtration Rate)?",
+opts:["A. Increased blood pressure in the afferent arteriole","B. Constriction of the efferent arteriole","C. Decreased blood pressure / severe dehydration","D. Dilation of the afferent arteriole"],
+ans:2, diff:"hard", chapter:"Excretory Products and their Elimination", pyq:null,
+exp:"GFR depends on filtration pressure = (blood pressure in glomerulus) − (capsular pressure + oncotic pressure). GFR increases with: higher afferent pressure (more blood flow), efferent constriction (backs up pressure in glomerulus). GFR DECREASES with: low blood pressure (dehydration, shock), afferent constriction, dilation of efferent (reduces glomerular pressure).",
+tip:"GFR ↑: afferent dilation OR efferent constriction (both raise glomerular pressure). GFR ↓: afferent constriction OR efferent dilation OR low BP. Remember: glomerular pressure drives filtration.",
+trick:"Efferent constriction seems like it would reduce flow and thus reduce GFR. It actually INCREASES GFR because it backs up blood in the glomerulus (raises hydraulic pressure → more filtration). Students think 'constriction = less flow = less filtration' — that logic applies to afferent, not efferent. Efferent constriction = GFR up. Afferent constriction = GFR down."},
+
+{q:"The 'respiratory center' that regulates the basic rhythm of breathing is located in:",
+opts:["A. Pons","B. Cerebral cortex","C. Medulla oblongata","D. Hypothalamus"],
+ans:2, diff:"medium", chapter:"Breathing and Exchange of Gases", pyq:"NEET 2020",
+exp:"The primary respiratory rhythm center is in the MEDULLA OBLONGATA (dorsal respiratory group = DRG and ventral respiratory group = VRG). The pons has the pneumotaxic center and apneustic center which MODIFY the rhythm (not set it). Cerebral cortex allows voluntary override. Hypothalamus responds to temperature.",
+tip:"Medulla = basic respiratory rhythm (set). Pons (pneumotaxic center) = modifies rhythm (fine-tuning). Cerebral cortex = voluntary control (holding breath, speaking). Three levels of control.",
+trick:"Pons has respiratory-related centers (pneumotaxic, apneustic) so students say pons = respiratory center. But pons only MODIFIES rhythm — the primary oscillator that sets the basic in-out rhythm is the medulla. If you destroy the pons, breathing continues (abnormally). If you destroy the medulla, breathing stops."},
+
+// ── EVOLUTION ──
+{q:"Which of the following is an example of pre-zygotic reproductive isolation?",
+opts:["A. Hybrid offspring between two species are sterile","B. Chromosomal incompatibility prevents normal development after fertilization","C. Behavioral differences prevent mating between two populations","D. Hybrid embryos abort due to genetic incompatibility"],
+ans:2, diff:"hard", chapter:"Evolution", pyq:null,
+exp:"Pre-zygotic isolation = barriers that prevent fertilization from occurring: temporal isolation, habitat isolation, behavioral isolation, mechanical isolation, gametic incompatibility. Option C (behavioral differences prevent mating) = PRE-zygotic. Options A, B, D all involve post-fertilization events = post-zygotic isolation (hybrid inviability, hybrid sterility, hybrid breakdown).",
+tip:"Pre-zygotic: 'before egg is made' = prevents mating or fertilization. Post-zygotic: fertilization occurs but hybrid fails. Examples: Mules (horse×donkey) = hybrid sterility = POST-zygotic.",
+trick:"Hybrid sterility (like mules) = post-zygotic, NOT pre-zygotic — fertilization succeeded, but the hybrid can't reproduce. Students often classify all 'species don't reproduce together' scenarios as pre-zygotic. The key: did fertilization happen? If yes and then it fails = post-zygotic. If fertilization never happens = pre-zygotic."},
+
+{q:"The Hardy-Weinberg equilibrium equation \(p^2 + 2pq + q^2 = 1\\) is being used for a population. If the frequency of the recessive homozygote (aa) is 0.09, what is the frequency of heterozygotes (Aa)?",
+opts:["A. 0.21","B. 0.42","C. 0.49","D. 0.30"],
+ans:1, diff:"hard", chapter:"Evolution", pyq:"NEET 2022",
+exp:"Given: \(q^2 = 0.09\\), so \(q = 0.3\\). Since \(p + q = 1\\), \(p = 0.7\\). Frequency of heterozygotes \(Aa = 2pq = 2 × 0.7 × 0.3 = 0.42\\).",
+tip:"HWE steps: get q from \(q^2\\), then p = 1-q, then 2pq = heterozygotes. Dominant homozygote = \(p^2\\). Always start from the recessive homozygote (easiest to identify phenotypically).",
+trick:"Students calculate \(q^2 = 0.09\\), try to find Aa, and multiply \(0.09 × 2 = 0.18\\) (wrong — that's 2q², not 2pq). You MUST take the square root first (q = 0.3), then p = 0.7, then 2pq = 0.42. Skipping the square root step is the most common error in HWE calculations."},
+
+{q:"Miller-Urey experiment (1953) demonstrated:",
+opts:["A. That life can spontaneously generate from non-living matter in modern conditions","B. That amino acids could be synthesized under simulated early Earth conditions","C. That DNA was the genetic material, not proteins","D. That the first living organisms were heterotrophs consuming atmospheric oxygen"],
+ans:1, diff:"medium", chapter:"Evolution", pyq:"NEET 2018",
+exp:"Miller-Urey experiment: used simulated early Earth atmosphere (\(CH_4, NH_3, H_2, H_2O\\) vapor) + electrical sparks (simulating lightning) → produced amino acids and other organic molecules. Demonstrated chemical evolution (abiogenesis of organic molecules). NOT spontaneous generation. DNA as genetic material = Hershey-Chase. Heterotroph hypothesis = separate theory.",
+tip:"Miller-Urey = chemical evolution proof. Early Earth gases + energy → amino acids. First step in origin of life theory. Supported Oparin-Haldane hypothesis.",
+trick:"Miller-Urey is NOT proof of spontaneous generation (which claims life from organic matter directly, like maggots from meat). It only showed AMINO ACIDS can form abiotically — a precursor step, not life itself. Also: early Earth had NO free oxygen (reducing atmosphere). Life consuming oxygen = much later (after photosynthetic bacteria evolved)."},
+
+// ── BIODIVERSITY AND CONSERVATION ──
+{q:"Which of the following correctly defines 'species diversity' in the context of biodiversity?",
+opts:["A. Genetic variation within a single species","B. Diversity of habitats and ecosystems across a region","C. The number and relative abundance of species in a given area","D. Differences in the morphological traits among individuals"],
+ans:2, diff:"medium", chapter:"Biodiversity and Conservation", pyq:"NEET 2021",
+exp:"Biodiversity has three levels: (1) Genetic diversity = variation within species. (2) Species diversity = number (richness) + relative abundance (evenness) of species in an area. (3) Ecosystem/ecological diversity = variety of habitats, communities, ecosystems. Option C correctly defines species diversity. Options A = genetic diversity. B = ecosystem diversity.",
+tip:"Three levels of biodiversity: Genetic (within species), Species (species richness + evenness), Ecosystem (habitat variety). NEET frequently tests which level each definition belongs to.",
+trick:"'Number of species' alone = species richness. 'Relative abundance' = species evenness. Species DIVERSITY = richness + evenness together. A forest with 100 species (mostly one dominant) has high richness but low evenness. True species diversity = both components. Option C correctly includes BOTH."},
+
+{q:"Assertion (A): Tropical regions have higher species diversity than temperate and polar regions.\nReason (R): Greater solar energy input in tropical regions increases productivity and supports more species.",
+opts:["A. Both A and R are true, and R is the correct explanation of A","B. Both A and R are true, but R is NOT the correct explanation of A","C. A is true but R is false","D. Both A and R are false"],
+ans:0, diff:"hard", chapter:"Biodiversity and Conservation", pyq:null,
+exp:"Both are TRUE. A is well-established: tropical regions have consistently higher species richness (latitudinal diversity gradient). R provides one valid explanation: greater solar energy → greater primary productivity → more resources → can support more species and trophic levels. This is a genuine causal mechanism for the gradient. Both A and R true, R explains A = option A.",
+tip:"Latitudinal diversity gradient: species richness decreases from tropics to poles. Causes: more solar energy (productivity), longer evolutionary time, more stable climate, greater habitat complexity, reduced extinction rates in tropics.",
+trick:"This seems like a trap because it has an obvious-sounding true statement as the reason. Students look for a 'trick' and choose B (both true but R doesn't explain A). But R IS a valid explanation — more solar energy → more productivity → resource partitioning → more species supported. This is the 'energy hypothesis' of diversity gradients. A = B would require R to be true but causally unrelated to A."},
+
+{q:"Sacred groves are an example of which type of conservation?",
+opts:["A. Ex situ conservation","B. In situ conservation","C. Both ex situ and in situ","D. Government-managed protected areas only"],
+ans:1, diff:"medium", chapter:"Biodiversity and Conservation", pyq:"NEET 2023",
+exp:"Sacred groves = patches of forest preserved by local communities for religious/cultural reasons = IN SITU conservation (species conserved in their natural habitat). Examples in India: Dev vans (Rajasthan), Khasi hills sacred groves (Meghalaya). They harbor rare and endemic species. Not government-managed — community-driven.",
+tip:"In situ: national parks, wildlife sanctuaries, biosphere reserves, sacred groves. Ex situ: zoos, botanical gardens, seed banks, cryopreservation, tissue culture. Sacred groves = community-led in situ.",
+trick:"Sacred groves are not officially listed national parks — students think 'not government = not in situ.' In situ doesn't require government management. The criterion = conservation IN natural habitat. Sacred groves preserve species in their natural forest habitat = in situ. Government management is not part of the definition."},
+
+// ── HUMAN HEALTH & DISEASE ──
+{q:"Which of the following statements about innate immunity is CORRECT?",
+opts:["A. Innate immunity is antigen-specific and has memory","B. T lymphocytes are the primary cells of innate immunity","C. Innate immunity includes barriers like skin and mucous membranes as first line of defense","D. Innate immunity develops after exposure to a specific pathogen"],
+ans:2, diff:"hard", chapter:"Human Health and Disease", pyq:null,
+exp:"Innate immunity = non-specific, no memory. Includes: physical barriers (skin, mucus), physiological barriers (stomach acid, saliva), cellular defenses (NK cells, neutrophils, macrophages), inflammatory response. T lymphocytes = adaptive immunity. Specific + memory = adaptive/acquired immunity. Innate = always present, not acquired.",
+tip:"Innate = first and second lines of defense (non-specific). Adaptive = third line (specific: B cells, T cells, antibodies, memory). Innate: fast but non-specific. Adaptive: slower but precise and has memory.",
+trick:"'Innate immunity has memory' = FALSE (that's adaptive immunity's defining feature). T lymphocytes = adaptive (T = T cells = acquired cellular immunity). Innate immunity: NK cells, neutrophils, macrophages, complement proteins — not T cells. The non-specific + no memory rule applies to ALL innate components."},
+
+{q:"The drug 'heroin' (diacetylmorphine) acts by:",
+opts:["A. Stimulating the dopamine reward pathway directly","B. Binding to opioid receptors in the brain and spinal cord, reducing pain and causing euphoria","C. Blocking serotonin reuptake in synaptic clefts","D. Acting as a GABA agonist, reducing neural activity broadly"],
+ans:1, diff:"hard", chapter:"Human Health and Disease", pyq:null,
+exp:"Heroin (diacetylmorphine) is converted to morphine in the brain. Morphine binds to mu-opioid receptors (opioid receptors in brain, spinal cord, and peripheral nerves) → inhibits pain signaling, causes euphoria, slows respiration. SSRIs block serotonin reuptake (antidepressants). Cocaine/amphetamines stimulate dopamine pathway. Benzodiazepines = GABA agonists.",
+tip:"Opioids (heroin, morphine, codeine) = bind opioid receptors = pain relief + euphoria + respiratory depression + constipation. Overdose risk = respiratory arrest. Naloxone = opioid antagonist (reverses overdose).",
+trick:"Heroin is often described as targeting the 'pleasure/reward pathway' (dopamine) — this is an indirect effect. The primary mechanism = opioid receptor binding. SSRIs = serotonin. Stimulants (cocaine) = dopamine reuptake inhibition. The specific receptor class (opioid) is what distinguishes heroin from other drugs of abuse."},
+
+{q:"Which of the following is the CORRECT match of pathogen and the disease it causes?",
+opts:["A. Plasmodium falciparum — Kala-azar","B. Leishmania donovani — Malaria","C. Wuchereria bancrofti — Filariasis (elephantiasis)","D. Ascaris lumbricoides — Typhoid"],
+ans:2, diff:"medium", chapter:"Human Health and Disease", pyq:"NEET 2021",
+exp:"Wuchereria bancrofti = filarial worm = filariasis (elephantiasis) — lymphatic obstruction causing limb swelling. Plasmodium falciparum = malaria. Leishmania donovani = kala-azar (visceral leishmaniasis). Ascaris lumbricoides = ascariasis (intestinal roundworm). Typhoid = Salmonella typhi (bacterium).",
+tip:"Filariasis: Wuchereria bancrofti (nematode worm), transmitted by Culex mosquito, blocks lymph vessels → elephantiasis. Malaria: Plasmodium (protozoa), Anopheles mosquito. Kala-azar: Leishmania, sandfly.",
+trick:"Options A and B swap the pathogen-disease pairs — a classic NEET trick. The distractor works because Plasmodium and Leishmania are both protozoa. Rule: Plasmodium = malaria. Leishmania = kala-azar (visceral leishmaniasis). Wuchereria = filariasis (helminths, not protozoa). Never mix them."},
+
+// ── PLANT PHYSIOLOGY ──
+{q:"In the Calvin cycle, the enzyme RuBisCO catalyzes the fixation of \(CO_2\\) onto RuBP. The product immediately formed is:",
+opts:["A. 3-phosphoglycerate (3-PGA) — a 3-carbon compound","B. Oxaloacetate (OAA) — a 4-carbon compound","C. An unstable 6-carbon compound that immediately splits into two 3-PGA molecules","D. Pyruvate — a 3-carbon compound"],
+ans:2, diff:"hard", chapter:"Photosynthesis in Higher Plants", pyq:null,
+exp:"RuBisCO attaches \(CO_2\\) to RuBP (5C) → unstable 6-carbon intermediate (β-keto acid) → immediately splits into 2 molecules of 3-phosphoglycerate (3-PGA, 3C each). The 6-carbon compound is so unstable it was never isolated for a long time — so historically textbooks skipped to saying '2 molecules of 3-PGA' directly. OAA = C4 pathway (PEP carboxylase). Pyruvate = respiration/C4 regeneration.",
+tip:"Calvin cycle: RuBP (5C) + \(CO_2\\) → unstable 6C intermediate → 2 × 3-PGA (3C). 3-PGA → G3P (using ATP + NADPH) → RuBP regeneration. 3 turns needed to fix 3 \(CO_2\\) and net 1 G3P.",
+trick:"Most answers will say 'two 3-PGA molecules' and skip the 6C intermediate. Option C is the most complete/accurate description — the 6C compound forms first, then splits. Option A is partially correct (3-PGA is the stable product) but omits the 6C intermediate. NEET has asked about the 'immediate product' — the 6C unstable compound IS technically the immediate product before it splits."},
+
+{q:"Which of the following is a C4 plant?",
+opts:["A. Wheat","B. Rice","C. Maize","D. Potato"],
+ans:2, diff:"easy", chapter:"Photosynthesis in Higher Plants", pyq:"NEET 2020",
+exp:"C4 plants: Maize (corn), sugarcane, sorghum, Amaranthus, Atriplex. C3 plants: wheat, rice, potato, soybean, most trees. C4 plants use PEP carboxylase in mesophyll cells (→ OAA/4C) and have Kranz anatomy (bundle sheath + mesophyll). C4 avoids photorespiration by concentrating \(CO_2\\) at RuBisCO.",
+tip:"C4 mnemonic: S-M-A = Sugarcane, Maize, Amaranthus. All others in NEET options are typically C3. C4 = tropical grasses + crops. C3 = temperate crops (wheat, rice).",
+trick:"Rice and wheat are food crops like maize — students group them all as C4 'advanced' plants. Rice and wheat are C3. Maize is C4. Sugarcane is C4. The C4/C3 distinction among common crops is highly tested. When in doubt: grasses from warm/tropical regions = C4; temperate food grains = C3."},
+
+{q:"Assertion (A): CAM plants (Crassulacean Acid Metabolism) keep their stomata open during the day and closed at night.\nReason (R): CAM is an adaptation to conserve water in arid/xeric environments.",
+opts:["A. Both A and R are true, and R is the correct explanation of A","B. Both A and R are true, but R is NOT the correct explanation of A","C. A is false but R is true","D. Both A and R are false"],
+ans:2, diff:"hard", chapter:"Photosynthesis in Higher Plants", pyq:"NEET 2023",
+exp:"A is FALSE: CAM plants do the OPPOSITE — stomata OPEN at NIGHT (to fix \(CO_2\\) as malic acid) and CLOSED during the day (Calvin cycle uses stored \(CO_2\\) from malic acid). This is the KEY adaptation for water conservation. R is TRUE: CAM IS an adaptation to arid/xeric environments (succulents like cacti, agave, pineapple). A is false, R is true = option C.",
+tip:"CAM: stomata open at NIGHT → \(CO_2\\) fixed as malate → stored in vacuole. Day: stomata closed → malate decarboxylated → releases \(CO_2\\) → enters Calvin cycle. Avoids daytime water loss.",
+trick:"CAM is often confused with C4 — both fix \(CO_2\\) before Calvin cycle. C4 = spatial separation (different cells). CAM = temporal separation (night vs day). The assertion reverses the stomata timing for CAM — this is a frequent NEET manipulation. Always: CAM = stomata open at NIGHT, not day."},
+
+{q:"In the process of mineral absorption in plants, which of the following correctly explains 'active transport' of minerals?",
+opts:["A. Movement of minerals along a concentration gradient using channel proteins","B. Movement of minerals against concentration gradient using ATP","C. Movement through the apoplast (cell wall spaces) without energy","D. Passive diffusion across plasma membrane down an electrochemical gradient"],
+ans:1, diff:"medium", chapter:"Mineral Nutrition", pyq:"NEET 2019",
+exp:"Active transport: movement AGAINST concentration gradient, requires energy (ATP), involves carrier proteins (pumps like H⁺-ATPase). This allows plants to accumulate minerals at higher concentrations inside than outside. Passive transport = along concentration gradient (facilitated diffusion, simple diffusion). Apoplast movement = passive (through cell walls and intercellular spaces).",
+tip:"Active transport: against gradient + ATP + carrier proteins (pumps). Passive: with gradient + no energy + channel proteins or diffusion. Plants actively accumulate \(K^+, NO_3^-, PO_4^{3-}\\) against gradients.",
+trick:"Channel proteins can be confused with carrier proteins. Channel proteins = facilitate PASSIVE transport (no energy, down gradient). Carrier proteins (pumps) = active transport (energy needed, against gradient). The key word is 'against concentration gradient' = always active transport, always requires ATP."},
+
+// ── HUMAN REPRODUCTION & REPRODUCTIVE HEALTH ──
+{q:"Which of the following is NOT a method of contraception that acts primarily by preventing fertilization?",
+opts:["A. Condom","B. Copper-T (IUD)","C. Tubectomy","D. Spermicides"],
+ans:1, diff:"hard", chapter:"Reproductive Health", pyq:null,
+exp:"Copper-T (copper IUD) primarily works by: (1) creating a hostile environment in uterus (copper ions toxic to sperm), (2) affecting sperm motility, but MAINLY it prevents IMPLANTATION of the zygote (post-fertilization effect). It can also prevent fertilization but its main contraceptive action is anti-implantation. Condom = prevents sperm from reaching egg (pre-fertilization). Tubectomy = fallopian tubes cut/tied = sperm can't reach egg. Spermicides = kill/immobilize sperm before fertilization.",
+tip:"Contraceptive mechanisms: Barrier (condom, diaphragm) = prevent sperm entry. Spermicides = kill sperm. IUDs (copper) = prevent implantation primarily. Hormonal pills = prevent ovulation. Tubectomy/vasectomy = block gamete transport permanently.",
+trick:"Copper-T is often listed with 'barrier methods' in casual discussion, leading students to say it prevents fertilization. The copper ions do impair sperm, but the PRIMARY mechanism is preventing implantation. This is why copper-T can work as emergency contraception even after unprotected sex (IUD inserted within 5 days) — fertilization may have already occurred."},
+
+{q:"The condition called 'polycystic ovary syndrome' (PCOS) is primarily characterized by:",
+opts:["A. Absence of ovaries from birth","B. Elevated androgen levels causing irregular ovulation and follicular cysts","C. Complete absence of estrogen leading to primary amenorrhea","D. Premature menopause before age 40"],
+ans:1, diff:"hard", chapter:"Reproductive Health", pyq:null,
+exp:"PCOS: elevated androgens (testosterone), insulin resistance, irregular or absent ovulation (anovulation), multiple small follicular cysts on ovaries (never reach full maturity). Symptoms: irregular periods, hirsutism, acne, weight gain, infertility. It's the most common endocrine disorder in reproductive-age women. Primary amenorrhea = Turner syndrome or anatomical issues. Complete estrogen absence = hypogonadism.",
+tip:"PCOS hallmarks: (1) hyperandrogenism, (2) irregular cycles/anovulation, (3) polycystic ovaries on ultrasound. Caused by LH:FSH ratio imbalance and insulin resistance. Treated with OCP, metformin.",
+trick:"PCOS doesn't mean 'no ovaries' or 'no estrogen' — estrogen may actually be elevated (due to peripheral androgen aromatization). The primary issue is ANDROGEN excess + failure to ovulate normally. Students confuse PCOS with Turner syndrome (XO, no functional ovaries) or menopause. PCOS = functional disorder of ovaries, not structural absence."},
+
+// ── MICROBES IN HUMAN WELFARE ──
+{q:"Which of the following correctly describes the role of Rhizobium in nitrogen fixation?",
+opts:["A. Rhizobium fixes atmospheric nitrogen in the soil independently","B. Rhizobium forms root nodules in legumes and fixes \(N_2\\) in symbiosis with the plant","C. Rhizobium is a free-living aerobe that converts \(NO_3^-\\) to \(N_2\\)","D. Rhizobium converts ammonium (\(NH_4^+\\)) to nitrite in the nitrification process"],
+ans:1, diff:"medium", chapter:"Microbes in Human Welfare", pyq:"NEET 2020",
+exp:"Rhizobium = symbiotic nitrogen-fixing bacterium. Forms root nodules in legumes (pea, soybean, clover). Inside nodules, it fixes \(N_2\\) → ammonia using nitrogenase enzyme. Requires anaerobic conditions inside nodule (leghemoglobin maintains microaerobic environment). Azotobacter = free-living aerobic nitrogen fixer. Nitrosomonas/Nitrobacter = nitrification (not Rhizobium).",
+tip:"Nitrogen fixation bacteria: Rhizobium (symbiotic, legume nodules), Azotobacter/Azospirillum (free-living aerobic), Clostridium (free-living anaerobic), Anabaena/Nostoc (cyanobacteria). Only Rhizobium = root nodule symbiosis.",
+trick:"'Rhizobium fixes nitrogen independently in soil' = FALSE. Rhizobium is OBLIGATELY symbiotic for nitrogen fixation — it needs the plant nodule environment. In soil alone, it's merely a rhizobacterium. Only inside the nodule (low oxygen, leghemoglobin present) does nitrogenase function. This symbiosis requirement is the key distinction from free-living fixers."},
+
+{q:"Biogas production involves methanogens. Which of the following is the CORRECT role of methanogens?",
+opts:["A. They break down complex carbohydrates into simple sugars (hydrolysis)","B. They convert \(H_2\\) and \(CO_2\\) (or acetate) into \(CH_4\\) gas","C. They oxidize organic compounds using \(SO_4^{2-}\\) as terminal electron acceptor","D. They perform acid fermentation, converting sugars to volatile fatty acids"],
+ans:1, diff:"hard", chapter:"Microbes in Human Welfare", pyq:null,
+exp:"Biogas production has 4 stages: (1) Hydrolysis (bacteria break polymers to monomers), (2) Acidogenesis (fermentative bacteria → VFAs, \(H_2, CO_2\\)), (3) Acetogenesis (acetogens → acetate + \(H_2 + CO_2\\)), (4) Methanogenesis (methanogens convert acetate OR \(H_2 + CO_2\\) → \(CH_4\\)). Methanogens (Archaea) = last step = \(CH_4\\) production. Option B correctly describes methanogen role.",
+tip:"Methanogens = Archaea (not bacteria). Convert: acetate → \(CH_4 + CO_2\\) OR \(H_2 + CO_2\\) → \(CH_4 + H_2O\\). They are STRICTLY anaerobic. Examples: Methanobacterium, Methanococcus.",
+trick:"Option A (hydrolysis) and D (acidogenesis) are earlier stages — not methanogen roles. Option C describes sulfate-reducing bacteria. Methanogens are specifically the terminal organisms in the anaerobic chain. Their product = methane = the actual biogas. Without methanogens, you get acids and \(H_2\\) but no methane."},
+
+// ── BODY FLUIDS & CIRCULATION ──
+{q:"Which of the following correctly describes the Bohr effect?",
+opts:["A. Oxygen binds to hemoglobin more readily at high \(CO_2\\) concentration","B. At low pH (high \(CO_2\\)), hemoglobin's affinity for oxygen decreases, releasing \(O_2\\) to tissues","C. Hemoglobin binds \(CO_2\\) and \(O_2\\) at the same binding site simultaneously","D. Higher temperature increases hemoglobin's oxygen affinity"],
+ans:1, diff:"hard", chapter:"Breathing and Exchange of Gases", pyq:"NEET 2022",
+exp:"Bohr effect: high \(CO_2\\) → low pH → hemoglobin shifts to T-state (deoxy conformation) → lower \(O_2\\) affinity → releases \(O_2\\) to metabolically active tissues. This is physiologically critical: tissues producing \(CO_2\\) receive more \(O_2\\). Also: higher temperature = lower affinity (shift right). Lower pH = lower affinity (shift right). The oxyHb dissociation curve shifts RIGHT.",
+tip:"Bohr effect: high \(CO_2\\)/low pH/high temperature → right shift of dissociation curve → lower Hb affinity → more \(O_2\\) released. Active tissues benefit most. Lung: low \(CO_2\\) → left shift → high affinity → \(O_2\\) loading.",
+trick:"Option A is the REVERSE of the Bohr effect. High \(CO_2\\) = LOWER Hb oxygen affinity (releases \(O_2\\), not binds more). This reversal is a classic NEET trick because students think 'high \(CO_2\\) in blood = need more oxygen = bind more' — physiological logic reversed. Actually: where CO2 is high = metabolically active tissue = NEEDS O2 released. So Hb releases, not picks up."},
+
+{q:"In ABO blood group system, a person with blood group AB has which antibodies in their plasma?",
+opts:["A. Anti-A only","B. Anti-B only","C. Both anti-A and anti-B","D. Neither anti-A nor anti-B"],
+ans:3, diff:"medium", chapter:"Body Fluids and Circulation", pyq:"NEET 2020",
+exp:"ABO system: Blood group A has antigen A + anti-B antibody. Blood group B has antigen B + anti-A antibody. Blood group AB has BOTH antigens (A and B) + NO antibodies (universal recipient — no antibodies that would react with donor blood). Blood group O has no antigens + both anti-A and anti-B antibodies (universal donor for red cells).",
+tip:"AB = universal recipient (has both antigens, no antibodies → won't reject any ABO type). O = universal donor for red cells (no antigens, but has both antibodies → plasma can't be used universally).",
+trick:"Students confuse 'antigens' and 'antibodies' in blood groups. Blood group AB: has ANTIGENS A and B, but NO antibodies. The presence of antigens A and B means the body doesn't make antibodies against them (self-tolerance). If you had anti-A antibodies AND antigen A, your blood would clump. Rule: you NEVER have an antibody against your own antigens."},
+
+// ── FINAL HIGH-YIELD QUESTIONS ──
+{q:"Which type of RNA serves as the adapter molecule between codons on mRNA and amino acids during translation?",
+opts:["A. mRNA","B. rRNA","C. tRNA","D. hnRNA"],
+ans:2, diff:"easy", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2021",
+exp:"tRNA (transfer RNA) = adapter molecule of translation. It has anticodon loop (recognizes mRNA codon) and acceptor stem (carries specific amino acid). rRNA = structural/catalytic component of ribosome. mRNA = template. hnRNA = pre-mRNA (eukaryotic precursor before processing).",
+tip:"tRNA = adapter/translator. One end reads mRNA codon (anticodon loop), other end carries amino acid (CCA-3'). Each tRNA is specific for one amino acid (aminoacyl-tRNA synthetase charges tRNA).",
+trick:"hnRNA is not a translation component — it's the unprocessed pre-mRNA in eukaryotes (nucleus-bound). rRNA doesn't carry amino acids. mRNA is the template, not the adapter. Only tRNA physically bridges between nucleotide sequence (mRNA) and amino acid sequence (protein)."},
+
+{q:"In which of the following plants is the stem modified for photosynthesis?",
+opts:["A. Opuntia (cactus)","B. Potato","C. Ginger","D. Onion"],
+ans:0, diff:"medium", chapter:"Morphology of Flowering Plants", pyq:"NEET 2019",
+exp:"Opuntia: the flat green cladodes (modified stems = phylloclade) are photosynthetic. The leaves are modified to spines to reduce water loss. Potato = stem tuber (food storage). Ginger = rhizome (horizontal underground stem for food storage). Onion = bulb (modified shoot with fleshy scale leaves for storage).",
+tip:"Photosynthetic stems: Opuntia (phylloclade/cladode — flat green photosynthetic stem). Casuarina (cladode). Asparagus (cladode). When leaves become spines → stem takes over photosynthesis.",
+trick:"Ginger and potato are both underground modified stems — but they're for storage (starch), not photosynthesis. Onion bulb = fleshy scale leaves, not photosynthetic stems. Opuntia is the only one where the stem is green and photosynthetically active as the primary adaptation."},
+
+{q:"The 'law of limiting factors' in photosynthesis was proposed by:",
+opts:["A. Engelmann","B. Emerson","C. Blackman","D. Van Niel"],
+ans:2, diff:"medium", chapter:"Photosynthesis in Higher Plants", pyq:"NEET 2022",
+exp:"Blackman's law of limiting factors (1905): when a process is conditioned by several factors, the rate is limited by the factor at the lowest/most limiting level. Applied to photosynthesis: at low light, light is limiting; at high light, \(CO_2\\) or temperature becomes limiting. Engelmann = first experiment linking chlorophyll location to O₂ production (Spirogyra + Bacteria experiment). Emerson = enhancement effect (red drop + emerson enhancement). Van Niel = photosynthesis uses water as H-donor.",
+tip:"Blackman = limiting factors. Emerson = two photosystems (enhancement effect). Engelmann = action spectrum experiment. Van Niel = \(H_2O\\) as reductant hypothesis. Match scientist to experiment.",
+trick:"Emerson and Blackman both contributed to photosynthesis biochemistry — Emerson is famous for the 'Emerson enhancement effect' (two wavelengths together > sum of individual), while Blackman's contribution is the RATE-LIMITING FACTOR concept. Don't mix their contributions."},
+
+{q:"Which of the following hormones is secreted by the corpus luteum and is essential for maintaining early pregnancy?",
+opts:["A. Estrogen only","B. hCG (human chorionic gonadotropin)","C. Progesterone","D. LH"],
+ans:2, diff:"medium", chapter:"Human Reproduction", pyq:"NEET 2021",
+exp:"After ovulation, the ruptured follicle becomes the corpus luteum → secretes PROGESTERONE (and some estrogen). Progesterone: (1) maintains uterine endometrium for implantation, (2) inhibits uterine contractions, (3) suppresses further ovulation. If fertilization occurs, hCG (from trophoblast) maintains the corpus luteum. If no fertilization, corpus luteum degenerates → progesterone falls → menstruation.",
+tip:"Corpus luteum → progesterone = pregnancy maintenance. hCG maintains corpus luteum. Without hCG, corpus luteum → regression → progesterone falls → menstruation. This cascade = pregnancy test logic.",
+trick:"hCG is what MAINTAINS the corpus luteum (trophoblast secretes hCG), but hCG is not itself secreted BY the corpus luteum. The corpus luteum secretes PROGESTERONE and estrogen. hCG just prolongs the corpus luteum's life. The question asks what the corpus luteum secretes = progesterone."},
+
+{q:"Match the following plant movements with their stimuli:\nI. Phototropism — (a) water\nII. Hydrotropism — (b) gravity\nIII. Geotropism — (c) touch\nIV. Thigmotropism — (d) light\nCorrect matching:",
+opts:["A. I-(d), II-(a), III-(b), IV-(c)","B. I-(a), II-(d), III-(c), IV-(b)","C. I-(d), II-(b), III-(a), IV-(c)","D. I-(c), II-(a), III-(d), IV-(b)"],
+ans:0, diff:"medium", chapter:"Plant Growth and Development", pyq:"NEET 2023",
+exp:"Phototropism = light. Hydrotropism = water. Geotropism = gravity. Thigmotropism = touch/contact. These are all tropic movements (directed growth responses). Tendrils of Cucurbita coil = thigmotropism. Root tips grow toward water = hydrotropism. Shoots grow toward light = phototropism.",
+tip:"Tropism mnemonic: Photo=light, Geo=earth/gravity, Hydro=water, Thigmo=touch (thigma = touch in Greek), Chemotropism=chemicals. All = directional growth toward/away from stimulus.",
+trick:"Geotropism is sometimes confused with hydrotropism — both involve roots. Roots grow DOWN (positive geotropism) AND toward water (positive hydrotropism). These can conflict (roots may grow sideways toward water source against gravity). Thigmo = touch specifically — like tendrils wrapping around a support. The key is the stimulus type."},
+
+{q:"In a typical flower, which part develops into the fruit and which part develops into the seed?",
+opts:["A. Ovary → fruit; ovule → seed","B. Ovule → fruit; ovary → seed","C. Receptacle → fruit; ovary → seed","D. Ovary → fruit; embryo → seed"],
+ans:0, diff:"easy", chapter:"Sexual Reproduction in Flowering Plants", pyq:"NEET 2018",
+exp:"After fertilization: Ovary wall (pericarp) → fruit wall. Ovary → fruit. Ovule → seed. Seed contains embryo + endosperm (+ seed coat from integuments). Fertilized ovule = seed. In some 'false fruits' (pseudocarps), the receptacle also enlarges (apple, strawberry), but the ovary still forms the true fruit.",
+tip:"Ovary → Fruit. Ovule → Seed. Simple rule. Embryo is inside the seed (= fertilized egg + suspensor). Seed coat = from integuments of ovule.",
+trick:"Option D says 'ovary → fruit; embryo → seed' — embryo is INSIDE the seed, not the seed itself. The seed = entire ovule after fertilization (seed coat from integuments, endosperm from PEN, embryo from zygote). The distinction: embryo ≠ seed. Ovule = seed. Ovary = fruit."},
+
+{q:"Photoperiodism refers to:",
+opts:["A. Growth movement of plants in response to light direction","B. The response of plants to the duration of light/dark periods affecting flowering","C. Photosynthesis rate changes with light intensity","D. Production of ATP by chloroplasts in proportion to light duration"],
+ans:1, diff:"medium", chapter:"Plant Growth and Development", pyq:"NEET 2020",
+exp:"Photoperiodism = the response of organisms (especially plants) to relative lengths of day (light period) vs night (dark period) — controls flowering time. Short-day plants (SDPs): flower when night > critical length (e.g., chrysanthemum). Long-day plants (LDPs): flower when night < critical length (e.g., wheat). Day-neutral plants: unaffected by photoperiod. The actual measurement is the DARK period length (phytochrome system).",
+tip:"Photoperiodism: plants measure night length (not day length) via phytochrome (Pr/Pfr conversion). SDP = need long nights. LDP = need short nights. Florigen (FT protein) = flowering hormone produced in leaves, moves to apex.",
+trick:"Option A describes PHOTOTROPISM (directional growth toward light) — completely different from photoperiodism (timing of flowering). Photoperiodism = flowering time = dark period measurement. Phototropism = directional movement = auxin redistribution. These are two different phenomena."},
+
+{q:"The term 'gene therapy' refers to:",
+opts:["A. Treatment of genetic diseases by replacing defective genes with functional copies","B. Using antibiotics to silence gene expression in pathogenic bacteria","C. Using CRISPR to create genetically modified food crops","D. Analysis of gene expression using microarray technology"],
+ans:0, diff:"medium", chapter:"Biotechnology and Its Applications", pyq:"NEET 2022",
+exp:"Gene therapy = introduction of functional gene copies into a patient's cells to replace/supplement defective genes causing genetic disease. Example: ADA (adenosine deaminase) deficiency — first clinical gene therapy case. Vectors: viral (retrovirus, adenovirus, AAV) or non-viral. Germline vs somatic gene therapy. Options B, C, D describe other biotechnology applications.",
+tip:"Gene therapy = treat genetic disease by fixing the gene, not just symptoms. ADA deficiency (SCID) = first successful gene therapy case. Somatic gene therapy = non-heritable. Germline = heritable but ethically restricted.",
+trick:"CRISPR is a gene-editing tool that CAN be used for gene therapy, but gene therapy specifically refers to treatment of disease. CRISPR for crops = genetic modification (not gene therapy). Gene therapy = medical, disease-directed application. Microarrays = diagnostics/research tool. The distinction: therapy = treating disease in patients."}
+
+,
+
+// ── MORE MOLECULAR BIOLOGY ──
+{q:"During transcription in prokaryotes, the sigma (σ) factor is responsible for:",
+opts:["A. Catalyzing the phosphodiester bond formation between nucleotides","B. Recognizing and binding to the promoter region of the gene","C. Terminating transcription at the stop codon","D. Proofreading the newly formed RNA strand"],
+ans:1, diff:"hard", chapter:"Molecular Basis of Inheritance", pyq:null,
+exp:"Sigma (σ) factor is a dissociable subunit of prokaryotic RNA polymerase holoenzyme that confers promoter specificity — it recognizes the -10 (Pribnow box: TATAAT) and -35 sequences on the promoter. After initiation, σ dissociates. The core enzyme (α₂ββ'ω) continues elongation. Sigma ≠ catalysis (that's β subunit) ≠ termination (that's rho factor or hairpin loop) ≠ proofreading.",
+tip:"Holoenzyme = core enzyme + σ factor. σ = promoter recognition only. Core enzyme = elongation. Termination: intrinsic (hairpin loop) or Rho-dependent.",
+trick:"Students say σ factor 'initiates transcription' broadly — technically σ only RECOGNIZES the promoter. The β subunit does the actual catalysis (phosphodiester bond). Sigma is a specificity factor, not the catalytic unit. Also: sigma factor has NOTHING to do with stop codons (those are in translation, not transcription)."},
+
+{q:"Which of the following correctly describes 'semiconservative' DNA replication as demonstrated by Meselson and Stahl?",
+opts:["A. Each new DNA has one new strand and one original (parental) strand","B. Both new DNA molecules are entirely newly synthesized","C. The original DNA is conserved intact; only new copies are made","D. Half the original DNA is degraded; half is used as template"],
+ans:0, diff:"easy", chapter:"Molecular Basis of Inheritance", pyq:"NEET 2021",
+exp:"Meselson-Stahl experiment (1958): grown bacteria in ¹⁵N, shifted to ¹⁴N medium. After one generation → hybrid ¹⁵N/¹⁴N DNA (intermediate density). After two generations → half hybrid, half light ¹⁴N/¹⁴N. This proved semiconservative replication: each daughter DNA = 1 parental strand + 1 new strand. Conservative = both parental strands stay together (one old-old, one new-new). Dispersive = mixed fragments.",
+tip:"Meselson-Stahl = three models tested: semiconservative (correct), conservative, dispersive. Intermediate density band after 1 generation = proof of semiconservative (hybrid DNA).",
+trick:"Conservative replication would give: one completely heavy (old-old) and one completely light (new-new) after one generation — NO hybrid band. Dispersive would give one broad intermediate band that keeps getting lighter. Only semiconservative gives one sharp hybrid band after 1 gen, then hybrid + light after 2 gens. Know the distinctive pattern for each model."},
+
+// ── MORE ANIMAL KINGDOM ──
+{q:"Which of the following is a characteristic feature exclusive to mammals?",
+opts:["A. Four-chambered heart","B. Diaphragm and mammary glands","C. Homeothermy (warm-bloodedness)","D. Amnion surrounding the embryo"],
+ans:1, diff:"hard", chapter:"Animal Kingdom", pyq:"NEET 2022",
+exp:"Diaphragm (for breathing) + mammary glands (for lactation) = exclusive to class Mammalia. Four-chambered heart = mammals AND birds (Aves). Homeothermy = both mammals and birds. Amnion = all amniotes (reptiles, birds, mammals). Mammary glands are the defining synapomorphy of mammals (the word 'mammal' comes from 'mamma' = breast).",
+tip:"Mammals EXCLUSIVE: mammary glands, hair/fur, diaphragm, three middle ear ossicles (malleus, incus, stapes), neocortex, heterodont dentition. Birds and mammals share: 4-chambered heart, homeothermy.",
+trick:"Four-chambered heart = the classic answer many choose, but birds ALSO have 4-chambered hearts. Homeothermy = both birds and mammals. Amnion = all amniotes. Only mammary glands + diaphragm are exclusively mammalian. When the question says 'exclusive to mammals,' four-chambered heart is WRONG because birds have it too."},
+
+{q:"The water vascular system in echinoderms is primarily used for:",
+opts:["A. Excretion of nitrogenous wastes","B. Locomotion and food capture using tube feet","C. Circulation of oxygenated blood","D. Osmotic regulation in marine environments"],
+ans:1, diff:"medium", chapter:"Animal Kingdom", pyq:"NEET 2020",
+exp:"Water vascular system (WVS) in echinoderms: hydraulic system filled with sea water. Components: madreporite → stone canal → ring canal → radial canals → tube feet (podia). Functions: locomotion (tube feet movement), food capture (sea stars), gas exchange (thin tube feet walls), sensory. NOT excretion or blood circulation.",
+tip:"Water vascular system = hydraulic locomotion. Tube feet = end organs. Madreporite = entry point (sieve plate on aboral surface). Unique to phylum Echinodermata.",
+trick:"'Circulation' trap: water vascular system is often confused with a circulatory system because it's a fluid-filled channel system. But it's NOT for blood/oxygen transport — it's specifically for movement and feeding via hydraulic pressure in tube feet. Echinoderms do have a hemal system (coelom) for fluid transport but WVS = locomotion."},
+
+// ── MORE GENETICS ──
+{q:"In incomplete dominance, a cross between red (RR) and white (WW) flowered plants gives pink (RW) F₁. When F₁ is selfed, the F₂ ratio will be:",
+opts:["A. 3 red : 1 white","B. 1 red : 2 pink : 1 white","C. 1 red : 1 white","D. All pink"],
+ans:1, diff:"medium", chapter:"Principles of Inheritance", pyq:"NEET 2019",
+exp:"Incomplete dominance: neither allele completely dominant. F₁: RW (pink). F₁ × F₁ (RW × RW) → F₂: RR (red) : RW (pink) : WW (white) = 1:2:1. Phenotype ratio = genotype ratio (since each genotype has different phenotype). This differs from Mendel's 3:1 (complete dominance). Example: Antirrhinum (snapdragon), Mirabilis jalapa (4 o'clock plant).",
+tip:"Incomplete dominance: F₁ = blended phenotype. F₂ = 1:2:1 (both phenotypic and genotypic ratio). Codominance: F₁ = BOTH traits expressed simultaneously (e.g., roan cattle, AB blood group). Different concepts.",
+trick:"Students give '3:1' for F₂ of incomplete dominance — that's only for COMPLETE dominance. In incomplete dominance, because F₁ (heterozygous) has a DISTINCT intermediate phenotype, the ratio becomes 1:2:1. The genotypic and phenotypic ratios are IDENTICAL in incomplete dominance (3 different phenotypes = 3 genotypes)."},
+
+{q:"The chromosomal theory of inheritance was proposed independently by:",
+opts:["A. Watson and Crick","B. Sutton and Boveri","C. Mendel and Morgan","D. Jacob and Monod"],
+ans:1, diff:"easy", chapter:"Principles of Inheritance", pyq:"NEET 2020",
+exp:"Walter Sutton (grasshopper chromosomes) and Theodor Boveri (sea urchin experiments) independently proposed that chromosomes are the bearers of hereditary factors (1902-1903). Their work linked Mendel's factors (genes) to physical chromosomes observed during meiosis. Morgan later proved it experimentally using Drosophila.",
+tip:"Sutton + Boveri = chromosomal theory of inheritance (proposed). Morgan = experimental proof (sex-linked traits in Drosophila). Mendel = pea plant laws (didn't know about chromosomes).",
+trick:"Morgan is often paired with the chromosomal theory because he proved it, but he didn't PROPOSE it. Sutton and Boveri independently proposed the theory. Morgan = Drosophila + sex linkage = experimental evidence. Sutton + Boveri = theoretical proposal. Know who proposed vs who proved."},
+
+// ── MORE ECOLOGY ──
+{q:"Which of the following correctly describes a 'keystone species'?",
+opts:["A. A species with the largest biomass in an ecosystem","B. A species that has a disproportionately large effect on ecosystem structure relative to its abundance","C. The primary producer that supports all food chains in the ecosystem","D. An introduced species that disrupts native ecological balance"],
+ans:1, diff:"hard", chapter:"Ecosystem", pyq:null,
+exp:"Keystone species: species whose ecological impact is disproportionately large compared to their biomass/abundance. Removal causes ecosystem collapse. Example: sea otters (control sea urchin populations → protect kelp forests). Pisaster (sea star) — Paine's experiment. NOT based on biomass (that's dominant species) or being a producer.",
+tip:"Keystone species: disproportionate impact. Examples: sea otter, African elephant (ecosystem engineer), fig trees (provide food for many species). Removal → cascade effects → ecosystem restructuring.",
+trick:"The largest biomass species = 'dominant species' not keystone. Keystone species are often PREDATORS with low biomass but high leverage (controlling herbivore populations). The word 'keystone' = the small central stone in an arch that holds everything together — disproportionate structural role, not the biggest piece."},
+
+{q:"The Pyramid of Energy is always upright (never inverted) because:",
+opts:["A. Biomass always increases at each trophic level","B. Energy is always lost at each trophic level due to metabolic processes, so less energy is available at higher levels","C. Producers always have more individuals than consumers","D. Energy flows bidirectionally in food webs"],
+ans:1, diff:"medium", chapter:"Ecosystem", pyq:"NEET 2021",
+exp:"The energy pyramid is ALWAYS upright because energy transfer between trophic levels is unidirectional and approximately 10% efficient (Lindeman) — 90% lost as heat at each level. Total energy always decreases going up trophic levels. Unlike biomass pyramids (can be inverted in aquatic systems with high phytoplankton turnover) or number pyramids, energy pyramids cannot be inverted — energy cannot be recycled through the food chain.",
+tip:"Energy pyramid: always upright. Biomass pyramid: usually upright, can be inverted (aquatic). Number pyramid: can be inverted (trees → parasites). Energy = absolute upright due to thermodynamic laws.",
+trick:"Students confuse energy and biomass pyramids. Biomass can be inverted (phytoplankton biomass < zooplankton at a snapshot — because phytoplankton turns over very rapidly). Energy accounts for TOTAL throughput over time, which cannot invert. '90% lost at each level' = energy always less at higher trophic levels. Thermodynamics forbids energy pyramid inversion."},
+
+// ── MORE HUMAN PHYSIOLOGY ──
+{q:"Assertion (A): The renal threshold for glucose is approximately 180 mg/dL blood glucose.\nReason (R): Above this concentration, glucose transporters in the PCT become saturated and excess glucose appears in urine.",
+opts:["A. Both A and R are true, and R is the correct explanation of A","B. Both A and R are true, but R is NOT the correct explanation of A","C. A is true but R is false","D. A is false but R is true"],
+ans:0, diff:"hard", chapter:"Excretory Products and their Elimination", pyq:null,
+exp:"A is TRUE: ~180 mg/dL is the renal threshold for glucose. R is TRUE and correctly explains A: PCT has secondary active transport using SGLT (sodium-glucose linked transporters) — when blood glucose is normal (<180 mg/dL), all filtered glucose is reabsorbed. When blood glucose exceeds 180 mg/dL, the SGLT transporters reach their transport maximum (Tm = saturation), and excess glucose spills into urine = glycosuria. Both A and R are true, R explains A = option A.",
+tip:"Renal threshold = blood concentration above which substance appears in urine. Glucose Tm = transport maximum of PCT. Diabetic glycosuria = blood glucose > 180 mg/dL → SGLT saturated → glucose in urine.",
+trick:"This assertion-reason tests whether you know the MECHANISM (SGLT saturation), not just the threshold number. The reason specifically states 'glucose transporters become saturated' — this is the Tm concept. If you only knew the 180 mg/dL number but not the mechanism, you'd answer C (A true, R false). The mechanism = transporter saturation = correct explanation."},
+
+{q:"Which of the following neurotransmitters is released at the neuromuscular junction (NMJ)?",
+opts:["A. Norepinephrine","B. Dopamine","C. Acetylcholine","D. GABA"],
+ans:2, diff:"easy", chapter:"Locomotion and Movement", pyq:"NEET 2020",
+exp:"Acetylcholine (ACh) is the neurotransmitter released at the NMJ (motor neuron → skeletal muscle). ACh binds nicotinic receptors on motor end plate → depolarization → muscle contraction. ACh is also used at some ANS synapses. Norepinephrine = sympathetic post-ganglionic neurons (except sweat glands). GABA = inhibitory CNS neurotransmitter. Dopamine = CNS reward/movement pathways.",
+tip:"NMJ always = ACh. Somatic motor = ACh. Sympathetic post-ganglionic = norepinephrine (mostly). Parasympathetic post-ganglionic = ACh. GABA = inhibitory CNS only.",
+trick:"GABA is inhibitory — students sometimes choose it for muscle relaxation thinking inhibitory means muscle inhibition. GABA acts in the CNS, not at neuromuscular junctions. All somatic motor neurons universally release ACh. NMJ = ACh, always, for skeletal muscle. No exceptions."},
+
+{q:"The hormone ADH (antidiuretic hormone / vasopressin) acts on which part of the kidney to retain water?",
+opts:["A. Proximal convoluted tubule","B. Loop of Henle (descending limb)","C. Collecting duct and distal convoluted tubule","D. Bowman's capsule"],
+ans:2, diff:"medium", chapter:"Excretory Products and their Elimination", pyq:"NEET 2022",
+exp:"ADH (secreted by posterior pituitary) acts on the COLLECTING DUCT and DCT to insert aquaporin-2 (water channel proteins) → increases water permeability → more water reabsorption → concentrated urine. In absence of ADH (diabetes insipidus) → collecting duct impermeable to water → large volumes of dilute urine. PCT water reabsorption is ADH-INDEPENDENT (constitutive, driven by solute reabsorption).",
+tip:"ADH = collecting duct + DCT = aquaporin-2 insertion = water retention. Aldosterone = collecting duct = \(Na^+\\) reabsorption + \(K^+\\) secretion. Both act on collecting duct but different channels and different stimuli.",
+trick:"PCT reabsorbs ~70% of water BUT this is ADH-independent (obligatory). ADH only controls the FINE TUNING of water balance in the collecting duct. A question about 'ADH action' = always collecting duct + DCT. PCTreabsorption is constitutive/obligatory — not regulated by ADH."},
+
+// ── MORE BIOTECHNOLOGY ──
+{q:"Bt toxin produced by Bacillus thuringiensis works by:",
+opts:["A. Inhibiting acetylcholinesterase at insect neuromuscular junctions","B. Forming pores in the insect gut epithelium causing cell lysis","C. Blocking photosynthesis in the cells of Bt-crop plants","D. Disrupting insect molting hormone (ecdysone) signaling"],
+ans:1, diff:"hard", chapter:"Biotechnology and Its Applications", pyq:"NEET 2023",
+exp:"Bt toxin (Cry protein from Bacillus thuringiensis): ingested as protoxin → alkaline insect midgut activates it → binds to specific receptors on midgut epithelium → creates pores → cell lysis → gut rupture → insect dies. Specific to insects (alkaline gut needed for activation). Non-toxic to mammals (acidic stomach — protoxin not activated). Bt cotton (Bollgard) has Cry1Ac gene.",
+tip:"Bt toxin mechanism: alkaline insect gut → activation → receptor binding → pore formation → cell lysis. Selective because: requires alkaline pH + specific insect midgut receptors. Mammals have acidic stomach = protoxin not activated.",
+trick:"'Acetylcholinesterase inhibition' = organophosphate pesticides (not Bt toxin). Bt toxin works in the GUT, not at neural synapses. The mechanism is physical disruption of gut epithelium via pore formation — essentially a targeted 'hole punch' in insect gut cells. Know: Bt toxin = gut-specific = protein (Cry) = pore-forming."},
+
+{q:"Which of the following is an example of 'molecular pharming' (pharming)?",
+opts:["A. Using bacteria to produce insulin for human use","B. Growing transgenic cows that produce human therapeutic proteins in their milk","C. Using CRISPR to edit patient cells directly","D. Fermenting yeast to produce bioethanol"],
+ans:1, diff:"hard", chapter:"Biotechnology and Its Applications", pyq:null,
+exp:"Molecular pharming = using transgenic animals (especially livestock) to produce pharmaceutical proteins in their milk, blood, or eggs. Example: transgenic cows with human gene for α-1 antitrypsin, transgenic goats producing antithrombin III in milk. Bacteria producing insulin = recombinant DNA technology (not pharming — pharming specifically = animals as bioreactors). CRISPR patient editing = gene therapy. Yeast fermentation = industrial biotechnology.",
+tip:"Pharming = farm + pharmacy = transgenic livestock as drug factories. Products harvested from milk (most common), blood, or eggs. Advantage: post-translational modifications that bacteria can't do.",
+trick:"Bacteria producing insulin is the most famous rDNA product, but it's NOT pharming. Pharming specifically requires a transgenic ANIMAL as the biological factory. Bacteria making insulin = microbial expression system. Transgenic cow/goat making human proteins in milk = pharming. The distinction is the organism: animal = pharming."},
+
+// ── MORE REPRODUCTION ──
+{q:"Placenta is the site for exchange between maternal blood and fetal blood. Which of the following substances can cross the placental barrier?",
+opts:["A. Maternal RBCs and antibodies (IgG)","B. IgG antibodies and some viruses, but NOT RBCs","C. All maternal blood components including RBCs and platelets","D. Only small molecules like glucose and \(O_2\\); no macromolecules"],
+ans:1, diff:"hard", chapter:"Human Reproduction", pyq:null,
+exp:"Placenta = selective barrier. DOES cross: glucose, \(O_2\\), \(CO_2\\), amino acids, IgG antibodies (FcRn receptor-mediated transport → passive immunity), some viruses (HIV, rubella, CMV = TORCH infections), some drugs (thalidomide, alcohol), hormones. Does NOT cross: maternal RBCs (too large), platelets, most bacteria, large proteins (except IgG). The Rh incompatibility issue arises because fetal RBCs occasionally enter maternal circulation (NOT maternal RBCs → fetus).",
+tip:"Placenta passes: nutrients, gases, IgG (gives infant passive immunity for ~6 months), TORCH viruses. Doesn't pass: maternal blood cells. Rh problem = fetal RBC enters MOTHER, not other way.",
+trick:"The trap: 'RBCs can cross the placenta.' They don't — normally. Fetal RBCs can occasionally enter maternal circulation (causing Rh sensitization), but maternal RBCs don't enter fetal circulation. IgG is the ONLY antibody class that crosses the placenta (via FcRn receptors). IgM doesn't cross. This IgG transfer = passive immunity in newborn."},
+
+{q:"Capacitation of sperm refers to:",
+opts:["A. Formation of the acrosome during spermatogenesis","B. Maturation of sperm in the epididymis that gives motility","C. Final activation of sperm that occurs in the female reproductive tract enabling fertilization","D. The process by which sperm count is increased to fertile levels"],
+ans:2, diff:"hard", chapter:"Human Reproduction", pyq:null,
+exp:"Capacitation = final physiological activation of sperm that occurs in the female reproductive tract (uterus/fallopian tube). During capacitation: (1) cholesterol removed from plasma membrane, (2) hyperactivated motility develops, (3) acrosome becomes primed for acrosome reaction, (4) ability to penetrate zona pellucida gained. Sperm are NOT capable of fertilizing immediately after ejaculation — capacitation takes ~7 hours in humans.",
+tip:"Capacitation = female tract → sperm fully fertilization-competent. Acrosome reaction = release of acrosomal enzymes to penetrate zona pellucida. These are sequential: capacitation first, then acrosome reaction at the egg.",
+trick:"Epididymal maturation gives sperm motility, but this is NOT capacitation. Capacitation is a LATER step in the FEMALE tract. Students confuse epididymal maturation (gives motility) with capacitation (gives fertilization competence). Both are 'sperm maturation' loosely, but capacitation specifically occurs in the female reproductive tract after ejaculation."},
+
+// ── MORE EVOLUTION ──
+{q:"The concept of 'genetic drift' is most significant in:",
+opts:["A. Large populations with random mating","B. Small, isolated populations","C. Populations under strong directional selection","D. Populations with high gene flow"],
+ans:1, diff:"medium", chapter:"Evolution", pyq:"NEET 2021",
+exp:"Genetic drift = random change in allele frequency due to chance events — most pronounced in SMALL populations (statistical sampling error is larger with smaller samples). In large populations, drift effects average out. Bottleneck effect and founder effect are types of genetic drift. In small isolated populations, drift can fix or eliminate alleles regardless of fitness.",
+tip:"Genetic drift: inversely proportional to population size. Small pop = large drift. Large pop = negligible drift. Types: Founder effect (new population from few individuals), Bottleneck effect (sudden population reduction).",
+trick:"Directional selection also changes allele frequencies in small populations — but genetic drift is specifically RANDOM change (not directed by fitness). The combination of small population + isolation = maximum drift effect. Large populations with random mating = Hardy-Weinberg equilibrium (drift negligible). Small isolated populations = drift can dominate over selection."},
+
+{q:"Which of the following provides the STRONGEST evidence for evolution from a common ancestor?",
+opts:["A. Analogous structures in unrelated species","B. Similar habitats occupied by unrelated species","C. Homologous structures with the same basic plan but different functions in related species","D. All species sharing the genetic code"],
+ans:3, diff:"hard", chapter:"Evolution", pyq:null,
+exp:"The universal genetic code (same codons = same amino acids in virtually all organisms) is the strongest single evidence for universal common ancestry — this is not something that could evolve independently. Homologous structures = strong evidence of common ancestry (divergent evolution). Analogous structures = convergent evolution (NOT evidence of common ancestry — opposite). Similar habitats = niche similarity, not ancestry. The universality of the genetic code is considered the most fundamental molecular evidence for common descent.",
+tip:"Universal genetic code: ~99.9% identical across all life (a few exceptions in mitochondria/ciliates). This universality at the molecular level = strongest evidence for single origin of life (universal common ancestor).",
+trick:"Homologous structures are the classic textbook answer for common ancestry, but the question asks for STRONGEST evidence. The universal genetic code is more compelling because: (1) it's molecular, not structural, (2) it applies to ALL life forms without exception, (3) the probability of the same codon table evolving independently multiple times = essentially zero. Homologous structures are strong but potentially explainable by developmental constraints; the genetic code is not."},
+
+// ── MORE PLANT KINGDOM ──
+{q:"Which of the following is the male sex organ in bryophytes?",
+opts:["A. Archegonium","B. Antheridium","C. Sporangium","D. Gametangium"],
+ans:1, diff:"medium", chapter:"Plant Kingdom", pyq:"NEET 2020",
+exp:"In bryophytes (and other non-vascular plants): Antheridium = male gametangium (produces antherozoids/sperms). Archegonium = female gametangium (flask-shaped, contains egg cell). Sporangium = spore-producing structure (on sporophyte). Gametangium = general term for sex organs. Male: antheridium → sperms (flagellated in bryophytes → require water for fertilization).",
+tip:"Antheridium = male sex organ (produces motile sperms). Archegonium = female sex organ (flask-shaped, contains egg). Both present in bryophytes, pteridophytes, gymnosperms. Angiosperms: pollen grain (male) + embryo sac (female) = reduced gametophytes.",
+trick:"'Archegonium' sounds like 'arch' = important/primary → students think it's male. Archegonium = ARCHe = ancient = 'first' but it's FEMALE (egg-containing flask). Antheridium = ANTHER-like = male. Anther (flower) = male. Antheridium (bryophyte) = male. Same root = male structure."},
+
+// ── FINAL QUESTION ──
+{q:"Which of the following is CORRECT regarding the structure and function of the human liver?",
+opts:["A. Bile is produced by the gallbladder and stored in the liver","B. Liver produces urea via the ornithine cycle from ammonia generated by amino acid deamination","C. The liver stores glycogen but cannot release glucose into the bloodstream","D. Liver-produced albumin is responsible for cellular immunity"],
+ans:1, diff:"hard", chapter:"Chemical Coordination and Integration", pyq:null,
+exp:"Liver produces urea via the ornithine (urea) cycle: amino acid deamination → ammonia → ornithine cycle → urea → excreted by kidneys. This is CORRECT. Option A = reversed: bile is PRODUCED by liver (hepatocytes), STORED in gallbladder. Option C = wrong: liver stores glycogen AND can break it down (glycogenolysis) → releases glucose (in response to glucagon). Option D = wrong: albumin = plasma protein for osmotic pressure/transport (not immunity). Immunoglobulins = produced by B cells/plasma cells.",
+tip:"Liver functions: urea synthesis (ornithine cycle), bile production (not storage), glycogen storage + glycogenolysis, albumin synthesis, detoxification, clotting factor synthesis. Gallbladder = stores bile. Pancreas ≠ liver.",
+trick:"Gallbladder STORES bile; liver MAKES bile. This is the most classic liver-gallbladder confusion. Liver stores glycogen AND releases glucose (both directions — stores via glycogenesis, releases via glycogenolysis). Albumin = transport/oncotic pressure protein (not immune). Only B cells/plasma cells make antibodies."},
+
+// ── MORE ECOLOGY ──
+{q:"The IUCN Red List categories for threatened species include (in order of increasing extinction risk):",
+opts:["A. Vulnerable → Near Threatened → Endangered → Critically Endangered","B. Near Threatened → Vulnerable → Endangered → Critically Endangered","C. Vulnerable → Endangered → Near Threatened → Critically Endangered","D. Endangered → Vulnerable → Near Threatened → Critically Endangered"],
+ans:1, diff:"hard", chapter:"Biodiversity and Conservation", pyq:null,
+exp:"IUCN Red List categories (increasing threat): Least Concern → Near Threatened → Vulnerable → Endangered → Critically Endangered → Extinct in the Wild → Extinct. So the sequence in order of increasing extinction risk: Near Threatened (NT) → Vulnerable (VU) → Endangered (EN) → Critically Endangered (CR). Option B is correct.",
+tip:"IUCN threat categories: LC → NT → VU → EN → CR → EW → EX. 'Not Valuable Enough? Critically Examine.' VU = 50% extinction risk in 10 years. EN = 70% in 20 years. CR = 80% in 10 years.",
+trick:"Near Threatened is NOT 'threatened' — it's below Vulnerable in risk level. Students place it after Vulnerable because 'threatened' sounds serious. NT is the first warning category before actual threat classification. Vulnerable < Endangered < Critically Endangered. This ordering is specifically tested in NEET."}
+
+]; // end of questions array
+
+// ═══════════════════════════════════════════════════════════
+//  CORE STATE
+// ═══════════════════════════════════════════════════════════
+let answers = new Array(TOTAL_QUESTIONS).fill(null);
+let revealed = new Array(TOTAL_QUESTIONS).fill(false);
+let visited = new Array(TOTAL_QUESTIONS).fill(false);
+let currentQ = 0;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startTest() {
+  showScreen('test-screen');
+  goTo(0);
+  buildPalette();
+}
+
+function goTo(n) {
+  if (n < 0 || n >= TOTAL_QUESTIONS) return;
+  currentQ = n;
+  visited[currentQ] = true;
+  renderQuestion();
+  updatePalette();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function prevQ() { goTo(currentQ - 1); }
+function nextQ() { goTo(currentQ + 1); }
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const sel = answers[currentQ];
+  const rev = revealed[currentQ];
+
+  document.getElementById('qNumDisplay').textContent = currentQ + 1;
+  const pct = ((currentQ + 1) / TOTAL_QUESTIONS * 100).toFixed(1);
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  const diffClass = 'diff-' + q.diff;
+  const pyqBadge = q.pyq ? `<span class="pyq-badge">★ ${q.pyq}</span>` : '';
+  const unanswered = answers.filter(a => a === null).length;
+  const submitLabel = `Submit (${unanswered} unanswered)`;
+
+  let optHtml = q.opts.map((opt, i) => {
+    let cls = 'opt-btn';
+    let disabled = rev ? 'disabled' : '';
+    if (rev) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === sel) cls += ' wrong';
+      else cls += '';
+    } else if (sel === i) {
+      cls += ' selected';
+    }
+    return `<button class="${cls}" ${disabled} onclick="selectOpt(${i})">${opt}</button>`;
+  }).join('');
+
+  let expHtml = '';
+  if (rev) {
+    expHtml = `<div class="exp-panel">
+      <div class="exp-text">${q.exp}</div>
+      <div class="tip-box"><strong>💡 NEET TIP</strong>${q.tip}</div>
+      <div class="trick-box"><strong>🪤 WHY IT WAS TRICKY & HOW TO AVOID IT</strong>${q.trick}</div>
+    </div>`;
+  }
+
+  const checkBtn = (sel !== null && !rev)
+    ? `<button class="check-btn" onclick="checkAnswer()">Check Answer</button>`
+    : '';
+
+  const html = `
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="q-num-badge">Q ${currentQ + 1}</span>
+        <span class="diff-badge ${diffClass}">${q.diff.toUpperCase()}</span>
+        ${pyqBadge}
+        <span class="chapter-pill">${q.chapter}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-list">${optHtml}</div>
+      ${checkBtn}
+      ${expHtml}
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn" onclick="prevQ()" ${currentQ === 0 ? 'disabled' : ''}>← Prev</button>
+      <button class="nav-btn" onclick="nextQ()" ${currentQ === TOTAL_QUESTIONS - 1 ? 'disabled' : ''}>Next →</button>
+      <button class="submit-btn" onclick="submitTest()">${submitLabel}</button>
+    </div>
+  `;
+
+  document.getElementById('questionArea').innerHTML = html;
+
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([document.getElementById('questionArea')]).catch(e => console.log(e));
+  }
+}
+
+function selectOpt(i) {
+  if (revealed[currentQ]) return;
+  answers[currentQ] = i;
+  renderQuestion();
+  updatePalette();
+}
+
+function checkAnswer() {
+  if (answers[currentQ] === null) return;
+  revealed[currentQ] = true;
+  renderQuestion();
+  updatePalette();
+}
+
+function buildPalette() {
+  const grid = document.getElementById('paletteGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'pal-dot';
+    dot.textContent = i + 1;
+    dot.id = 'pd-' + i;
+    dot.onclick = (() => { const idx = i; return () => { goTo(idx); togglePalette(); }; })();
+    grid.appendChild(dot);
+  }
+}
+
+function updatePalette() {
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const dot = document.getElementById('pd-' + i);
+    if (!dot) continue;
+    dot.className = 'pal-dot';
+    if (i === currentQ) dot.classList.add('current');
+    else if (answers[i] !== null) dot.classList.add('answered');
+    else if (visited[i]) dot.classList.add('skipped');
+  }
+}
+
+function togglePalette() {
+  document.getElementById('palettePanel').classList.toggle('open');
+}
+
+function submitTest() {
+  let correct = 0, wrong = 0, skipped = 0;
+  const chapterData = {};
+
+  questions.forEach((q, i) => {
+    if (!chapterData[q.chapter]) chapterData[q.chapter] = { c: 0, w: 0, s: 0, total: 0 };
+    chapterData[q.chapter].total++;
+    if (answers[i] === null) { skipped++; chapterData[q.chapter].s++; }
+    else if (answers[i] === q.ans) { correct++; chapterData[q.chapter].c++; }
+    else { wrong++; chapterData[q.chapter].w++; }
+  });
+
+  const score = correct * 4 - wrong * 1;
+  const pct = Math.round((score / MAX_MARKS) * 100);
+  let scoreColor = pct >= 85 ? '#2e7d32' : pct >= 70 ? '#00838f' : pct >= 50 ? '#e65100' : '#c62828';
+  let grade = pct >= 85 ? '🔥 Excellent' : pct >= 70 ? '✅ Good' : pct >= 50 ? '⚠️ Needs Work' : '❌ Critical — Review Now';
+
+  const bC = Math.round((correct / TOTAL_QUESTIONS) * 100);
+  const bW = Math.round((wrong / TOTAL_QUESTIONS) * 100);
+  const bS = Math.round((skipped / TOTAL_QUESTIONS) * 100);
+
+  let alerts = '';
+  if (wrong > 0) alerts += `<div class="alert-card alert-red">⚠️ Negative marks: −${wrong} = <strong>−${wrong} marks</strong> deducted. Review these before NEET.</div>`;
+  if (wrong > correct * 0.5) alerts += `<div class="alert-card alert-orange">📊 Your wrong:correct ratio is high (${wrong}:${correct}). Consider skipping unfamiliar questions instead of guessing.</div>`;
+  if (skipped > TOTAL_QUESTIONS * 0.25) alerts += `<div class="alert-card alert-orange">⏭️ ${skipped} questions skipped. Attempt all in NEET — educated guesses can yield marks.</div>`;
+
+  let chBars = Object.entries(chapterData).map(([ch, d]) => {
+    const total = d.c + d.w + d.s;
+    const pch = total > 0 ? Math.round((d.c / total) * 100) : 0;
+    const fill = pch >= 70 ? 'var(--green)' : pch >= 40 ? 'var(--orange)' : 'var(--red)';
+    const label = pch >= 70 ? 'alert-green' : pch >= 40 ? 'alert-orange' : 'alert-red';
+    return `<div class="chapter-bar-row">
+      <div class="chapter-bar-label"><span>${ch}</span><span>${d.c}/${total} (${pch}%)</span></div>
+      <div class="chapter-bar-track"><div class="chapter-bar-fill" style="width:${pch}%;background:${fill}"></div></div>
+    </div>`;
+  }).join('');
+
+  let weakChapters = Object.entries(chapterData).filter(([ch, d]) => d.total > 0 && (d.c / d.total) < 0.5).map(([ch]) => ch);
+  let strongChapters = Object.entries(chapterData).filter(([ch, d]) => d.total > 0 && (d.c / d.total) >= 0.8).map(([ch]) => ch);
+  if (weakChapters.length) alerts += `<div class="alert-card alert-red">📖 Weak chapters: <strong>${weakChapters.join(', ')}</strong>. Prioritize these in your next revision cycle.</div>`;
+  if (strongChapters.length) alerts += `<div class="alert-card alert-green">💪 Strong chapters: <strong>${strongChapters.join(', ')}</strong>. Maintain with periodic revision.</div>`;
+
+  let mistakes = '';
+  questions.forEach((q, i) => {
+    if (answers[i] !== null && answers[i] !== q.ans) {
+      const letters = ['A', 'B', 'C', 'D'];
+      const yourChoice = letters[answers[i]] + '. ' + q.opts[answers[i]];
+      const rightChoice = letters[q.ans] + '. ' + q.opts[q.ans];
+      mistakes += `<div class="mistake-card">
+        <div class="mistake-q">Q${i+1}: ${q.q}</div>
+        <div class="mistake-ans-row">
+          <div class="wrong-ans">❌ You chose: ${yourChoice}</div>
+          <div class="right-ans">✅ Correct: ${rightChoice}</div>
+        </div>
+        <div class="exp-label">📖 WHY THE CORRECT ANSWER IS RIGHT</div>
+        <div style="font-size:13.5px;line-height:1.7;color:var(--text);margin-bottom:10px;">${q.exp}</div>
+        <div class="trick-box"><strong>🪤 WHY IT WAS TRICKY & HOW TO AVOID IT</strong>${q.trick}</div>
+      </div>`;
+    }
+  });
+
+  const html = `
+    <div class="motivation-card">
+      <div class="emoji">💜</div>
+      <div class="msg">Every question you got wrong today is one fewer mistake on exam day. The students who crack NEET aren't smarter — they're the ones who treat wrong answers as data, not as failure.</div>
+      <div class="sub">You're 90 questions closer to understanding where you actually stand. Mock 02 is harder by design — if you struggled, that's the point. Now go fix what this test just showed you.</div>
+      <div class="sig">~ Harsh</div>
+    </div>
+
+    <div class="score-header">
+      <div class="score-big" style="color:${scoreColor}">${score}</div>
+      <div class="score-label">out of ${MAX_MARKS} marks · ${pct}% accuracy</div>
+      <div class="score-grade" style="color:${scoreColor}">${grade}</div>
+      <div class="breakdown-bar">
+        <div class="bar-correct" style="width:${bC}%"></div>
+        <div class="bar-wrong" style="width:${bW}%"></div>
+        <div class="bar-skip" style="width:${bS}%"></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)">${correct}</div><div class="stat-lbl">Correct</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--red)">${wrong}</div><div class="stat-lbl">Wrong</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--orange)">${skipped}</div><div class="stat-lbl">Skipped</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--accent)">${Math.round(correct / TOTAL_QUESTIONS * 100)}%</div><div class="stat-lbl">Accuracy</div></div>
+    </div>
+
+    <div class="analysis-section">
+      <div class="analysis-title">📊 Smart Analysis</div>
+      ${alerts}
+      <div class="alert-card" style="background:var(--bg);border-left:4px solid var(--accent);color:var(--text2)">
+        📌 Strategy: Mock 02 was harder with more multi-statement and assertion-reason questions. If your score dropped from Mock 01, that's expected — this format is closer to actual NEET 2025/2026 pattern.
+      </div>
+    </div>
+
+    <div class="analysis-section">
+      <div class="analysis-title">📚 Chapter-wise Performance</div>
+      ${chBars}
+    </div>
+
+    ${mistakes ? `<div class="analysis-section"><div class="analysis-title">❌ Mistake Analysis (${wrong} wrong)</div>${mistakes}</div>` : '<div class="analysis-section"><div class="analysis-title">✅ Perfect Score!</div><p style="color:var(--green);font-weight:600;">No mistakes to review. Excellent work.</p></div>'}
+
+    <button class="retry-btn" onclick="retryTest()">↺ Retry Mock 02</button>
+  `;
+
+  document.getElementById('resultContent').innerHTML = html;
+  showScreen('result-screen');
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([document.getElementById('resultContent')]).catch(e => console.log(e));
+  }
+}
+
+function retryTest() {
+  answers = new Array(TOTAL_QUESTIONS).fill(null);
+  revealed = new Array(TOTAL_QUESTIONS).fill(false);
+  visited = new Array(TOTAL_QUESTIONS).fill(false);
+  currentQ = 0;
+  showScreen('test-screen');
+  goTo(0);
+  buildPalette();
+}
+</script>
+</body>
+</html>
