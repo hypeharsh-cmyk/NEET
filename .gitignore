@@ -1,0 +1,9 @@
+# Local-only / copyrighted / large — never publish these
+mocks/
+soln/
+mock_soln_2/
+build/
+graphify-out/
+.claude/
+*.pdf
+neet_biology_qbank_pilot.html
